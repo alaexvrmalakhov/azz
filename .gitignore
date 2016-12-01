@@ -1,7 +1,10 @@
-~.dcu
-~azz.dof
-~.ddp
-~azz.cfg
-~azz.dsk
-~azz.gdb
-~azz.~res
+*.dcu
+
+azz.dof
+
+*.ddp
+azz.cfg
+
+azz.dsk
+azz.gdb
+azz.~*

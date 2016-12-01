@@ -3,21 +3,19 @@ unit ProProgramu;
 interface
 
 uses
-  Forms, StdCtrls, Controls, Classes;
+  Forms, StdCtrls, Controls, Classes, ExtCtrls, Graphics;
 
 type
   TfrmProProgramu = class(TForm)
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    Memo1: TMemo;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
-    btnZakriti: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btnZakritiClick(Sender: TObject);
+    procedure btnCloseClick(Sender: TObject);
   end;
 
 var
@@ -37,7 +35,7 @@ begin
   Action:=caFree;
 end;
 
-procedure TfrmProProgramu.btnZakritiClick(Sender: TObject);
+procedure TfrmProProgramu.btnCloseClick(Sender: TObject);
 begin
   frmProProgramu.Close;
 end;

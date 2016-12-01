@@ -13,9 +13,11 @@ unit Main;
 interface
 
 uses
-  Forms, OleServer, Word2000, IBDatabase, DB, StdActns, Classes, ActnList,
-  IBServices, Menus, Controls, ComCtrls, Windows, INIFiles, Messages, SysUtils,
-  Dialogs, ToolWin, ImgList, ExtCtrls, DBCtrls;
+  Forms, OleServer, WordXP, ExtCtrls, ImgList, Controls, IBDatabase, DB,
+  StdActns, Classes, ActnList, IBServices, Menus, DBCtrls, ToolWin,
+  ComCtrls, Windows, INIFiles, Messages, SysUtils, Dialogs;
+//  , Word2000;
+
 //, StdCtrls;
 //  , IBCustomDataSet, IBQuery, Graphics, DateUtils, Variants, IBSQL,
 //  , Gauges, DBTables, DBCtrls, ShellApi, ToolWin,
@@ -205,7 +207,6 @@ type
     aNalashtuvanny_ElementiVikon: TAction;
     aNalashtuvanny_PravaKoristuvachiv: TAction;
     mnNalashtuvannyKoristuvachiPravaKoristuvachiv: TMenuItem;
-    sWordApp: TWordApplication;
     mnZahodiViluchenny_Z_RealizaciilRozdilT23F18: TMenuItem;
     mnZahodiShtrafiRozdilT23F18: TMenuItem;
     mnZahodiAdmin_Zapobizh_ZahodiRozdilT23F18: TMenuItem;
@@ -248,6 +249,7 @@ type
     mnZvitReports: TMenuItem;
     aRozdiliInicializacii: TAction;
     mnDovidnikiRozdiliInicializacii: TMenuItem;
+    sWordApp: TWordApplication;
     procedure ReadInit;
     procedure SaveInit;
     function IsFormOpen(const FormName : string): Boolean;

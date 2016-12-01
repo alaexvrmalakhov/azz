@@ -1,6 +1,6 @@
 object frmMain: TfrmMain
-  Left = 835
-  Top = 105
+  Left = 1474
+  Top = 114
   Width = 445
   Height = 167
   Caption = 'frmMain'
@@ -22,8 +22,8 @@ object frmMain: TfrmMain
   TextHeight = 13
   object StatusBar: TStatusBar
     Left = 0
-    Top = 94
-    Width = 437
+    Top = 90
+    Width = 429
     Height = 19
     Panels = <
       item
@@ -38,24 +38,23 @@ object frmMain: TfrmMain
       item
         Width = 100
       end>
-    SimplePanel = False
   end
   object cbMain: TCoolBar
     Left = 0
     Top = 0
-    Width = 437
+    Width = 429
     Height = 45
     Bands = <
       item
         Control = DBNavigator1
         ImageIndex = -1
-        Width = 433
+        Width = 423
       end>
     Images = ilMain
     object DBNavigator1: TDBNavigator
-      Left = 9
+      Left = 11
       Top = 0
-      Width = 420
+      Width = 412
       Height = 25
       VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
       Hints.Strings = (
@@ -559,6 +558,7 @@ object frmMain: TfrmMain
   end
   object ssUsers: TIBSecurityService
     ServerName = 'localhost'
+    Protocol = TCP
     LoginPrompt = False
     TraceFlags = []
     SecurityAction = ActionAddUser
@@ -949,24 +949,12 @@ object frmMain: TfrmMain
   object dbAzz: TIBDatabase
     LoginPrompt = False
     DefaultTransaction = trAzz
-    IdleTimer = 0
-    SQLDialect = 3
-    TraceFlags = []
     Left = 68
     Top = 52
   end
   object trAzz: TIBTransaction
-    Active = False
     DefaultDatabase = dbAzz
-    AutoStopAction = saNone
     Left = 96
-    Top = 52
-  end
-  object sWordApp: TWordApplication
-    AutoConnect = False
-    ConnectKind = ckRunningOrNew
-    AutoQuit = False
-    Left = 156
     Top = 52
   end
   object ilMain: TImageList
@@ -977,5 +965,12 @@ object frmMain: TfrmMain
     OnTimer = TimerTimer
     Left = 220
     Top = 52
+  end
+  object sWordApp: TWordApplication
+    AutoConnect = False
+    ConnectKind = ckRunningOrNew
+    AutoQuit = False
+    Left = 304
+    Top = 48
   end
 end
