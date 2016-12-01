@@ -40,6 +40,7 @@ object frmTeritoryEdit: TfrmTeritoryEdit
     Top = 16
     Width = 121
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 0
     Text = 'edtKod'
   end
@@ -56,6 +57,7 @@ object frmTeritoryEdit: TfrmTeritoryEdit
     Top = 52
     Width = 389
     Height = 21
+    ImeName = 'Russian'
     ItemHeight = 13
     TabOrder = 2
     Text = 'cbMinistry'
@@ -73,6 +75,7 @@ object frmTeritoryEdit: TfrmTeritoryEdit
     Top = 88
     Width = 437
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 5
     Text = 'edtTeritory'
   end
@@ -131,8 +134,6 @@ object frmTeritoryEdit: TfrmTeritoryEdit
   object qTeritoryUpdates: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 40
     Top = 112
   end

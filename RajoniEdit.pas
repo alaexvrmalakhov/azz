@@ -160,6 +160,7 @@ begin
       frmRajoni.Close;
       exit;
     end;
+{
     if frmMain.IsFormOpen('frmViddilennyEdit') then
     begin
       frmViddilennyEdit.cbRajon.Text:=frmRajoniEdit.edtRajon.Text;
@@ -167,6 +168,7 @@ begin
       frmRajoni.Close;
       exit;
     end;
+}
     if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
     begin
       frmSpivrobitnikiEdit.cbRajon.Text:=frmRajoniEdit.edtRajon.Text;

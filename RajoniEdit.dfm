@@ -47,6 +47,7 @@ object frmRajoniEdit: TfrmRajoniEdit
     Top = 16
     Width = 121
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 0
     Text = 'edtKod'
   end
@@ -63,6 +64,7 @@ object frmRajoniEdit: TfrmRajoniEdit
     Top = 124
     Width = 357
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 8
     Text = 'edtRajon'
   end
@@ -89,6 +91,7 @@ object frmRajoniEdit: TfrmRajoniEdit
     Top = 88
     Width = 309
     Height = 21
+    ImeName = 'Russian'
     ItemHeight = 13
     TabOrder = 5
     Text = 'cbTeritory'
@@ -106,6 +109,7 @@ object frmRajoniEdit: TfrmRajoniEdit
     Top = 52
     Width = 309
     Height = 21
+    ImeName = 'Russian'
     ItemHeight = 13
     TabOrder = 2
     Text = 'cbMinistry'

@@ -234,7 +234,6 @@ type
     mnAdministruvannyProtokol: TMenuItem;
     N3: TMenuItem;
     N6: TMenuItem;
-    N8: TMenuItem;
     aRivniSES: TAction;
     mnDovidnikiRivniSES: TMenuItem;
     aDataTypes: TAction;
@@ -250,6 +249,16 @@ type
     mnDovidnikiRozdiliInicializacii: TMenuItem;
     sWordApp: TWordApplication;
     N9: TMenuItem;
+    N2: TMenuItem;
+    N10: TMenuItem;
+    old1: TMenuItem;
+    old2: TMenuItem;
+    old3: TMenuItem;
+    N11: TMenuItem;
+    N12: TMenuItem;
+    old4: TMenuItem;
+    N14: TMenuItem;
+    old5: TMenuItem;
     procedure ReadInit;
     procedure SaveInit;
     function IsFormOpen(const FormName : string): Boolean;
@@ -320,6 +329,11 @@ type
     function PosN(Substring, Mainstring: string; n: Integer): Integer;
     property SecurityService : TIBSecurityService read FIBSecurityService write FIBSecurityService;
   end;
+
+const
+  clWindow=$FFFFFF;
+  clError=$008080FF;
+  clCorrect=$0080FF80;
 
 var
   frmMain: TfrmMain;
@@ -1014,7 +1028,7 @@ begin
   frmViddilenny.Caption:='Довідник відділень';
   frmViddilenny.DBGrid1.Align:=alClient;
   frmViddilenny.aChoice.Enabled:=false;
-  frmViddilenny.aTeritoryUpdateExecute(sender);
+//  frmViddilenny.aTeritoryUpdateExecute(sender);
   frmViddilenny.aUpdateExecute(sender);
   frmViddilenny.qViddilenny.Last;
   frmViddilenny.qViddilenny.First;

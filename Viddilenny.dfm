@@ -1,6 +1,6 @@
 object frmViddilenny: TfrmViddilenny
-  Left = 876
-  Top = 223
+  Left = 286
+  Top = 115
   Width = 404
   Height = 269
   Caption = 'frmViddilenny'
@@ -17,17 +17,17 @@ object frmViddilenny: TfrmViddilenny
   ShowHint = True
   OnActivate = FormActivate
   OnClose = FormClose
-  OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
-    Left = 321
-    Top = 21
+    Left = 313
+    Top = 0
     Width = 75
-    Height = 221
+    Height = 231
     Align = alRight
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 0
     object btnDodati: TButton
       Left = 0
@@ -84,6 +84,7 @@ object frmViddilenny: TfrmViddilenny
     Width = 289
     Height = 97
     DataSource = dsViddilenny
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
@@ -91,81 +92,6 @@ object frmViddilenny: TfrmViddilenny
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'KODVIDDILENNY'
-        Title.Caption = #1050#1086#1076
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NAZVAVIDDILENNY'
-        Title.Caption = #1053#1072#1079#1074#1072' '#1074#1110#1076#1076#1110#1083#1077#1085#1085#1103
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NAZVAVIDDILENNY_RV'
-        Title.Caption = #1053#1072#1079#1074#1072' '#1074#1110#1076#1076#1110#1083#1077#1085#1085#1103' '#1091' '#1056'.'#1042'.'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NAZVAVIDDILENNY_TV'
-        Title.Caption = #1053#1072#1079#1074#1072' '#1074#1110#1076#1076#1110#1083#1077#1085#1085#1103' '#1091' '#1054'.'#1042'.'
-        Visible = True
-      end>
-  end
-  object Panel2: TPanel
-    Left = 0
-    Top = 0
-    Width = 396
-    Height = 21
-    Align = alTop
-    AutoSize = True
-    BevelOuter = bvNone
-    Ctl3D = True
-    ParentCtl3D = False
-    TabOrder = 2
-    object cbTeritory: TComboBox
-      Left = 152
-      Top = 0
-      Width = 81
-      Height = 21
-      ItemHeight = 13
-      TabOrder = 1
-      Text = 'cbTeritory'
-      OnChange = aTeritoryChangeExecute
-    end
-    object cbRajon: TComboBox
-      Left = 232
-      Top = 0
-      Width = 65
-      Height = 21
-      ItemHeight = 13
-      TabOrder = 2
-      Text = 'cbRajon'
-      OnChange = cbRajonChange
-    end
-    object btnMin_Ter_Raj: TButton
-      Left = 300
-      Top = 0
-      Width = 21
-      Height = 21
-      Action = aTeritoryUpdate
-      TabOrder = 3
-    end
-    object cbMinistry: TComboBox
-      Left = 4
-      Top = 0
-      Width = 145
-      Height = 21
-      ItemHeight = 13
-      TabOrder = 0
-      Text = 'cbMinistry'
-      OnChange = aMinistryChangeExecute
-    end
   end
   object alViddilenny: TActionList
     Left = 28
@@ -206,18 +132,6 @@ object frmViddilenny: TfrmViddilenny
       ShortCut = 16499
       OnExecute = aCloseExecute
     end
-    object aTeritoryUpdate: TAction
-      Caption = '...'
-      OnExecute = aTeritoryUpdateExecute
-    end
-    object aMinistryChange: TAction
-      Caption = 'aMinistryChange'
-      OnExecute = aMinistryChangeExecute
-    end
-    object aTeritoryChange: TAction
-      Caption = 'aTeritoryChange'
-      OnExecute = aTeritoryChangeExecute
-    end
     object aSortByKod: TAction
       Caption = #1047#1072' '#1082#1086#1076#1086#1084
       ShortCut = 16433
@@ -225,7 +139,7 @@ object frmViddilenny: TfrmViddilenny
     end
     object aSortByViddilenny: TAction
       Caption = #1047#1072' '#1074#1110#1076#1076#1110#1083#1077#1085#1085#1103#1084
-      ShortCut = 16434
+      ShortCut = 16433
       OnExecute = aSortByViddilennyExecute
     end
   end
@@ -274,17 +188,13 @@ object frmViddilenny: TfrmViddilenny
   object qViddilenny: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 184
     Top = 36
   end
-  object qTeritory: TIBQuery
+  object qEdit: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
-    Left = 268
-    Top = 44
+    Left = 240
+    Top = 20
   end
 end

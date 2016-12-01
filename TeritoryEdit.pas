@@ -169,6 +169,7 @@ begin
       exit;
     end;
 
+{
     if frmMain.IsFormOpen('frmViddilennyEdit') then
     begin
       frmViddilennyEdit.cbTeritory.Text:=frmTeritoryEdit.edtTeritory.Text;
@@ -177,6 +178,7 @@ begin
       frmViddilennyEdit.aTeritoryChangeExecute(sender);
       exit;
     end;
+}
 
     if frmMain.IsFormOpen('frmRajoniEdit') then
     begin

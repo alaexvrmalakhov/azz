@@ -77,209 +77,212 @@ object frmMain: TfrmMain
     object mnZahodi: TMenuItem
       Caption = #1047#1072#1093#1086#1076#1080
       Hint = #1056#1077#1076#1072#1075#1091#1074#1072#1085#1085#1103' '#1078#1091#1088#1085#1072#1083#1110#1074' '#1079#1072#1093#1086#1076#1110#1074
-      object mnZahodiShtrafi: TMenuItem
-        Caption = #1064#1090#1088#1072#1092#1080
-        object mnZahodiShtrafiShtrafi: TMenuItem
-          Action = aShtrafi
-        end
-        object mnShtrafiChoices: TMenuItem
-          Caption = '-'
-        end
-        object mnZahodiShtrafiNeSplacheni: TMenuItem
-          Action = frmShtrafi.aNeSplacheni
-        end
-        object mnZahodiShtrafiNeVrucheni: TMenuItem
-          Action = frmShtrafi.aNeVrucheni
-        end
-        object mnZahodiShtrafiPeredaniDoVDVS: TMenuItem
-          Caption = #1055#1077#1088#1077#1076#1072#1085#1110' '#1076#1086' '#1042#1044#1042#1057
-          object mnZahodiShtrafiPeredaniDoVDVSPeredani: TMenuItem
-            Action = frmShtrafi.aPeredaniDoVDVSPeredani
+      object old2: TMenuItem
+        Caption = 'old'
+        object mnZahodiShtrafi: TMenuItem
+          Caption = #1064#1090#1088#1072#1092#1080
+          object mnZahodiShtrafiShtrafi: TMenuItem
+            Action = aShtrafi
           end
-          object mnZahodiShtrafiPeredaniDoVDVSSplacheni: TMenuItem
-            Action = frmShtrafi.aPeredaniDoVDVSSplacheni
+          object mnShtrafiChoices: TMenuItem
+            Caption = '-'
           end
-        end
-        object mnZahodiShtrafiNePeredaniDoVDVS: TMenuItem
-          Action = frmShtrafi.aNePeredaniDoVDVS
-        end
-        object mnZahodiShtrafiPrimusovoStygneni: TMenuItem
-          Action = frmShtrafi.aPrimusovoStygneni
-        end
-        object mnZahodiShtrafiSkasovani: TMenuItem
-          Action = frmShtrafi.aSkasovani
-        end
-        object mnZahodiShtrafiSpivrobitnik: TMenuItem
-          Action = frmShtrafi.aSpivrobitnik
-        end
-        object mnZahodiShtrafiTipShtrafu: TMenuItem
-          Action = frmShtrafi.aTipShtrafu
-        end
-        object mnZahodiShtrafiObjekt: TMenuItem
-          Caption = #1054#1073#39#1108#1082#1090
-          object mnZahodiShtrafiObjektAdresa: TMenuItem
-            Action = frmShtrafi.aObjekt_Adresa
+          object mnZahodiShtrafiNeSplacheni: TMenuItem
+            Action = frmShtrafi.aNeSplacheni
           end
-          object mnZahodiShtrafiObjektNazva: TMenuItem
-            Action = frmShtrafi.aObjekt_Nazva
+          object mnZahodiShtrafiNeVrucheni: TMenuItem
+            Action = frmShtrafi.aNeVrucheni
           end
-        end
-        object mnZahodiShtrafiRozdilT23F18: TMenuItem
-          Action = frmShtrafi.aRozdilT23F18
-        end
-      end
-      object mnZahodiAdmin_Zapobizh_Zahodi: TMenuItem
-        Caption = #1040#1076#1084#1110#1085#1110#1089#1090#1088#1072#1090#1080#1074#1085#1086'-'#1079#1072#1087#1086#1073#1110#1078#1085#1110' '#1079#1072#1093#1086#1076#1080
-        object mnZahodiAdmin_Zapobizh_ZahodiAdminZapobizhZahodi: TMenuItem
-          Action = aAdminZahodi
-        end
-        object mnAdminChoices: TMenuItem
-          Caption = '-'
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiNeVrucheni: TMenuItem
-          Action = frmAdminZapobizhZahodi.aNeVrucheni
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiNeZnytiZKontrolu: TMenuItem
-          Action = frmAdminZapobizhZahodi.aNeZnytiZKontrolu
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiOskarzheni: TMenuItem
-          Action = frmAdminZapobizhZahodi.aOskarzheni
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiNePovidomleni: TMenuItem
-          Action = frmAdminZapobizhZahodi.aNePovidomleni
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiPovidomleni: TMenuItem
-          Action = frmAdminZapobizhZahodi.aPovidomleni
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiOpechatani: TMenuItem
-          Action = frmAdminZapobizhZahodi.aOpechatani
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiNeVidnovleni: TMenuItem
-          Action = frmAdminZapobizhZahodi.aNeVidnovleni
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiObmezhennyAsortimentu: TMenuItem
-          Action = frmAdminZapobizhZahodi.aObmezhennyAsortimentu
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiNazvaObjektu: TMenuItem
-          Action = frmAdminZapobizhZahodi.aNazvaObjektu
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiAdresaObjektu: TMenuItem
-          Action = frmAdminZapobizhZahodi.aAdresaObjektu
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiPIBPredstavnikaSES: TMenuItem
-          Action = frmAdminZapobizhZahodi.aPIBPredstavnikaSES
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiTipPostanovi: TMenuItem
-          Action = frmAdminZapobizhZahodi.aTipPostanovi
-        end
-        object mnZahodiAdmin_Zapobizh_ZahodiRozdilT23F18: TMenuItem
-          Action = frmAdminZapobizhZahodi.aRozdilT23F18
-        end
-      end
-      object mnZahodiViluchenny_Z_Realizacii: TMenuItem
-        Caption = #1042#1080#1083#1091#1095#1077#1085#1085#1103' '#1079' '#1088#1077#1072#1083#1110#1079#1072#1094#1110#1111
-        object mnZahodiViluchenny_Z_RealizaciiViluchennyZRealizacii: TMenuItem
-          Action = aViluchennyZRealizacii
-        end
-        object mnVibir_Viluchenny_Choices: TMenuItem
-          Caption = '-'
-        end
-        object mnZahodiViluchenny_Z_RealizaciiNeVrucheni: TMenuItem
-          Action = frmViluchennyZRealizacii.aViluchennyNeVrucheni
-        end
-        object mnZahodiViluchenny_Z_RealizaciiOskarzheni: TMenuItem
-          Action = frmViluchennyZRealizacii.aViluchennyOskarzheni
-        end
-        object mnZahodiViluchenny_Z_RealizaciiNazvaObjektu: TMenuItem
-          Action = frmViluchennyZRealizacii.aViluchennyNazvaObjektu
-        end
-        object mnZahodiViluchenny_Z_RealizaciiAdresaObjektu: TMenuItem
-          Action = frmViluchennyZRealizacii.aViluchennyAdresaObjektu
-        end
-        object mnZahodiViluchenny_Z_RealizaciiTipPostanovi: TMenuItem
-          Action = frmViluchennyZRealizacii.aViluchennyTipPostanovi
-        end
-        object mnZahodiViluchenny_Z_RealizaciiPIBOsobiSES: TMenuItem
-          Action = frmViluchennyZRealizacii.aViluchennyPIB_SES
-        end
-        object mnZahodiViluchenny_Z_RealizaciiPosadaOsobiSES: TMenuItem
-          Action = frmViluchennyZRealizacii.aViluchennyPosadaSES
-        end
-        object mnZahodiViluchenny_Z_RealizaciiTipProdukcii: TMenuItem
-          Action = frmViluchennyZRealizacii.aViluchennyTipProdukcii
-        end
-        object mnZahodiViluchenny_Z_RealizaciilRozdilT23F18: TMenuItem
-          Action = frmViluchennyZRealizacii.aViluchennyT23F18
-        end
-      end
-      object mnZahodiFinansovi_Sankcii: TMenuItem
-        Caption = #1060#1110#1085#1072#1085#1089#1086#1074#1110' '#1089#1072#1085#1082#1094#1110#1111
-        object mnZahodiFinansovi_SankciiFinansoviSankcii: TMenuItem
-          Action = aFinansoviSankcii
-        end
-        object N13: TMenuItem
-          Caption = '-'
-        end
-        object mnZahodiFinansovi_SankciiNeVrucheni: TMenuItem
-          Action = frmFinansoviSankcii.aNeVrucheni
-        end
-        object mnZahodiFinansovi_SankciiNeSplacheni: TMenuItem
-          Action = frmFinansoviSankcii.aNeSplacheni
-        end
-        object mnZahodiFinansovi_SankciiOskarzheni: TMenuItem
-          Action = frmFinansoviSankcii.aOskarzheni
-        end
-        object mnZahodiFinansovi_SankciiObjekt: TMenuItem
-          Caption = #1054#1073#39#1108#1082#1090
-          object mnZahodiFinansovi_SankciiObjektNazvaObjektu: TMenuItem
-            Action = frmFinansoviSankcii.aNazvaObjektu
+          object mnZahodiShtrafiPeredaniDoVDVS: TMenuItem
+            Caption = #1055#1077#1088#1077#1076#1072#1085#1110' '#1076#1086' '#1042#1044#1042#1057
+            object mnZahodiShtrafiPeredaniDoVDVSPeredani: TMenuItem
+              Action = frmShtrafi.aPeredaniDoVDVSPeredani
+            end
+            object mnZahodiShtrafiPeredaniDoVDVSSplacheni: TMenuItem
+              Action = frmShtrafi.aPeredaniDoVDVSSplacheni
+            end
           end
-          object mnZahodiFinansovi_SankciiObjektAdresaObjektu: TMenuItem
-            Action = frmFinansoviSankcii.aAdresaObjektu
+          object mnZahodiShtrafiNePeredaniDoVDVS: TMenuItem
+            Action = frmShtrafi.aNePeredaniDoVDVS
+          end
+          object mnZahodiShtrafiPrimusovoStygneni: TMenuItem
+            Action = frmShtrafi.aPrimusovoStygneni
+          end
+          object mnZahodiShtrafiSkasovani: TMenuItem
+            Action = frmShtrafi.aSkasovani
+          end
+          object mnZahodiShtrafiSpivrobitnik: TMenuItem
+            Action = frmShtrafi.aSpivrobitnik
+          end
+          object mnZahodiShtrafiTipShtrafu: TMenuItem
+            Action = frmShtrafi.aTipShtrafu
+          end
+          object mnZahodiShtrafiObjekt: TMenuItem
+            Caption = #1054#1073#39#1108#1082#1090
+            object mnZahodiShtrafiObjektAdresa: TMenuItem
+              Action = frmShtrafi.aObjekt_Adresa
+            end
+            object mnZahodiShtrafiObjektNazva: TMenuItem
+              Action = frmShtrafi.aObjekt_Nazva
+            end
+          end
+          object mnZahodiShtrafiRozdilT23F18: TMenuItem
+            Action = frmShtrafi.aRozdilT23F18
           end
         end
-        object mnZahodiFinansovi_SankciiSES: TMenuItem
-          Caption = #1057#1045#1057
-          object mnZahodiFinansovi_SankciiSESPIBPredstavnika: TMenuItem
-            Action = frmFinansoviSankcii.aPIB_SES
+        object mnZahodiAdmin_Zapobizh_Zahodi: TMenuItem
+          Caption = #1040#1076#1084#1110#1085#1110#1089#1090#1088#1072#1090#1080#1074#1085#1086'-'#1079#1072#1087#1086#1073#1110#1078#1085#1110' '#1079#1072#1093#1086#1076#1080
+          object mnZahodiAdmin_Zapobizh_ZahodiAdminZapobizhZahodi: TMenuItem
+            Action = aAdminZahodi
           end
-          object mnZahodiFinansovi_SankciiSESPosadaPredstavnika: TMenuItem
-            Action = frmFinansoviSankcii.aPosada_SES
+          object mnAdminChoices: TMenuItem
+            Caption = '-'
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiNeVrucheni: TMenuItem
+            Action = frmAdminZapobizhZahodi.aNeVrucheni
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiNeZnytiZKontrolu: TMenuItem
+            Action = frmAdminZapobizhZahodi.aNeZnytiZKontrolu
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiOskarzheni: TMenuItem
+            Action = frmAdminZapobizhZahodi.aOskarzheni
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiNePovidomleni: TMenuItem
+            Action = frmAdminZapobizhZahodi.aNePovidomleni
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiPovidomleni: TMenuItem
+            Action = frmAdminZapobizhZahodi.aPovidomleni
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiOpechatani: TMenuItem
+            Action = frmAdminZapobizhZahodi.aOpechatani
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiNeVidnovleni: TMenuItem
+            Action = frmAdminZapobizhZahodi.aNeVidnovleni
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiObmezhennyAsortimentu: TMenuItem
+            Action = frmAdminZapobizhZahodi.aObmezhennyAsortimentu
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiNazvaObjektu: TMenuItem
+            Action = frmAdminZapobizhZahodi.aNazvaObjektu
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiAdresaObjektu: TMenuItem
+            Action = frmAdminZapobizhZahodi.aAdresaObjektu
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiPIBPredstavnikaSES: TMenuItem
+            Action = frmAdminZapobizhZahodi.aPIBPredstavnikaSES
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiTipPostanovi: TMenuItem
+            Action = frmAdminZapobizhZahodi.aTipPostanovi
+          end
+          object mnZahodiAdmin_Zapobizh_ZahodiRozdilT23F18: TMenuItem
+            Action = frmAdminZapobizhZahodi.aRozdilT23F18
           end
         end
-        object mnZahodiFinansovi_SankciiTipProdukcii: TMenuItem
-          Action = frmFinansoviSankcii.aTipProdukcii
+        object mnZahodiViluchenny_Z_Realizacii: TMenuItem
+          Caption = #1042#1080#1083#1091#1095#1077#1085#1085#1103' '#1079' '#1088#1077#1072#1083#1110#1079#1072#1094#1110#1111
+          object mnZahodiViluchenny_Z_RealizaciiViluchennyZRealizacii: TMenuItem
+            Action = aViluchennyZRealizacii
+          end
+          object mnVibir_Viluchenny_Choices: TMenuItem
+            Caption = '-'
+          end
+          object mnZahodiViluchenny_Z_RealizaciiNeVrucheni: TMenuItem
+            Action = frmViluchennyZRealizacii.aViluchennyNeVrucheni
+          end
+          object mnZahodiViluchenny_Z_RealizaciiOskarzheni: TMenuItem
+            Action = frmViluchennyZRealizacii.aViluchennyOskarzheni
+          end
+          object mnZahodiViluchenny_Z_RealizaciiNazvaObjektu: TMenuItem
+            Action = frmViluchennyZRealizacii.aViluchennyNazvaObjektu
+          end
+          object mnZahodiViluchenny_Z_RealizaciiAdresaObjektu: TMenuItem
+            Action = frmViluchennyZRealizacii.aViluchennyAdresaObjektu
+          end
+          object mnZahodiViluchenny_Z_RealizaciiTipPostanovi: TMenuItem
+            Action = frmViluchennyZRealizacii.aViluchennyTipPostanovi
+          end
+          object mnZahodiViluchenny_Z_RealizaciiPIBOsobiSES: TMenuItem
+            Action = frmViluchennyZRealizacii.aViluchennyPIB_SES
+          end
+          object mnZahodiViluchenny_Z_RealizaciiPosadaOsobiSES: TMenuItem
+            Action = frmViluchennyZRealizacii.aViluchennyPosadaSES
+          end
+          object mnZahodiViluchenny_Z_RealizaciiTipProdukcii: TMenuItem
+            Action = frmViluchennyZRealizacii.aViluchennyTipProdukcii
+          end
+          object mnZahodiViluchenny_Z_RealizaciilRozdilT23F18: TMenuItem
+            Action = frmViluchennyZRealizacii.aViluchennyT23F18
+          end
         end
-        object mnZahodiFinansovi_SankciiRozdilT23F18: TMenuItem
-          Action = frmFinansoviSankcii.aRozdilT23F18
+        object mnZahodiFinansovi_Sankcii: TMenuItem
+          Caption = #1060#1110#1085#1072#1085#1089#1086#1074#1110' '#1089#1072#1085#1082#1094#1110#1111
+          object mnZahodiFinansovi_SankciiFinansoviSankcii: TMenuItem
+            Action = aFinansoviSankcii
+          end
+          object N13: TMenuItem
+            Caption = '-'
+          end
+          object mnZahodiFinansovi_SankciiNeVrucheni: TMenuItem
+            Action = frmFinansoviSankcii.aNeVrucheni
+          end
+          object mnZahodiFinansovi_SankciiNeSplacheni: TMenuItem
+            Action = frmFinansoviSankcii.aNeSplacheni
+          end
+          object mnZahodiFinansovi_SankciiOskarzheni: TMenuItem
+            Action = frmFinansoviSankcii.aOskarzheni
+          end
+          object mnZahodiFinansovi_SankciiObjekt: TMenuItem
+            Caption = #1054#1073#39#1108#1082#1090
+            object mnZahodiFinansovi_SankciiObjektNazvaObjektu: TMenuItem
+              Action = frmFinansoviSankcii.aNazvaObjektu
+            end
+            object mnZahodiFinansovi_SankciiObjektAdresaObjektu: TMenuItem
+              Action = frmFinansoviSankcii.aAdresaObjektu
+            end
+          end
+          object mnZahodiFinansovi_SankciiSES: TMenuItem
+            Caption = #1057#1045#1057
+            object mnZahodiFinansovi_SankciiSESPIBPredstavnika: TMenuItem
+              Action = frmFinansoviSankcii.aPIB_SES
+            end
+            object mnZahodiFinansovi_SankciiSESPosadaPredstavnika: TMenuItem
+              Action = frmFinansoviSankcii.aPosada_SES
+            end
+          end
+          object mnZahodiFinansovi_SankciiTipProdukcii: TMenuItem
+            Action = frmFinansoviSankcii.aTipProdukcii
+          end
+          object mnZahodiFinansovi_SankciiRozdilT23F18: TMenuItem
+            Action = frmFinansoviSankcii.aRozdilT23F18
+          end
         end
-      end
-      object mnRishennyRVK: TMenuItem
-        Caption = #1056#1110#1096#1077#1085#1085#1103' '#1056#1042#1050
-        Enabled = False
-        Hint = #1055#1077#1088#1077#1083#1110#1082' '#1088#1110#1096#1077#1085#1100' '#1056#1042#1050
-        RadioItem = True
-        Visible = False
-      end
-      object mnVidstoronennyVidRoboti: TMenuItem
-        Caption = #1042#1110#1076#1089#1090#1086#1088#1086#1085#1077#1085#1085#1103' '#1074#1110#1076' '#1088#1086#1073#1086#1090#1080
-        Enabled = False
-        Hint = #1042#1110#1076#1086#1084#1086#1089#1090#1110' '#1087#1088#1086' '#1074#1110#1076#1089#1090#1086#1088#1086#1085#1077#1085#1085#1103' '#1087#1088#1072#1094#1110#1074#1085#1080#1082#1110#1074' '#1074#1110#1076' '#1088#1086#1073#1086#1090#1080
-        Visible = False
-      end
-      object mnPeredachaDoProkuraturi: TMenuItem
-        Caption = #1055#1077#1088#1077#1076#1072#1095#1072' '#1076#1086' '#1087#1088#1086#1082#1091#1088#1072#1090#1091#1088#1080
-        Enabled = False
-        Hint = #1042#1110#1076#1086#1084#1086#1089#1090#1110' '#1087#1088#1086' '#1087#1077#1088#1077#1076#1072#1095#1110' '#1089#1087#1088#1072#1074' '#1076#1086' '#1087#1088#1086#1082#1091#1088#1072#1090#1091#1088#1080
-        Visible = False
-      end
-      object mnPropozicii: TMenuItem
-        Caption = #1055#1088#1086#1087#1086#1079#1080#1094#1110#1111
-        Enabled = False
-        Hint = 
-          #1055#1077#1088#1077#1083#1110#1082' '#1088#1086#1079#1087#1086#1088#1103#1076#1078#1077#1085#1100' '#1097#1086#1076#1086' '#1087#1086#1082#1088#1072#1097#1077#1085#1085#1103' '#1077#1087#1110#1076#1077#1084#1110#1086#1083#1086#1075#1110#1095#1085#1086#1111' '#1089#1080#1090#1091#1072#1094#1110#1111' '#1085 +
-          #1072' '#1086#1073#39#1108#1082#1090#1110
-        Visible = False
+        object mnRishennyRVK: TMenuItem
+          Caption = #1056#1110#1096#1077#1085#1085#1103' '#1056#1042#1050
+          Enabled = False
+          Hint = #1055#1077#1088#1077#1083#1110#1082' '#1088#1110#1096#1077#1085#1100' '#1056#1042#1050
+          RadioItem = True
+          Visible = False
+        end
+        object mnVidstoronennyVidRoboti: TMenuItem
+          Caption = #1042#1110#1076#1089#1090#1086#1088#1086#1085#1077#1085#1085#1103' '#1074#1110#1076' '#1088#1086#1073#1086#1090#1080
+          Enabled = False
+          Hint = #1042#1110#1076#1086#1084#1086#1089#1090#1110' '#1087#1088#1086' '#1074#1110#1076#1089#1090#1086#1088#1086#1085#1077#1085#1085#1103' '#1087#1088#1072#1094#1110#1074#1085#1080#1082#1110#1074' '#1074#1110#1076' '#1088#1086#1073#1086#1090#1080
+          Visible = False
+        end
+        object mnPeredachaDoProkuraturi: TMenuItem
+          Caption = #1055#1077#1088#1077#1076#1072#1095#1072' '#1076#1086' '#1087#1088#1086#1082#1091#1088#1072#1090#1091#1088#1080
+          Enabled = False
+          Hint = #1042#1110#1076#1086#1084#1086#1089#1090#1110' '#1087#1088#1086' '#1087#1077#1088#1077#1076#1072#1095#1110' '#1089#1087#1088#1072#1074' '#1076#1086' '#1087#1088#1086#1082#1091#1088#1072#1090#1091#1088#1080
+          Visible = False
+        end
+        object mnPropozicii: TMenuItem
+          Caption = #1055#1088#1086#1087#1086#1079#1080#1094#1110#1111
+          Enabled = False
+          Hint = 
+            #1055#1077#1088#1077#1083#1110#1082' '#1088#1086#1079#1087#1086#1088#1103#1076#1078#1077#1085#1100' '#1097#1086#1076#1086' '#1087#1086#1082#1088#1072#1097#1077#1085#1085#1103' '#1077#1087#1110#1076#1077#1084#1110#1086#1083#1086#1075#1110#1095#1085#1086#1111' '#1089#1080#1090#1091#1072#1094#1110#1111' '#1085 +
+            #1072' '#1086#1073#39#1108#1082#1090#1110
+          Visible = False
+        end
       end
       object N18: TMenuItem
         Caption = '-'
@@ -291,28 +294,6 @@ object frmMain: TfrmMain
     object mnDovidniki: TMenuItem
       Caption = #1044#1086#1074#1110#1076#1085#1080#1082#1080
       Hint = #1044#1086#1074#1110#1076#1085#1080#1082#1080' '#1076#1083#1103' '#1088#1086#1073#1086#1090#1080' '#1087#1088#1086#1075#1088#1072#1084#1080
-      object mnDovidnikiTeritory: TMenuItem
-        Caption = #1058#1077#1088#1080#1090#1086#1088#1110#1103
-        Hint = #1044#1086#1074#1110#1076#1085#1080#1082#1080' '#1076#1083#1103' '#1074#1080#1079#1085#1072#1095#1077#1085#1085#1103' '#1090#1077#1088#1080#1090#1086#1088#1110#1111' '#1086#1073#1089#1083#1091#1075#1086#1074#1091#1074#1072#1085#1085#1103' '#1057#1045#1057
-        object mnDovidnikiTeritoryMinistry: TMenuItem
-          Action = aMinistry
-        end
-        object mnDovidnikiTeritoryTeritory: TMenuItem
-          Action = aTeritory
-        end
-        object mnDovidnikiTeritoryRajoni: TMenuItem
-          Action = aDistrict
-        end
-      end
-      object mnDovidnikiPidkontrolniObjekti: TMenuItem
-        Caption = #1055#1110#1076#1082#1086#1085#1090#1088#1086#1083#1100#1085#1110' '#1086#1073#39#1108#1082#1090#1080
-        object mnDovidnikiPidkontrolniObjektiVidomchaPidporydkovanist: TMenuItem
-          Action = aVidomchaPidporydkovanist
-        end
-        object mnDovidnikiPidkontrolniObjektiObjekti: TMenuItem
-          Action = aObjekti
-        end
-      end
       object mnDovidnikiOrganizaciy: TMenuItem
         Caption = #1054#1088#1075#1072#1085#1110#1079#1072#1094#1110#1103
         Hint = #1044#1086#1074#1110#1076#1085#1080#1082#1080' '#1076#1083#1103' '#1085#1072#1083#1072#1096#1090#1091#1074#1072#1085#1085#1103' '#1088#1086#1073#1086#1090#1080' '#1086#1088#1075#1072#1085#1110#1079#1072#1094#1110#1111
@@ -321,150 +302,179 @@ object frmMain: TfrmMain
         end
         object mnDovidnikiOrganizaciyPosadi: TMenuItem
           Action = aPosadi
+          Enabled = False
         end
         object mnDovidnikiOrganizaciySpivrobitniki: TMenuItem
           Action = aSpivrobitniki
+          Enabled = False
         end
       end
-      object mnDovidnikiNormativnaBaza: TMenuItem
-        Caption = #1053#1086#1088#1084#1072#1090#1080#1074#1085#1072' '#1073#1072#1079#1072
-        Hint = 
-          #1044#1086#1074#1110#1076#1085#1080#1082' '#1085#1086#1088#1084#1072#1090#1080#1074#1085#1086#1111' '#1073#1072#1079#1080', '#1097#1086' '#1088#1077#1075#1091#1083#1102#1108' '#1088#1086#1073#1086#1090#1091' '#1089#1072#1085#1110#1090#1072#1088#1085#1086'-'#1077#1087#1110#1076#1077#1084#1110#1086#1083 +
-          #1086#1075#1110#1095#1085#1086#1111' '#1089#1083#1091#1078#1073#1080
-        object mnDovidnikiNormativnaBazaStatti: TMenuItem
-          Action = aStatti
+      object N10: TMenuItem
+        Caption = '-'
+      end
+      object old1: TMenuItem
+        Caption = 'old'
+        object mnDovidnikiTeritory: TMenuItem
+          Caption = #1058#1077#1088#1080#1090#1086#1088#1110#1103
+          Hint = #1044#1086#1074#1110#1076#1085#1080#1082#1080' '#1076#1083#1103' '#1074#1080#1079#1085#1072#1095#1077#1085#1085#1103' '#1090#1077#1088#1080#1090#1086#1088#1110#1111' '#1086#1073#1089#1083#1091#1075#1086#1074#1091#1074#1072#1085#1085#1103' '#1057#1045#1057
+          object mnDovidnikiTeritoryMinistry: TMenuItem
+            Action = aMinistry
+          end
+          object mnDovidnikiTeritoryTeritory: TMenuItem
+            Action = aTeritory
+          end
+          object mnDovidnikiTeritoryRajoni: TMenuItem
+            Action = aDistrict
+          end
         end
-        object mnDovidnikiNormativnaBazaNormativniAkti: TMenuItem
-          Action = aNormativniAkti
+        object mnDovidnikiPidkontrolniObjekti: TMenuItem
+          Caption = #1055#1110#1076#1082#1086#1085#1090#1088#1086#1083#1100#1085#1110' '#1086#1073#39#1108#1082#1090#1080
+          object mnDovidnikiPidkontrolniObjektiVidomchaPidporydkovanist: TMenuItem
+            Action = aVidomchaPidporydkovanist
+          end
+          object mnDovidnikiPidkontrolniObjektiObjekti: TMenuItem
+            Action = aObjekti
+          end
         end
-      end
-      object mnDovidnikiDatas: TMenuItem
-        Caption = #1044#1072#1085#1085#1110
-        object mnDovidnikiDatasDataTables: TMenuItem
-          Action = aDataTables
+        object mnDovidnikiNormativnaBaza: TMenuItem
+          Caption = #1053#1086#1088#1084#1072#1090#1080#1074#1085#1072' '#1073#1072#1079#1072
+          Hint = 
+            #1044#1086#1074#1110#1076#1085#1080#1082' '#1085#1086#1088#1084#1072#1090#1080#1074#1085#1086#1111' '#1073#1072#1079#1080', '#1097#1086' '#1088#1077#1075#1091#1083#1102#1108' '#1088#1086#1073#1086#1090#1091' '#1089#1072#1085#1110#1090#1072#1088#1085#1086'-'#1077#1087#1110#1076#1077#1084#1110#1086#1083 +
+            #1086#1075#1110#1095#1085#1086#1111' '#1089#1083#1091#1078#1073#1080
+          object mnDovidnikiNormativnaBazaStatti: TMenuItem
+            Action = aStatti
+          end
+          object mnDovidnikiNormativnaBazaNormativniAkti: TMenuItem
+            Action = aNormativniAkti
+          end
         end
-        object mnDovidnikiDatasDataTypes: TMenuItem
-          Action = aDataTypes
+        object mnDovidnikiDatas: TMenuItem
+          Caption = #1044#1072#1085#1085#1110
+          object mnDovidnikiDatasDataTables: TMenuItem
+            Action = aDataTables
+          end
+          object mnDovidnikiDatasDataTypes: TMenuItem
+            Action = aDataTypes
+          end
         end
-      end
-      object mnDovidnikiSumiShtrafu: TMenuItem
-        Action = aSumiShtrafu
-      end
-      object mnDovidnikiViznatiVinnim: TMenuItem
-        Action = aViznatiVinnim
-      end
-      object mnDovidnikiRozdil_T23_F18: TMenuItem
-        Action = aRozdil_t23_f18
-      end
-      object mnDovidnikiTipShtrafu: TMenuItem
-        Action = aTipShtrafu
-      end
-      object mnDovidnikiLaboratorniDoslidzhenny: TMenuItem
-        Action = aLaboratorniDoslidzhenny
-      end
-      object mnDovidnikiKudiOskarzheno: TMenuItem
-        Action = aKudiOskarzheno
-      end
-      object mnDovidnikiRezultatOskargenny: TMenuItem
-        Action = aOskarzhenny
-      end
-      object mnDovidnikiNapravlenny: TMenuItem
-        Action = aNapravlenny
-      end
-      object mnDovidnikiVidPostanovi: TMenuItem
-        Action = aVidPostanovi
-      end
-      object mnDovidnikiSutPostanovi: TMenuItem
-        Action = aVidObmezhen
-      end
-      object mnDovidnikiUmoviVidnovlenny: TMenuItem
-        Action = aUmoviVidnovlenny
-      end
-      object mnDovidnikiOrganizacii: TMenuItem
-        Action = aOrganizacii
-      end
-      object mnDovidnikiTipiProdukcii: TMenuItem
-        Action = aTipProdukcii
-      end
-      object mnDovidnikiVirobniki: TMenuItem
-        Action = aVirobniki
-      end
-      object mnDovidnikiOdiniciVimiru: TMenuItem
-        Caption = #1054#1076#1080#1085#1080#1094#1110' '#1074#1080#1084#1110#1088#1091
-        Hint = #1055#1077#1088#1077#1083#1110#1082' '#1086#1076#1080#1085#1080#1094#1100' '#1074#1080#1084#1110#1088#1091', '#1111#1093' '#1084#1085#1086#1078#1085#1080#1082#1080' '#1090#1072' '#1085#1072#1083#1072#1096#1090#1091#1074#1072#1085#1085#1103
-        OnClick = mnDovidnikiOdiniciVimiruClick
-      end
-      object mnDovidnikiRivniSES: TMenuItem
-        Action = aRivniSES
-      end
-      object mnDovidnikiRozdiliInicializacii: TMenuItem
-        Action = aRozdiliInicializacii
-        Visible = False
+        object mnDovidnikiSumiShtrafu: TMenuItem
+          Action = aSumiShtrafu
+        end
+        object mnDovidnikiViznatiVinnim: TMenuItem
+          Action = aViznatiVinnim
+        end
+        object mnDovidnikiRozdil_T23_F18: TMenuItem
+          Action = aRozdil_t23_f18
+        end
+        object mnDovidnikiTipShtrafu: TMenuItem
+          Action = aTipShtrafu
+        end
+        object mnDovidnikiLaboratorniDoslidzhenny: TMenuItem
+          Action = aLaboratorniDoslidzhenny
+        end
+        object mnDovidnikiKudiOskarzheno: TMenuItem
+          Action = aKudiOskarzheno
+        end
+        object mnDovidnikiRezultatOskargenny: TMenuItem
+          Action = aOskarzhenny
+        end
+        object mnDovidnikiNapravlenny: TMenuItem
+          Action = aNapravlenny
+        end
+        object mnDovidnikiVidPostanovi: TMenuItem
+          Action = aVidPostanovi
+        end
+        object mnDovidnikiSutPostanovi: TMenuItem
+          Action = aVidObmezhen
+        end
+        object mnDovidnikiUmoviVidnovlenny: TMenuItem
+          Action = aUmoviVidnovlenny
+        end
+        object mnDovidnikiOrganizacii: TMenuItem
+          Action = aOrganizacii
+        end
+        object mnDovidnikiTipiProdukcii: TMenuItem
+          Action = aTipProdukcii
+        end
+        object mnDovidnikiVirobniki: TMenuItem
+          Action = aVirobniki
+        end
+        object mnDovidnikiOdiniciVimiru: TMenuItem
+          Caption = #1054#1076#1080#1085#1080#1094#1110' '#1074#1080#1084#1110#1088#1091
+          Hint = #1055#1077#1088#1077#1083#1110#1082' '#1086#1076#1080#1085#1080#1094#1100' '#1074#1080#1084#1110#1088#1091', '#1111#1093' '#1084#1085#1086#1078#1085#1080#1082#1080' '#1090#1072' '#1085#1072#1083#1072#1096#1090#1091#1074#1072#1085#1085#1103
+          OnClick = mnDovidnikiOdiniciVimiruClick
+        end
+        object mnDovidnikiRivniSES: TMenuItem
+          Action = aRivniSES
+        end
+        object mnDovidnikiRozdiliInicializacii: TMenuItem
+          Action = aRozdiliInicializacii
+          Visible = False
+        end
+        object N2: TMenuItem
+          Action = aAdminZahodi
+        end
       end
     end
     object mnZvit: TMenuItem
       Caption = #1047#1074#1110#1090
       Hint = #1047#1074#1110#1090#1080', '#1097#1086' '#1092#1086#1088#1084#1091#1102#1090#1100#1089#1103' '#1087#1088#1086#1075#1088#1072#1084#1086#1102
-      object mnZvitSchomisychnij: TMenuItem
-        Action = aZvitSchomisychnij
-      end
-      object mnZvitT23F18: TMenuItem
-        Action = aZvitT23F18
-      end
-      object N5: TMenuItem
+      object N11: TMenuItem
         Caption = '-'
       end
-      object mnZvitZvyzki: TMenuItem
-        Caption = #1047#1074#1103#1079#1082#1080
-        object mnZvitZvyzkiZSchomisychnim: TMenuItem
-          Action = aNalashtuvanny_ZvyazokZSchomicyachnim
+      object old3: TMenuItem
+        Caption = 'old'
+        object mnZvitSchomisychnij: TMenuItem
+          Action = aZvitSchomisychnij
         end
-        object mnZvitZvyzkiZSchokvartalnim: TMenuItem
-          Action = aZvitSchokvartalnij
+        object mnZvitT23F18: TMenuItem
+          Action = aZvitT23F18
         end
-        object mnZvitZvyzkiZRezultatamiOskarzhenny: TMenuItem
-          Action = aNalashtuvanny_ZvyazokZRezultatamiOskarzhenny
+        object N5: TMenuItem
+          Caption = '-'
         end
-      end
-      object mnZvitReports: TMenuItem
-        Action = aReports
-        Visible = False
+        object mnZvitZvyzki: TMenuItem
+          Caption = #1047#1074#1103#1079#1082#1080
+          object mnZvitZvyzkiZSchomisychnim: TMenuItem
+            Action = aNalashtuvanny_ZvyazokZSchomicyachnim
+          end
+          object mnZvitZvyzkiZSchokvartalnim: TMenuItem
+            Action = aZvitSchokvartalnij
+          end
+          object mnZvitZvyzkiZRezultatamiOskarzhenny: TMenuItem
+            Action = aNalashtuvanny_ZvyazokZRezultatamiOskarzhenny
+          end
+        end
+        object mnZvitReports: TMenuItem
+          Action = aReports
+          Visible = False
+        end
       end
     end
     object mnNalashtuvanny: TMenuItem
       Caption = #1053#1072#1083#1072#1096#1090#1091#1074#1072#1085#1085#1103
       Hint = #1053#1072#1083#1072#1096#1090#1091#1074#1072#1085#1085#1103' '#1087#1088#1086#1075#1088#1072#1084#1080
-      object mnNalashtuvannyOrganizaciy: TMenuItem
-        Action = aOrganizaciya
-      end
-      object mnNalashtuvannyNalashtuvannySistemi: TMenuItem
-        Action = aNalashtuvannySistemy
-      end
-      object N7: TMenuItem
+      object N12: TMenuItem
         Caption = '-'
       end
-      object mnNalashtuvannyVidPostanovi: TMenuItem
-        Action = aNalashtuvannyViduPostanovi
+      object old4: TMenuItem
+        Caption = 'old'
+        object mnNalashtuvannyOrganizaciy: TMenuItem
+          Action = aOrganizaciya
+        end
+        object mnNalashtuvannyNalashtuvannySistemi: TMenuItem
+          Action = aNalashtuvannySistemy
+        end
+        object N7: TMenuItem
+          Caption = '-'
+        end
+        object mnNalashtuvannyVidPostanovi: TMenuItem
+          Action = aNalashtuvannyViduPostanovi
+        end
       end
     end
     object mnAdministruvanny: TMenuItem
       Caption = #1040#1076#1084#1110#1085#1110#1089#1090#1088#1091#1074#1072#1085#1085#1103
-      object mnAdministruvannyArchiving: TMenuItem
-        Action = aArchiving
-        Visible = False
-      end
-      object mnAdministruvannyRestore: TMenuItem
-        Action = aRestore
-        Visible = False
-      end
-      object mnAdministruvannyCleaning: TMenuItem
-        Action = aCleaning
-        Visible = False
-      end
-      object N3: TMenuItem
-        Caption = '-'
-        Visible = False
-      end
       object mnNalashtuvannyKoristuvachi: TMenuItem
         Caption = #1050#1086#1088#1080#1089#1090#1091#1074#1072#1095#1110
         Hint = #1056#1086#1073#1086#1090#1072' '#1079' '#1082#1086#1088#1080#1089#1090#1091#1074#1072#1095#1072#1084#1080' '#1110' '#1087#1088#1072#1074#1072#1084#1080' '#1076#1086#1089#1090#1091#1087#1091' '#1076#1086' '#1074#1110#1076#1086#1084#1086#1089#1090#1077#1081
@@ -525,25 +535,43 @@ object frmMain: TfrmMain
           Visible = False
         end
       end
-      object N6: TMenuItem
+      object N14: TMenuItem
         Caption = '-'
-        Visible = False
       end
-      object mnAdministruvannyImport: TMenuItem
-        Action = aImport
-        Visible = False
-      end
-      object mnAdministruvannyExport: TMenuItem
-        Action = aExport
-        Visible = False
-      end
-      object N8: TMenuItem
-        Caption = '-'
-        Visible = False
-      end
-      object mnAdministruvannyProtokol: TMenuItem
-        Action = aProtokol
-        Visible = False
+      object old5: TMenuItem
+        Caption = 'old'
+        object mnAdministruvannyArchiving: TMenuItem
+          Action = aArchiving
+          Visible = False
+        end
+        object mnAdministruvannyRestore: TMenuItem
+          Action = aRestore
+          Visible = False
+        end
+        object mnAdministruvannyCleaning: TMenuItem
+          Action = aCleaning
+          Visible = False
+        end
+        object N3: TMenuItem
+          Caption = '-'
+          Visible = False
+        end
+        object mnAdministruvannyImport: TMenuItem
+          Action = aImport
+          Visible = False
+        end
+        object mnAdministruvannyExport: TMenuItem
+          Action = aExport
+          Visible = False
+        end
+        object N6: TMenuItem
+          Caption = '-'
+          Visible = False
+        end
+        object mnAdministruvannyProtokol: TMenuItem
+          Action = aProtokol
+          Visible = False
+        end
       end
     end
     object mnVikna: TMenuItem

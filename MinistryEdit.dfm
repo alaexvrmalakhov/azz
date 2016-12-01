@@ -33,6 +33,7 @@ object frmMinistryEdit: TfrmMinistryEdit
     Top = 16
     Width = 121
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 0
     Text = 'edtKod'
   end
@@ -49,6 +50,7 @@ object frmMinistryEdit: TfrmMinistryEdit
     Top = 52
     Width = 413
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 2
     Text = 'edtMinistry'
   end

@@ -150,6 +150,7 @@ begin
       exit;
     end;
 
+{
     if frmMain.IsFormOpen('frmViddilennyEdit') then
     begin
       frmViddilennyEdit.cbMinistry.Text:=frmMinistryEdit.edtMinistry.Text;
@@ -158,6 +159,7 @@ begin
       frmViddilennyEdit.aMinistryChangeExecute(sender);
       exit;
     end;
+}
 
     if frmMain.IsFormOpen('frmRajoniEdit') then
     begin
