@@ -3,7 +3,8 @@ unit LogOn;
 interface
 
 uses
-  Forms, Classes, ActnList, StdCtrls, Controls, SysUtils;
+  Forms, Classes, ActnList, StdCtrls, Controls, SysUtils, Dialogs, DB,
+  IBCustomDataSet, IBQuery;
 
 type
   TfrmLogOn = class(TForm)
@@ -18,10 +19,18 @@ type
     alLogOn: TActionList;
     aCancel: TAction;
     aOK: TAction;
+    qUser: TIBQuery;
+    dsUser: TDataSource;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure aOKExecute(Sender: TObject);
     procedure aCancelExecute(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   end;
+
+const
+  clWindow=$FFFFFF;
+  clError=$008080FF;
+  clCorrect=$0080FF80;
 
 var
   frmLogOn: TfrmLogOn;
@@ -40,32 +49,129 @@ begin
 end;
 
 procedure TfrmLogOn.aOKExecute(Sender: TObject);
+var
+  MandatoryFields: boolean;
 begin
-  if (frmLogOn.edtUser_Name.Text='')or(frmLogOn.edtPassword.Text='') then
+  MandatoryFields:=false;
+  with frmLogOn do
   begin
-    frmLogOn.edtUser_Name.Text:='';
-    frmLogOn.edtPassword.Text:='';
-    frmLogOn.edtUser_Name.SetFocus;
-    exit;
+    edtServer.Color:=clWindow;
+    edtUser_Name.Color:=clWindow;
+    edtPassword.Color:=clWindow;
+
+    if edtPassword.Text='' then
+    begin
+      MandatoryFields:=true;
+      edtPassword.Text:='';
+      edtPassword.Color:=clError;
+    end
+    else
+      edtPassword.Color:=clCorrect;
+    if edtUser_Name.Text='' then
+    begin
+      MandatoryFields:=true;
+      edtUser_Name.Text:='';
+      edtUser_Name.Color:=clError;
+    end
+    else
+      edtUser_Name.Color:=clCorrect;
+    if edtServer.Text='' then
+    begin
+      MandatoryFields:=true;
+      edtServer.Text:='';
+      edtServer.Color:=clError;
+    end
+    else
+      edtServer.Color:=clCorrect;
+    if MandatoryFields then
+    begin
+      edtServer.SetFocus;
+      ShowMessage('Заповніть обов"язкові поля!');
+      Exit;
+    end;
   end;
+
   if frmMain.IsFormOpen('frmNalashnuvannySistemi') then
   begin
     frmNalashnuvannySistemi.Enabled:=True;
     frmNalashnuvannySistemi.Close;
   end;
+  try
+    frmMain.dbAzz.DatabaseName:=frmLogOn.edtServer.Text;
+    frmMain.dbAzz.Connected:=true;
+    frmMain.trAzz.Active:=true;
+  except
+    frmLogOn.edtServer.Color:=clError;
+    ShowMessage('Не вірний щлях до сервера ДБ.'+#13+'Зверніться до адміністратора для корректного налаштування!');
+    Exit;
+  end;
+
   frmMain.dbAzz.DatabaseName:=frmLogOn.edtServer.Text;
   frmMain.dbAzz.Connected:=true;
   frmMain.trAzz.Active:=true;
-  frmMain.StatusBar.Panels[1].Text:=TimeToStr(Time);
-  frmMain.StatusBar.Panels[2].Text:=DateToStr(Date);
-  frmMain.StatusBar.Panels[3].Text:=frmLogOn.edtUser_Name.Text;
-  frmLogOn.Close;
+  with frmLogOn do
+  begin
+    with qUser do
+    begin
+      SQL.Clear;
+      SQL.Text:='select * from USERS where LOGIN=:login and PASSWD=:pass';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='login';
+      Params[0].Value:=frmLogOn.edtUser_Name.Text;
+      Params.Add;
+      Params[1].Name:='pass';
+      Params[1].Value:=frmLogOn.edtPassword.Text;
+      Open;
+    end;
+    if qUser.RecordCount>0 then
+    begin
+      if (qUser.FieldByName('LOGIN').AsString=frmLogOn.edtUser_Name.Text)and(qUser.FieldByName('PASSWD').AsString=frmLogOn.edtPassword.Text) then
+      begin
+        frmMain.StatusBar.Panels[1].Text:=TimeToStr(Time);
+        frmMain.StatusBar.Panels[2].Text:=DateToStr(Date);
+        frmMain.StatusBar.Panels[3].Text:=frmLogOn.edtUser_Name.Text;
+        frmLogOn.Close;
+        Exit;
+      end
+      else
+      begin
+        edtPassword.Text:='';
+        edtPassword.Color:=clError;
+        edtUser_Name.Text:='';
+        edtUser_Name.Color:=clError;
+        edtUser_Name.SetFocus;
+        ShowMessage('Користувача не знайдено!');
+        Exit;
+      end;
+    end
+    else
+    begin
+      edtPassword.Text:='';
+      edtPassword.Color:=clError;
+      edtUser_Name.Text:='';
+      edtUser_Name.Color:=clError;
+      edtUser_Name.SetFocus;
+      ShowMessage('Користувача не знайдено!');
+      Exit;
+    end;
+  end;
 end;
 
 procedure TfrmLogOn.aCancelExecute(Sender: TObject);
 begin
   frmLogOn.Close;
   frmMain.Close;
+end;
+
+procedure TfrmLogOn.FormActivate(Sender: TObject);
+begin
+  with frmLogOn do
+  begin
+    edtServer.Color:=clWindow;
+    edtUser_Name.Color:=clWindow;
+    edtPassword.Color:=clWindow;
+  end;
 end;
 
 end.

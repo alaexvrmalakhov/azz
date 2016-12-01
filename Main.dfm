@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 1474
+  Left = 1403
   Top = 114
-  Width = 445
+  Width = 516
   Height = 167
   Caption = 'frmMain'
   Color = clBtnFace
@@ -23,7 +23,7 @@ object frmMain: TfrmMain
   object StatusBar: TStatusBar
     Left = 0
     Top = 90
-    Width = 429
+    Width = 500
     Height = 19
     Panels = <
       item
@@ -42,19 +42,19 @@ object frmMain: TfrmMain
   object cbMain: TCoolBar
     Left = 0
     Top = 0
-    Width = 429
+    Width = 500
     Height = 45
     Bands = <
       item
         Control = DBNavigator1
         ImageIndex = -1
-        Width = 423
+        Width = 494
       end>
     Images = ilMain
     object DBNavigator1: TDBNavigator
       Left = 11
       Top = 0
-      Width = 412
+      Width = 484
       Height = 25
       VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
       Hints.Strings = (
@@ -446,26 +446,47 @@ object frmMain: TfrmMain
       object mnNalashtuvannyVidPostanovi: TMenuItem
         Action = aNalashtuvannyViduPostanovi
       end
-      object N2: TMenuItem
+    end
+    object mnAdministruvanny: TMenuItem
+      Caption = #1040#1076#1084#1110#1085#1110#1089#1090#1088#1091#1074#1072#1085#1085#1103
+      object mnAdministruvannyArchiving: TMenuItem
+        Action = aArchiving
+        Visible = False
+      end
+      object mnAdministruvannyRestore: TMenuItem
+        Action = aRestore
+        Visible = False
+      end
+      object mnAdministruvannyCleaning: TMenuItem
+        Action = aCleaning
+        Visible = False
+      end
+      object N3: TMenuItem
         Caption = '-'
+        Visible = False
       end
       object mnNalashtuvannyKoristuvachi: TMenuItem
         Caption = #1050#1086#1088#1080#1089#1090#1091#1074#1072#1095#1110
         Hint = #1056#1086#1073#1086#1090#1072' '#1079' '#1082#1086#1088#1080#1089#1090#1091#1074#1072#1095#1072#1084#1080' '#1110' '#1087#1088#1072#1074#1072#1084#1080' '#1076#1086#1089#1090#1091#1087#1091' '#1076#1086' '#1074#1110#1076#1086#1084#1086#1089#1090#1077#1081
         object mnNalashtuvannyKoristuvachiGlobalUsers: TMenuItem
           Action = aNalashtuvannyGlobalUsers
+          Visible = False
         end
         object N4: TMenuItem
           Caption = '-'
+          Visible = False
         end
         object mnNalashtuvannyKoristuvachiFunkciiDostupu: TMenuItem
           Caption = #1060#1091#1085#1082#1094#1110#1111' '#1076#1086#1089#1090#1091#1087#1091
           Hint = #1055#1077#1088#1077#1083#1110#1082' '#1087#1088#1072#1074' '#1076#1086#1089#1090#1091#1087#1091' '#1076#1086' '#1077#1083#1077#1084#1077#1085#1090#1110#1074' '#1082#1077#1088#1091#1074#1072#1085#1085#1103
+          Visible = False
           object mnNalashtuvannyKoristuvachiFunkciiDostupuVikna: TMenuItem
             Action = aNalashtuvanny_Vikna
+            Visible = False
           end
           object mnNalashtuvannyKoristuvachiFunkciiDostupuElementiVikon: TMenuItem
             Action = aNalashtuvanny_ElementiVikon
+            Visible = False
           end
           object N17: TMenuItem
             Caption = '-'
@@ -480,50 +501,49 @@ object frmMain: TfrmMain
         end
         object N1: TMenuItem
           Caption = '-'
+          Visible = False
         end
         object mnNalashtuvannyKoristuvachiGrupi: TMenuItem
           Action = aNalashtuvannyGroups
+          Visible = False
         end
         object mnNalashtuvannyKoristuvachiKoristuvachi: TMenuItem
           Action = aNalashtuvannyKoristuvachi
+          Hint = #1055#1077#1088#1077#1083#1110#1082' '#1082#1086#1088#1080#1089#1090#1091#1074#1072#1095#1110#1074' '#1089#1080#1089#1090#1077#1084#1080' '#1082#1077#1088#1091#1074#1072#1085#1085#1103' '#1087#1088#1072#1074#1072#1084#1080' '#1082#1086#1088#1080#1089#1090#1091#1074#1072#1095#1110#1074
         end
         object mnNalashtuvannyKoristuvachiPravaKoristuvachiv: TMenuItem
           Action = aNalashtuvanny_PravaKoristuvachiv
+          Visible = False
         end
-      end
-    end
-    object mnAdministruvanny: TMenuItem
-      Caption = #1040#1076#1084#1110#1085#1110#1089#1090#1088#1091#1074#1072#1085#1085#1103
-      Visible = False
-      object mnAdministruvannyArchiving: TMenuItem
-        Action = aArchiving
-      end
-      object mnAdministruvannyRestore: TMenuItem
-        Action = aRestore
-      end
-      object mnAdministruvannyCleaning: TMenuItem
-        Action = aCleaning
-      end
-      object N3: TMenuItem
-        Caption = '-'
-      end
-      object mnAdministruvannyUsers: TMenuItem
-        Action = aUsers
+        object N9: TMenuItem
+          Caption = '-'
+          Visible = False
+        end
+        object mnAdministruvannyUsers: TMenuItem
+          Action = aUsers
+          Caption = #1055#1110#1076#1082#1083#1102#1095#1077#1085#1110' '#1082#1086#1088#1080#1089#1090#1091#1074#1072#1095#1110
+          Visible = False
+        end
       end
       object N6: TMenuItem
         Caption = '-'
+        Visible = False
       end
       object mnAdministruvannyImport: TMenuItem
         Action = aImport
+        Visible = False
       end
       object mnAdministruvannyExport: TMenuItem
         Action = aExport
+        Visible = False
       end
       object N8: TMenuItem
         Caption = '-'
+        Visible = False
       end
       object mnAdministruvannyProtokol: TMenuItem
         Action = aProtokol
+        Visible = False
       end
     end
     object mnVikna: TMenuItem

@@ -1,6 +1,6 @@
 object frmAdminZapobizhZahodi: TfrmAdminZapobizhZahodi
-  Left = 189
-  Top = 107
+  Left = 791
+  Top = 254
   Width = 636
   Height = 306
   Caption = 'frmAdminZapobizhZahodi'
@@ -20,11 +20,12 @@ object frmAdminZapobizhZahodi: TfrmAdminZapobizhZahodi
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 162
-    Width = 628
+    Top = 158
+    Width = 620
     Height = 110
     Align = alBottom
     AutoSize = True
+    ParentBackground = True
     TabOrder = 0
     object Label1: TLabel
       Left = 4
@@ -54,6 +55,7 @@ object frmAdminZapobizhZahodi: TfrmAdminZapobizhZahodi
       Top = 87
       Width = 121
       Height = 21
+      ImeName = 'Russian'
       TabOrder = 17
       Text = '2000'
     end
@@ -68,7 +70,6 @@ object frmAdminZapobizhZahodi: TfrmAdminZapobizhZahodi
       Position = 2000
       TabOrder = 18
       Thousands = False
-      Wrap = False
     end
     object btnYear: TButton
       Left = 164
@@ -226,16 +227,18 @@ object frmAdminZapobizhZahodi: TfrmAdminZapobizhZahodi
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 628
+    Width = 620
     Height = 23
     Align = alTop
     AutoSize = True
+    ParentBackground = True
     TabOrder = 1
     object cbMinistry: TComboBox
       Left = 4
       Top = 1
       Width = 73
       Height = 21
+      ImeName = 'Russian'
       ItemHeight = 13
       TabOrder = 0
       Text = 'cbMinistry'
@@ -246,6 +249,7 @@ object frmAdminZapobizhZahodi: TfrmAdminZapobizhZahodi
       Top = 1
       Width = 77
       Height = 21
+      ImeName = 'Russian'
       ItemHeight = 13
       TabOrder = 1
       Text = 'cbTeritory'
@@ -256,6 +260,7 @@ object frmAdminZapobizhZahodi: TfrmAdminZapobizhZahodi
       Top = 1
       Width = 73
       Height = 21
+      ImeName = 'Russian'
       ItemHeight = 13
       TabOrder = 2
       Text = 'cbDistrict'
@@ -276,6 +281,7 @@ object frmAdminZapobizhZahodi: TfrmAdminZapobizhZahodi
     Width = 320
     Height = 120
     DataSource = dsAdminZapobizhZahidi
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 2
     TitleFont.Charset = DEFAULT_CHARSET
@@ -392,6 +398,7 @@ object frmAdminZapobizhZahodi: TfrmAdminZapobizhZahodi
     Top = 72
     Width = 49
     Height = 25
+    ImeName = 'Russian'
     Lines.Strings = (
       'memKom'
       'uNapravl'
@@ -632,8 +639,6 @@ object frmAdminZapobizhZahodi: TfrmAdminZapobizhZahodi
   object qTeritory: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 560
     Top = 28
   end
@@ -782,8 +787,6 @@ object frmAdminZapobizhZahodi: TfrmAdminZapobizhZahodi
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
     AfterScroll = qAdminZapobizhZahidiAfterScroll
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 484
     Top = 28
   end

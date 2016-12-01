@@ -58,7 +58,6 @@ type
     mnZvitZvyzkiZSchokvartalnim: TMenuItem;
     mnZvitZvyzkiZRezultatamiOskarzhenny: TMenuItem;
     mnDovidnikiTipShtrafu: TMenuItem;
-    N2: TMenuItem;
     mnZahodiAdmin_Zapobizh_ZahodiAdminZapobizhZahodi: TMenuItem;
     mnDovidnikiVidPostanovi: TMenuItem;
     mnNalashtuvannyVidPostanovi: TMenuItem;
@@ -250,6 +249,7 @@ type
     aRozdiliInicializacii: TAction;
     mnDovidnikiRozdiliInicializacii: TMenuItem;
     sWordApp: TWordApplication;
+    N9: TMenuItem;
     procedure ReadInit;
     procedure SaveInit;
     function IsFormOpen(const FormName : string): Boolean;
@@ -469,7 +469,7 @@ begin
     frmLogOn.edtUser_Name.SetFocus;
   end;
   frmMain.cbMain.AutoSize:=true;
-  ShowMessage('доделать проверку пользователя и пароля');
+//  ShowMessage('доделать проверку пользователя и пароля');
 
   if frmMain.IsFormOpen('frmFinansoviSankcii') then
   begin
