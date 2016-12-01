@@ -302,7 +302,6 @@ object frmMain: TfrmMain
         end
         object mnDovidnikiOrganizaciyPosadi: TMenuItem
           Action = aPosadi
-          Enabled = False
         end
         object mnDovidnikiOrganizaciySpivrobitniki: TMenuItem
           Action = aSpivrobitniki

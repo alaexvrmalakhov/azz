@@ -153,6 +153,7 @@ var
 begin
   if frmRajoniEdit.Caption='Вибрати район' then
   begin
+{
     if frmMain.IsFormOpen('frmPosadiEdit') then
     begin
       frmPosadiEdit.cbRajon.Text:=frmRajoniEdit.edtRajon.Text;
@@ -160,6 +161,7 @@ begin
       frmRajoni.Close;
       exit;
     end;
+}
 {
     if frmMain.IsFormOpen('frmViddilennyEdit') then
     begin

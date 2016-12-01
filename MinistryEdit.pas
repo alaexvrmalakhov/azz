@@ -141,6 +141,7 @@ procedure TfrmMinistryEdit.aOKExecute(Sender: TObject);
 begin
   if frmMinistryEdit.Caption='Вибрати міністерство' then
   begin
+{
     if frmMain.IsFormOpen('frmPosadiEdit') then
     begin
       frmPosadiEdit.cbMinistry.Text:=frmMinistryEdit.edtMinistry.Text;
@@ -149,7 +150,7 @@ begin
       frmPosadiEdit.aMinistryChangeExecute(sender);
       exit;
     end;
-
+}
 {
     if frmMain.IsFormOpen('frmViddilennyEdit') then
     begin

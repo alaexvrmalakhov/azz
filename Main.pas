@@ -1042,7 +1042,6 @@ begin
   frmPosadi.FormStyle:=fsMDIChild;
   frmPosadi.DBGrid1.Align:=alClient;
   frmPosadi.aChoice.Enabled:=false;
-  frmPosadi.aTeritoryUpdateExecute(sender);
   frmPosadi.aUpdateExecute(sender);
 end;
 

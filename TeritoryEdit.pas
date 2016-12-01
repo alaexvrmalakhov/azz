@@ -160,6 +160,7 @@ var
 begin
   if frmTeritoryEdit.Caption='Вибрати територію' then
   begin
+{
     if frmMain.IsFormOpen('frmPosadiEdit') then
     begin
       frmPosadiEdit.cbTeritory.Text:=frmTeritoryEdit.edtTeritory.Text;
@@ -168,7 +169,7 @@ begin
       frmPosadiEdit.aTeritoryChangeExecute(sender);
       exit;
     end;
-
+}
 {
     if frmMain.IsFormOpen('frmViddilennyEdit') then
     begin
