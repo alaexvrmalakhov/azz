@@ -14,6 +14,9 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
+    iLogoSES: TImage;
+    Bevel1: TBevel;
+    btnClose: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnCloseClick(Sender: TObject);
   end;

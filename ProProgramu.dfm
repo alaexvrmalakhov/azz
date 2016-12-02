@@ -1,6 +1,6 @@
 object frmProProgramu: TfrmProProgramu
-  Left = 558
-  Top = 115
+  Left = 325
+  Top = 207
   Width = 428
   Height = 340
   Caption = 'frmHelpAbout'
@@ -2148,7 +2148,7 @@ object frmProProgramu: TfrmProProgramu
   object Bevel1: TBevel
     Left = 8
     Top = 8
-    Width = 401
+    Width = 397
     Height = 257
     Shape = bsBottomLine
   end
