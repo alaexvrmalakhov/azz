@@ -294,6 +294,21 @@ object frmMain: TfrmMain
     object mnDovidniki: TMenuItem
       Caption = #1044#1086#1074#1110#1076#1085#1080#1082#1080
       Hint = #1044#1086#1074#1110#1076#1085#1080#1082#1080' '#1076#1083#1103' '#1088#1086#1073#1086#1090#1080' '#1087#1088#1086#1075#1088#1072#1084#1080
+      object mnDovidnikiTeritory: TMenuItem
+        Caption = #1058#1077#1088#1080#1090#1086#1088#1110#1103
+        Hint = #1044#1086#1074#1110#1076#1085#1080#1082#1080' '#1076#1083#1103' '#1074#1080#1079#1085#1072#1095#1077#1085#1085#1103' '#1090#1077#1088#1080#1090#1086#1088#1110#1111' '#1086#1073#1089#1083#1091#1075#1086#1074#1091#1074#1072#1085#1085#1103' '#1057#1045#1057
+        object mnDovidnikiTeritoryMinistry: TMenuItem
+          Action = aMinistry
+          Enabled = False
+          Visible = False
+        end
+        object mnDovidnikiTeritoryTeritory: TMenuItem
+          Action = aTeritory
+        end
+        object mnDovidnikiTeritoryRajoni: TMenuItem
+          Action = aDistrict
+        end
+      end
       object mnDovidnikiOrganizaciy: TMenuItem
         Caption = #1054#1088#1075#1072#1085#1110#1079#1072#1094#1110#1103
         Hint = #1044#1086#1074#1110#1076#1085#1080#1082#1080' '#1076#1083#1103' '#1085#1072#1083#1072#1096#1090#1091#1074#1072#1085#1085#1103' '#1088#1086#1073#1086#1090#1080' '#1086#1088#1075#1072#1085#1110#1079#1072#1094#1110#1111
@@ -305,7 +320,6 @@ object frmMain: TfrmMain
         end
         object mnDovidnikiOrganizaciySpivrobitniki: TMenuItem
           Action = aSpivrobitniki
-          Enabled = False
         end
       end
       object N10: TMenuItem
@@ -313,19 +327,6 @@ object frmMain: TfrmMain
       end
       object old1: TMenuItem
         Caption = 'old'
-        object mnDovidnikiTeritory: TMenuItem
-          Caption = #1058#1077#1088#1080#1090#1086#1088#1110#1103
-          Hint = #1044#1086#1074#1110#1076#1085#1080#1082#1080' '#1076#1083#1103' '#1074#1080#1079#1085#1072#1095#1077#1085#1085#1103' '#1090#1077#1088#1080#1090#1086#1088#1110#1111' '#1086#1073#1089#1083#1091#1075#1086#1074#1091#1074#1072#1085#1085#1103' '#1057#1045#1057
-          object mnDovidnikiTeritoryMinistry: TMenuItem
-            Action = aMinistry
-          end
-          object mnDovidnikiTeritoryTeritory: TMenuItem
-            Action = aTeritory
-          end
-          object mnDovidnikiTeritoryRajoni: TMenuItem
-            Action = aDistrict
-          end
-        end
         object mnDovidnikiPidkontrolniObjekti: TMenuItem
           Caption = #1055#1110#1076#1082#1086#1085#1090#1088#1086#1083#1100#1085#1110' '#1086#1073#39#1108#1082#1090#1080
           object mnDovidnikiPidkontrolniObjektiVidomchaPidporydkovanist: TMenuItem
@@ -518,6 +519,7 @@ object frmMain: TfrmMain
         end
         object mnNalashtuvannyKoristuvachiKoristuvachi: TMenuItem
           Action = aNalashtuvannyKoristuvachi
+          Enabled = False
           Hint = #1055#1077#1088#1077#1083#1110#1082' '#1082#1086#1088#1080#1089#1090#1091#1074#1072#1095#1110#1074' '#1089#1080#1089#1090#1077#1084#1080' '#1082#1077#1088#1091#1074#1072#1085#1085#1103' '#1087#1088#1072#1074#1072#1084#1080' '#1082#1086#1088#1080#1089#1090#1091#1074#1072#1095#1110#1074
         end
         object mnNalashtuvannyKoristuvachiPravaKoristuvachiv: TMenuItem
@@ -541,35 +543,35 @@ object frmMain: TfrmMain
         Caption = 'old'
         object mnAdministruvannyArchiving: TMenuItem
           Action = aArchiving
-          Visible = False
+          Enabled = False
         end
         object mnAdministruvannyRestore: TMenuItem
           Action = aRestore
-          Visible = False
+          Enabled = False
         end
         object mnAdministruvannyCleaning: TMenuItem
           Action = aCleaning
-          Visible = False
+          Enabled = False
         end
         object N3: TMenuItem
           Caption = '-'
-          Visible = False
+          Enabled = False
         end
         object mnAdministruvannyImport: TMenuItem
           Action = aImport
-          Visible = False
+          Enabled = False
         end
         object mnAdministruvannyExport: TMenuItem
           Action = aExport
-          Visible = False
+          Enabled = False
         end
         object N6: TMenuItem
           Caption = '-'
-          Visible = False
+          Enabled = False
         end
         object mnAdministruvannyProtokol: TMenuItem
           Action = aProtokol
-          Visible = False
+          Enabled = False
         end
       end
     end

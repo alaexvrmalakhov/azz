@@ -1,6 +1,6 @@
 object frmRajoni: TfrmRajoni
-  Left = 192
-  Top = 113
+  Left = 250
+  Top = 114
   Width = 386
   Height = 257
   Caption = 'frmRajoni'
@@ -25,6 +25,7 @@ object frmRajoni: TfrmRajoni
     Width = 157
     Height = 97
     DataSource = dsDistrict
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -32,28 +33,16 @@ object frmRajoni: TfrmRajoni
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'KOD'
-        Title.Caption = #1050#1086#1076
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'RAJON'
-        Title.Caption = #1056#1072#1081#1086#1085
-        Visible = True
-      end>
   end
   object Panel1: TPanel
-    Left = 303
+    Left = 295
     Top = 21
     Width = 75
-    Height = 202
+    Height = 198
     Align = alRight
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 1
     object btnDodati: TButton
       Left = 0
@@ -107,29 +96,21 @@ object frmRajoni: TfrmRajoni
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 378
+    Width = 370
     Height = 21
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 2
-    object cbMinistry: TComboBox
-      Left = 0
-      Top = 0
-      Width = 145
-      Height = 21
-      ItemHeight = 13
-      TabOrder = 0
-      Text = 'cbMinistry'
-      OnChange = aMinistryChangeExecute
-    end
     object cbTeritory: TComboBox
       Left = 172
       Top = 0
       Width = 145
       Height = 21
+      ImeName = 'Russian'
       ItemHeight = 13
-      TabOrder = 1
+      TabOrder = 0
       Text = 'cbTeritory'
       OnChange = cbTeritoryChange
     end
@@ -139,7 +120,7 @@ object frmRajoni: TfrmRajoni
       Width = 21
       Height = 21
       Action = aTeritoryUpdate
-      TabOrder = 2
+      TabOrder = 1
     end
   end
   object alDistrict: TActionList
@@ -148,10 +129,6 @@ object frmRajoni: TfrmRajoni
     object aTeritoryUpdate: TAction
       Caption = '...'
       OnExecute = aTeritoryUpdateExecute
-    end
-    object aMinistryChange: TAction
-      Caption = 'aMinistryChange'
-      OnExecute = aMinistryChangeExecute
     end
     object aTeritoryChange: TAction
       Caption = 'aTeritoryChange'
@@ -205,8 +182,6 @@ object frmRajoni: TfrmRajoni
   object qTeritory: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 60
     Top = 148
   end
@@ -218,8 +193,6 @@ object frmRajoni: TfrmRajoni
   object qDistrict: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 192
     Top = 148
   end

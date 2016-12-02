@@ -16,13 +16,11 @@ type
     btnZaktiti: TButton;
     btnVibrati: TButton;
     Panel2: TPanel;
-    cbMinistry: TComboBox;
     cbTeritory: TComboBox;
     btnMin_Ter: TButton;
     alDistrict: TActionList;
     aTeritoryUpdate: TAction;
     qTeritory: TIBQuery;
-    aMinistryChange: TAction;
     aTeritoryChange: TAction;
     btnUpdate: TButton;
     aAdd: TAction;
@@ -50,7 +48,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure aTeritoryUpdateExecute(Sender: TObject);
-    procedure aMinistryChangeExecute(Sender: TObject);
     procedure aUpdateExecute(Sender: TObject);
     procedure aCloseExecute(Sender: TObject);
     procedure aAddExecute(Sender: TObject);
@@ -76,7 +73,9 @@ uses
 procedure TfrmRajoni.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   frmRajoni.qTeritory.Close;
+  frmRajoni.qDistrict.Close;
 
+{
   if frmMain.IsFormOpen('frmPosadiEdit') then
   begin
     frmPosadiEdit.Enabled:=true;
@@ -100,6 +99,7 @@ begin
     Action:=caFree;
     exit;
   end;
+}
 
   frmMain.Enabled:=true;
   Action:=caFree;
@@ -107,10 +107,9 @@ end;
 
 procedure TfrmRajoni.FormResize(Sender: TObject);
 begin
-  frmRajoni.btnMin_Ter.Left:=frmRajoni.Width-32;
-  frmRajoni.cbMinistry.Width:=trunc((frmRajoni.btnMin_Ter.Left-8)/2);
-  frmRajoni.cbTeritory.Left:=frmRajoni.cbMinistry.Width+4;
-  frmRajoni.cbTeritory.Width:=trunc((frmRajoni.btnMin_Ter.Left-8)/2);
+  frmRajoni.btnMin_Ter.Left:=frmRajoni.Width-40;
+  frmRajoni.cbTeritory.Left:=8;
+  frmRajoni.cbTeritory.Width:=frmRajoni.Width-frmRajoni.btnMin_Ter.Width-32;
 end;
 
 procedure TfrmRajoni.aTeritoryUpdateExecute(Sender: TObject);
@@ -119,25 +118,7 @@ begin
   with frmRajoni do
   begin
     qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from MINISTRY order by MINISTRY';
-    qTeritory.Open;
-    cbMinistry.Text:='';
-    cbMinistry.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      cbMinistry.Items.Add(qTeritory.FieldByName('MINISTRY').Value);
-      qTeritory.Next;
-    end;
-    cbMinistry.Text:=INIAZZ.ReadString('Teritory','Ministry',cbMinistry.Text);
-    if qTeritory.Locate('KOD',StrToInt(cbMinistry.Text),[]) then cbMinistry.Text:=qTeritory.FieldByName('MINISTRY').Value else cbMinistry.Text:='';
-
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Ministry';
-    qTeritory.Params[0].Value:=cbMinistry.Text;
+    qTeritory.SQL.Text:='select * from TERITORY where not TERITORY is null order by TERITORY';
     qTeritory.Open;
     cbTeritory.Text:='';
     cbTeritory.Items.Clear;
@@ -153,34 +134,12 @@ begin
   INIAZZ.Free;
 end;
 
-procedure TfrmRajoni.aMinistryChangeExecute(Sender: TObject);
-begin
-  with frmRajoni do
-  begin
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Ministry';
-    qTeritory.Params[0].Value:=cbMinistry.Text;
-    qTeritory.Open;
-    cbTeritory.Text:='';
-    cbTeritory.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      cbTeritory.Items.Add(qTeritory.FieldByName('TERITORY').Value);
-      qTeritory.Next;
-    end;
-  end;
-end;
-
 procedure TfrmRajoni.aUpdateExecute(Sender: TObject);
 begin
   with frmRajoni do
   begin
     qDistrict.SQL.Clear;
-    qDistrict.SQL.Text:='select * from RAJONI, TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.RAJON';
+    qDistrict.SQL.Text:='select RAJONI.KOD as "Код району", RAJONI.RAJON as "Район" from RAJONI, TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.RAJON';
     qDistrict.Params.Clear;
     qDistrict.Params.Add;
     qDistrict.Params[0].Name:='Teritory';
@@ -201,25 +160,19 @@ begin
   if not frmMain.IsFormOpen('frmRajoniEdit') then frmRajoniEdit:=TfrmRajoniEdit.Create(self);
   frmMain.Enabled:=false;
   frmRajoniEdit.Show;
-  if frmMain.IsFormOpen('frmPosadiEdit') then frmRajoni.Enabled:=false;
-  if frmMain.IsFormOpen('frmViddilennyEdit') then frmRajoni.Enabled:=false;
-  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
   frmRajoniEdit.BorderStyle:=bsDialog;
   frmRajoniEdit.Position:=poMainFormCenter;
   frmRajoniEdit.Caption:='Додати район';
+//  if frmMain.IsFormOpen('frmPosadiEdit') then frmRajoni.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViddilennyEdit') then frmRajoni.Enabled:=false;
+//  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
+
   frmRajoniEdit.edtKod.Text:='';
   frmRajoniEdit.aKodUpdateExecute(sender);
   frmRajoniEdit.edtKod.Enabled:=false;
   frmRajoniEdit.btnKod.Enabled:=false;
-  frmRajoniEdit.cbMinistry.Text:='';
-  frmRajoniEdit.cbMinistry.Items.Clear;
-  frmRajoniEdit.aMinistryUpdateExecute(sender);
+
   INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
-  frmRajoniEdit.cbMinistry.Text:=INIAZZ.ReadString('Teritory','Ministry',frmRajoniEdit.cbMinistry.Text);
-  if frmRajoni.qTeritory.Locate('KOD',StrToInt(frmRajoniEdit.cbMinistry.Text),[]) then frmRajoniEdit.cbMinistry.Text:=frmRajoni.qTeritory.FieldByName('MINISTRY').Text else frmRajoniEdit.cbMinistry.Text:='';
-  frmRajoniEdit.cbMinistry.Enabled:=true;
-  frmRajoniEdit.btnMinistryUpdate.Enabled:=true;
-  frmRajoniEdit.btnMinistryChoice.Enabled:=true;
   frmRajoniEdit.cbTeritory.Text:='';
   frmRajoniEdit.cbTeritory.Items.Clear;
   frmRajoniEdit.aTeritoryUpdateExecute(sender);
@@ -241,39 +194,28 @@ begin
   if not frmMain.IsFormOpen('frmRajoniEdit') then frmRajoniEdit:=TfrmRajoniEdit.Create(self);
   frmMain.Enabled:=false;
   frmRajoniEdit.Show;
-  if frmMain.IsFormOpen('frmPosadiEdit') then frmRajoni.Enabled:=false;
-  if frmMain.IsFormOpen('frmViddilennyEdit') then frmRajoni.Enabled:=false;
-  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
   frmRajoniEdit.BorderStyle:=bsDialog;
   frmRajoniEdit.Position:=poMainFormCenter;
   frmRajoniEdit.Caption:='Редагувати район';
-  if not frmRajoni.qTeritory.FieldByName('KOD').IsNull then frmRajoniEdit.edtKod.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('KOD').Value) else frmRajoniEdit.aKodUpdateExecute(sender);
+//  if frmMain.IsFormOpen('frmPosadiEdit') then frmRajoni.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViddilennyEdit') then frmRajoni.Enabled:=false;
+//  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
+
+  if not frmRajoni.qDistrict.FieldByName('Код району').IsNull then frmRajoniEdit.edtKod.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('Код району').Value) else frmRajoniEdit.aKodUpdateExecute(sender);
   frmRajoniEdit.edtKod.Enabled:=false;
   frmRajoniEdit.btnKod.Enabled:=false;
-
-  frmRajoniEdit.cbMinistry.Text:='';
-  frmRajoniEdit.cbMinistry.Items.Clear;
-  frmRajoniEdit.aMinistryUpdateExecute(sender);
-  INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
-  if not frmRajoni.qDistrict.FieldByName('MINISTRY').IsNull then frmRajoniEdit.cbMinistry.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('MINISTRY').Value) else frmRajoniEdit.cbMinistry.Text:='0';
-  if frmRajoni.qTeritory.Locate('KOD',StrToInt(frmRajoniEdit.cbMinistry.Text),[]) then frmRajoniEdit.cbMinistry.Text:=frmRajoni.qTeritory.FieldByName('MINISTRY').Text else frmRajoniEdit.cbMinistry.Text:='';
-  frmRajoniEdit.cbMinistry.Enabled:=true;
-  frmRajoniEdit.btnMinistryUpdate.Enabled:=true;
-  frmRajoniEdit.btnMinistryChoice.Enabled:=true;
 
   frmRajoniEdit.cbTeritory.Text:='';
   frmRajoniEdit.cbTeritory.Items.Clear;
   frmRajoniEdit.aTeritoryUpdateExecute(sender);
-  if not frmRajoni.qDistrict.FieldByName('TERITORY').IsNull then frmRajoniEdit.cbTeritory.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('TERITORY').Value) else frmRajoniEdit.cbTeritory.Text:='0';
-  if frmRajoni.qTeritory.Locate('KOD',StrToInt(frmRajoniEdit.cbTeritory.Text),[]) then frmRajoniEdit.cbTeritory.Text:=frmRajoni.qTeritory.FieldByName('TERITORY').Value else frmRajoniEdit.cbTeritory.Text:='';
+  frmRajoniEdit.cbTeritory.Text:=frmRajoni.cbTeritory.Text;
   frmRajoniEdit.cbTeritory.Enabled:=true;
   frmRajoniEdit.btnTeritoryUpdate.Enabled:=true;
   frmRajoniEdit.btnTeritoryChoice.Enabled:=true;
-
-  if not frmRajoni.qDistrict.FieldByName('RAJON').IsNull then frmRajoniEdit.edtRajon.Text:=frmRajoni.qDistrict.FieldByName('RAJON').Value else frmRajoniEdit.edtRajon.Text:='';
+  
+  if not frmRajoni.qDistrict.FieldByName('Район').IsNull then frmRajoniEdit.edtRajon.Text:=frmRajoni.qDistrict.FieldByName('Район').Value else frmRajoniEdit.edtRajon.Text:='';
   frmRajoniEdit.edtRajon.Enabled:=true;
   frmRajoniEdit.edtRajon.SetFocus;
-  INIAZZ.Free;
 end;
 
 procedure TfrmRajoni.aDeleteExecute(Sender: TObject);
@@ -282,39 +224,28 @@ begin
   if not frmMain.IsFormOpen('frmRajoniEdit') then frmRajoniEdit:=TfrmRajoniEdit.Create(self);
   frmMain.Enabled:=false;
   frmRajoniEdit.Show;
-  if frmMain.IsFormOpen('frmPosadiEdit') then frmRajoni.Enabled:=false;
-  if frmMain.IsFormOpen('frmViddilennyEdit') then frmRajoni.Enabled:=false;
-  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
   frmRajoniEdit.BorderStyle:=bsDialog;
   frmRajoniEdit.Position:=poMainFormCenter;
   frmRajoniEdit.Caption:='Видалити район';
-  if not frmRajoni.qTeritory.FieldByName('KOD').IsNull then frmRajoniEdit.edtKod.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('KOD').Value) else frmRajoniEdit.aKodUpdateExecute(sender);
+//  if frmMain.IsFormOpen('frmPosadiEdit') then frmRajoni.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViddilennyEdit') then frmRajoni.Enabled:=false;
+//  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
+
+  if not frmRajoni.qDistrict.FieldByName('Код району').IsNull then frmRajoniEdit.edtKod.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('Код району').Value) else frmRajoniEdit.aKodUpdateExecute(sender);
   frmRajoniEdit.edtKod.Enabled:=false;
   frmRajoniEdit.btnKod.Enabled:=false;
-
-  frmRajoniEdit.cbMinistry.Text:='';
-  frmRajoniEdit.cbMinistry.Items.Clear;
-  frmRajoniEdit.aMinistryUpdateExecute(sender);
-  INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
-  if not frmRajoni.qDistrict.FieldByName('MINISTRY').IsNull then frmRajoniEdit.cbMinistry.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('MINISTRY').Value) else frmRajoniEdit.cbMinistry.Text:='0';
-  if frmRajoni.qTeritory.Locate('KOD',StrToInt(frmRajoniEdit.cbMinistry.Text),[]) then frmRajoniEdit.cbMinistry.Text:=frmRajoni.qTeritory.FieldByName('MINISTRY').Text else frmRajoniEdit.cbMinistry.Text:='';
-  frmRajoniEdit.cbMinistry.Enabled:=false;
-  frmRajoniEdit.btnMinistryUpdate.Enabled:=false;
-  frmRajoniEdit.btnMinistryChoice.Enabled:=false;
 
   frmRajoniEdit.cbTeritory.Text:='';
   frmRajoniEdit.cbTeritory.Items.Clear;
   frmRajoniEdit.aTeritoryUpdateExecute(sender);
-  if not frmRajoni.qDistrict.FieldByName('TERITORY').IsNull then frmRajoniEdit.cbTeritory.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('TERITORY').Value) else frmRajoniEdit.cbTeritory.Text:='0';
-  if frmRajoni.qTeritory.Locate('KOD',StrToInt(frmRajoniEdit.cbTeritory.Text),[]) then frmRajoniEdit.cbTeritory.Text:=frmRajoni.qTeritory.FieldByName('TERITORY').Value else frmRajoniEdit.cbTeritory.Text:='';
+  frmRajoniEdit.cbTeritory.Text:=frmRajoni.cbTeritory.Text;
   frmRajoniEdit.cbTeritory.Enabled:=false;
   frmRajoniEdit.btnTeritoryUpdate.Enabled:=false;
   frmRajoniEdit.btnTeritoryChoice.Enabled:=false;
 
-  if not frmRajoni.qDistrict.FieldByName('RAJON').IsNull then frmRajoniEdit.edtRajon.Text:=frmRajoni.qDistrict.FieldByName('RAJON').Value else frmRajoniEdit.edtRajon.Text:='';
+  if not frmRajoni.qDistrict.FieldByName('Район').IsNull then frmRajoniEdit.edtRajon.Text:=frmRajoni.qDistrict.FieldByName('Район').Value else frmRajoniEdit.edtRajon.Text:='';
   frmRajoniEdit.edtRajon.Enabled:=false;
   frmRajoniEdit.btnVidminiti.SetFocus;
-  INIAZZ.Free;
 end;
 
 procedure TfrmRajoni.aChoiceExecute(Sender: TObject);
@@ -326,53 +257,30 @@ begin
   frmRajoniEdit.BorderStyle:=bsDialog;
   frmRajoniEdit.Position:=poMainFormCenter;
   frmRajoniEdit.Caption:='Вибрати район';
-  if frmMain.IsFormOpen('frmPosadiEdit') then frmRajoni.Enabled:=false;
-  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
-  if frmMain.IsFormOpen('frmViddilennyEdit') then frmRajoni.Enabled:=false;
+//  if frmMain.IsFormOpen('frmPosadiEdit') then frmRajoni.Enabled:=false;
+//  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViddilennyEdit') then frmRajoni.Enabled:=false;
 
-  if not frmRajoni.qTeritory.FieldByName('KOD').IsNull then frmRajoniEdit.edtKod.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('KOD').Value) else frmRajoniEdit.aKodUpdateExecute(sender);
+  if not frmRajoni.qDistrict.FieldByName('Код району').IsNull then frmRajoniEdit.edtKod.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('Код району').Value) else frmRajoniEdit.aKodUpdateExecute(sender);
   frmRajoniEdit.edtKod.Enabled:=false;
   frmRajoniEdit.btnKod.Enabled:=false;
-
-  frmRajoniEdit.cbMinistry.Text:='';
-  frmRajoniEdit.cbMinistry.Items.Clear;
-  frmRajoniEdit.aMinistryUpdateExecute(sender);
-  INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
-  if not frmRajoni.qDistrict.FieldByName('MINISTRY').IsNull then frmRajoniEdit.cbMinistry.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('MINISTRY').Value) else frmRajoniEdit.cbMinistry.Text:='0';
-  if frmRajoni.qTeritory.Locate('KOD',StrToInt(frmRajoniEdit.cbMinistry.Text),[]) then frmRajoniEdit.cbMinistry.Text:=frmRajoni.qTeritory.FieldByName('MINISTRY').Text else frmRajoniEdit.cbMinistry.Text:='';
-  frmRajoniEdit.cbMinistry.Enabled:=false;
-  frmRajoniEdit.btnMinistryUpdate.Enabled:=false;
-  frmRajoniEdit.btnMinistryChoice.Enabled:=false;
 
   frmRajoniEdit.cbTeritory.Text:='';
   frmRajoniEdit.cbTeritory.Items.Clear;
   frmRajoniEdit.aTeritoryUpdateExecute(sender);
-  if not frmRajoni.qDistrict.FieldByName('TERITORY').IsNull then frmRajoniEdit.cbTeritory.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('TERITORY').Value) else frmRajoniEdit.cbTeritory.Text:='0';
-  if frmRajoni.qTeritory.Locate('KOD',StrToInt(frmRajoniEdit.cbTeritory.Text),[]) then frmRajoniEdit.cbTeritory.Text:=frmRajoni.qTeritory.FieldByName('TERITORY').Value else frmRajoniEdit.cbTeritory.Text:='';
+  frmRajoniEdit.cbTeritory.Text:=frmRajoni.cbTeritory.Text;
   frmRajoniEdit.cbTeritory.Enabled:=false;
   frmRajoniEdit.btnTeritoryUpdate.Enabled:=false;
   frmRajoniEdit.btnTeritoryChoice.Enabled:=false;
 
-  if not frmRajoni.qDistrict.FieldByName('RAJON').IsNull then frmRajoniEdit.edtRajon.Text:=frmRajoni.qDistrict.FieldByName('RAJON').Value else frmRajoniEdit.edtRajon.Text:='';
+  if not frmRajoni.qDistrict.FieldByName('Район').IsNull then frmRajoniEdit.edtRajon.Text:=frmRajoni.qDistrict.FieldByName('Район').Value else frmRajoniEdit.edtRajon.Text:='';
   frmRajoniEdit.edtRajon.Enabled:=false;
   frmRajoniEdit.btnVikonati.SetFocus;
-  INIAZZ.Free;
 end;
 
 procedure TfrmRajoni.aSortByNazvaExecute(Sender: TObject);
 begin
-  with frmRajoni do
-  begin
-    qDistrict.SQL.Clear;
-    qDistrict.SQL.Text:='select * from RAJONI, TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.RAJON';
-    qDistrict.Params.Clear;
-    qDistrict.Params.Add;
-    qDistrict.Params[0].Name:='Teritory';
-    qDistrict.Params[0].Value:=cbTeritory.Text;
-    qDistrict.Open;
-    aSortByKod.Checked:=false;
-    aSortByNazva.Checked:=true;
-  end;
+  frmRajoni.aUpdateExecute(sender);
 end;
 
 procedure TfrmRajoni.aSortByKodExecute(Sender: TObject);
@@ -380,7 +288,7 @@ begin
   with frmRajoni do
   begin
     qDistrict.SQL.Clear;
-    qDistrict.SQL.Text:='select * from RAJONI, TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.KOD';
+    qDistrict.SQL.Text:='select RAJONI.KOD as "Код району", RAJONI.RAJON as "Район" from RAJONI, TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.KOD';
     qDistrict.Params.Clear;
     qDistrict.Params.Add;
     qDistrict.Params[0].Name:='Teritory';

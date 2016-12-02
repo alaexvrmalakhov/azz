@@ -339,6 +339,8 @@ var
   frmMain: TfrmMain;
   INIAZZ: TIniFile;
 
+function GetMyVersion:string;
+
 implementation
 
 uses
@@ -353,6 +355,30 @@ uses
   PravaKoristuvachiv, RivniSES, DataTypes, DataTables, Reports, Initialize;
 
 {$R *.dfm}
+
+function GetMyVersion: string;
+type
+  TVerInfo=packed record
+    Nevazhno: array[0..47] of byte; // не нужные нам первые 48 байт
+    Minor,Major,Build,Release: word; // а тут версия
+  end;
+var
+  s:TResourceStream;
+  v:TVerInfo;
+begin
+  result:='';
+  try
+    s:=TResourceStream.Create(HInstance,'#1',RT_VERSION); // достаем ресурс
+    if s.Size>0 then
+    begin
+      s.Read(v,SizeOf(v)); // читаем нужные нам байты
+      result:=Format('%d.%d.%d.%d', [v.Major, v.Minor, v.Release, v.Build]);
+    end;
+    s.Free;
+  except;
+  end;
+end;
+
 
 function TfrmMain.GetPathToNode(Node: TTreeNode;Separator: Char): string;
 begin
@@ -680,7 +706,19 @@ end;
 
 procedure TfrmMain.aProProgramuExecute(Sender: TObject);
 begin
-  if not IsFormOpen('frmProProgramu') then frmProProgramu:=TfrmProProgramu.Create(self);
+  if not IsFormOpen('frmProProgramu') then
+  begin
+    try
+      frmProProgramu:=TfrmProProgramu.Create(self);
+    except
+      exit;
+    end;
+  end
+  else
+  begin
+    frmProProgramu.Free;
+    frmProProgramu:=TfrmProProgramu.Create(self);
+  end;
   frmMain.Enabled:=false;
   frmProProgramu.Show;
   frmProProgramu.Caption:='Про програму';
@@ -965,11 +1003,6 @@ begin
   frmTeritory.Caption:='Довідник територій';
   frmTeritory.aChoice.Enabled:=false;
   frmTeritory.DBGrid1.Align:=alClient;
-  INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
-  frmTeritory.aMinistryUpdateExecute(sender);
-  frmTeritory.cbMinistry.Text:=INIAZZ.ReadString('Teritory','Ministry',frmTeritory.cbMinistry.Text);
-  INIAZZ.Free;
-  if frmTeritory.qMinistry.Locate('KOD',StrToInt(frmTeritory.cbMinistry.Text),[]) then frmTeritory.cbMinistry.Text:=frmTeritory.qMinistry.FieldByName('MINISTRY').Value else frmTeritory.cbMinistry.Text:='';
   frmTeritory.aUpdateExecute(sender);
   frmTeritory.qTeritory.Last;
   frmTeritory.qTeritory.First;

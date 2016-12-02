@@ -161,7 +161,7 @@ begin
       exit;
     end;
 }
-
+{
     if frmMain.IsFormOpen('frmRajoniEdit') then
     begin
       frmRajoniEdit.cbMinistry.Text:=frmMinistryEdit.edtMinistry.Text;
@@ -169,7 +169,8 @@ begin
       frmMinistry.Close;
       exit;
     end;
-
+}
+{
     if frmMain.IsFormOpen('frmTeritoryEdit') then
     begin
       frmTeritoryEdit.cbMinistry.Text:=frmMinistryEdit.edtMinistry.Text;
@@ -177,7 +178,8 @@ begin
       frmMinistry.Close;
       exit;
     end;
-
+}
+{
     if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
     begin
       frmSpivrobitnikiEdit.cbMinistry.Text:=frmMinistryEdit.edtMinistry.Text;
@@ -186,6 +188,7 @@ begin
       frmSpivrobitnikiEdit.aMinistryChangeExecute(sender);
       exit;
     end;
+}
   end;
 
   if frmMinistryEdit.Caption='Видалити міністерство' then

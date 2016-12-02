@@ -22,24 +22,14 @@ type
     aTeritoryUpdate: TAction;
     aOK: TAction;
     aCancel: TAction;
-    Label4: TLabel;
-    cbMinistry: TComboBox;
-    btnMinistryUpdate: TButton;
-    btnMinistryChoice: TButton;
     btnTeritoryChoice: TButton;
-    aMinistryUpdate: TAction;
-    aMinistryChoice: TAction;
     aTeritoryChoice: TAction;
-    aMinistryChange: TAction;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure aKodUpdateExecute(Sender: TObject);
     procedure aTeritoryUpdateExecute(Sender: TObject);
     procedure aCancelExecute(Sender: TObject);
     procedure aOKExecute(Sender: TObject);
-    procedure aMinistryUpdateExecute(Sender: TObject);
-    procedure aMinistryChoiceExecute(Sender: TObject);
     procedure aTeritoryChoiceExecute(Sender: TObject);
-    procedure aMinistryChangeExecute(Sender: TObject);
   end;
 
 var
@@ -49,13 +39,14 @@ implementation
 
 uses
   Main, PosadiEdit, SpivrobitnikiEdit, Rajoni, ViddilennyEdit, Ministry,
-  Teritory;
+  Teritory, DB;
 
 {$R *.dfm}
 
 procedure TfrmRajoniEdit.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+{
   if frmMain.IsFormOpen('frmPosadiEdit') then
   begin
     frmPosadiEdit.Enabled:=true;
@@ -100,7 +91,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -109,14 +100,14 @@ procedure TfrmRajoniEdit.aKodUpdateExecute(Sender: TObject);
 begin
   with frmRajoni do
   begin
-    qDistrict.SQL.Clear;
-    qDistrict.SQL.Text:='insert into RAJONI (KOD) values (gen_id(GET_DICTIONARIES_RECORD_ID,1))';
-    qDistrict.Open;
-    qDistrict.SQL.Clear;
-    qDistrict.SQL.Text:='select * from RAJONI order by KOD';
-    qDistrict.Open;
-    qDistrict.Last;
-    frmRajoniEdit.edtKod.Text:=IntToStr(qDistrict.FieldByName('KOD').Value);
+    qTeritory.SQL.Clear;
+    qTeritory.SQL.Text:='insert into RAJONI (KOD) values (gen_id(GET_DICTIONARIES_RECORD_ID,1))';
+    qTeritory.Open;
+    qTeritory.SQL.Clear;
+    qTeritory.SQL.Text:='select * from RAJONI order by KOD';
+    qTeritory.Open;
+    qTeritory.Last;
+    frmRajoniEdit.edtKod.Text:=IntToStr(qTeritory.FieldByName('KOD').Value);
   end;
 end;
 
@@ -125,11 +116,7 @@ begin
   with frmRajoni do
   begin
     qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from TERITORY, MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Ministry';
-    qTeritory.Params[0].Value:=frmRajoniEdit.cbMinistry.Text;
+    qTeritory.SQL.Text:='select * from TERITORY where not TERITORY is null order by TERITORY';
     qTeritory.Open;
     frmRajoniEdit.cbTeritory.Text:='';
     frmRajoniEdit.cbTeritory.Items.Clear;
@@ -149,28 +136,27 @@ end;
 
 procedure TfrmRajoniEdit.aOKExecute(Sender: TObject);
 var
-  Ministry,Teritory: integer;
+  Teritory: integer;
 begin
   if frmRajoniEdit.Caption='Вибрати район' then
   begin
 {
-    if frmMain.IsFormOpen('frmPosadiEdit') then
-    begin
-      frmPosadiEdit.cbRajon.Text:=frmRajoniEdit.edtRajon.Text;
-      frmRajoniEdit.Close;
-      frmRajoni.Close;
-      exit;
-    end;
-}
-{
-    if frmMain.IsFormOpen('frmViddilennyEdit') then
-    begin
-      frmViddilennyEdit.cbRajon.Text:=frmRajoniEdit.edtRajon.Text;
-      frmRajoniEdit.Close;
-      frmRajoni.Close;
-      exit;
-    end;
-}
+//    if frmMain.IsFormOpen('frmPosadiEdit') then
+//    begin
+//      frmPosadiEdit.cbRajon.Text:=frmRajoniEdit.edtRajon.Text;
+//      frmRajoniEdit.Close;
+//      frmRajoni.Close;
+//      exit;
+//    end;
+
+//    if frmMain.IsFormOpen('frmViddilennyEdit') then
+//    begin
+//      frmViddilennyEdit.cbRajon.Text:=frmRajoniEdit.edtRajon.Text;
+//      frmRajoniEdit.Close;
+//      frmRajoni.Close;
+//      exit;
+//    end;
+
     if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
     begin
       frmSpivrobitnikiEdit.cbRajon.Text:=frmRajoniEdit.edtRajon.Text;
@@ -179,19 +165,20 @@ begin
       frmSpivrobitnikiEdit.aRajonChangeExecute(sender);
       exit;
     end;
+}
   end;
 
   if frmRajoniEdit.Caption='Видалити район' then
   begin
     if MessageDlg('Увага!'+#13+'Видалення цього запису може відобразитись на інших відомостях!'+#13+'Ви дійсно бажаєте видалити цей запис?',mtWarning,[mbYes,mbNo],0)=mrYes then
     begin
-      frmRajoni.qDistrict.SQL.Clear;
-      frmRajoni.qDistrict.SQL.Text:='delete from RAJONI where KOD=:Kod';
-      frmRajoni.qDistrict.Params.Clear;
-      frmRajoni.qDistrict.Params.Add;
-      frmRajoni.qDistrict.Params[0].Name:='Kod';
-      frmRajoni.qDistrict.Params[0].Value:=frmRajoniEdit.edtKod.Text;
-      frmRajoni.qDistrict.Open;
+      frmRajoni.qTeritory.SQL.Clear;
+      frmRajoni.qTeritory.SQL.Text:='delete from RAJONI where KOD=:Kod';
+      frmRajoni.qTeritory.Params.Clear;
+      frmRajoni.qTeritory.Params.Add;
+      frmRajoni.qTeritory.Params[0].Name:='Kod';
+      frmRajoni.qTeritory.Params[0].Value:=frmRajoniEdit.edtKod.Text;
+      frmRajoni.qTeritory.Open;
       frmMain.trAzz.CommitRetaining;
       frmRajoniEdit.Close;
       frmRajoni.aUpdateExecute(sender);
@@ -214,20 +201,6 @@ begin
       frmRajoniEdit.edtRajon.SetFocus;
       exit;
     end;
-    if frmRajoniEdit.cbMinistry.Text='' then
-    begin
-      frmRajoniEdit.aMinistryUpdateExecute(sender);
-      frmRajoniEdit.cbMinistry.SetFocus;
-      exit;
-    end;
-    frmRajoni.qTeritory.SQL.Clear;
-    frmRajoni.qTeritory.SQL.Text:='select * from MINISTRY where MINISTRY=:Ministry order by MINISTRY';
-    frmRajoni.qTeritory.Params.Clear;
-    frmRajoni.qTeritory.Params.Add;
-    frmRajoni.qTeritory.Params[0].Name:='Ministry';
-    frmRajoni.qTeritory.Params[0].Value:=frmRajoni.cbMinistry.Text;
-    frmRajoni.qTeritory.Open;
-    if frmRajoni.qTeritory.Locate('MINISTRY',cbMinistry.Text,[]) then Ministry:=frmRajoni.qTeritory.FieldByName('KOD').Value else Ministry:=0;
     if frmRajoniEdit.cbTeritory.Text='' then
     begin
       frmRajoniEdit.aTeritoryUpdateExecute(sender);
@@ -235,11 +208,17 @@ begin
       exit;
     end;
     frmRajoni.qTeritory.SQL.Clear;
-    frmRajoni.qTeritory.SQL.Text:='select * from TERITORY, MINISTRY where TERITORY.MINISTRY=:Ministry order by TERITORY.TERITORY';
-    frmRajoni.qTeritory.Params.Clear;
-    frmRajoni.qTeritory.Params.Add;
-    frmRajoni.qTeritory.Params[0].Name:='Ministry';
-    frmRajoni.qTeritory.Params[0].Value:=Ministry;
+    frmRajoni.qTeritory.SQL.Text:='select * from TERITORY order by TERITORY';
+    frmRajoni.qTeritory.Open;
+    if frmRajoni.qTeritory.Locate('TERITORY',frmRajoniEdit.cbTeritory.Text,[]) then Teritory:=frmRajoni.qTeritory.FieldByName('KOD').Value else Teritory:=0;
+    if frmRajoniEdit.edtRajon.Text='' then
+    begin
+      frmRajoniEdit.aTeritoryUpdateExecute(sender);
+      frmRajoniEdit.edtRajon.SetFocus;
+      exit;
+    end;
+    frmRajoni.qTeritory.SQL.Clear;
+    frmRajoni.qTeritory.SQL.Text:='select * from TERITORY order by TERITORY';
     frmRajoni.qTeritory.Open;
     if frmRajoni.qTeritory.Locate('TERITORY',frmRajoniEdit.cbTeritory.Text,[]) then Teritory:=frmRajoni.qTeritory.FieldByName('KOD').Value else Teritory:=0;
     if frmRajoniEdit.edtRajon.Text='' then
@@ -247,25 +226,22 @@ begin
       frmRajoniEdit.edtRajon.SetFocus;
       exit;
     end;
-    with frmRajoni.qDistrict do
+    with frmRajoni.qTeritory do
     begin
       SQL.Clear;
-      SQL.Text:='update RAJONI set MINISTRY=:Ministry,TERITORY=:Teritory,RAJON=:Rajon where KOD=:Kod';
+      SQL.Text:='update RAJONI set TERITORY=:Teritory,RAJON=:Rajon where KOD=:Kod';
       Params.Clear;
       Params.Add;
-      Params[0].Name:='Ministry';
-      Params[0].Value:=Ministry;
+      Params[0].Name:='Teritory';
+      Params[0].Value:=Teritory;
       Params.Add;
-      Params[1].Name:='Teritory';
-      Params[1].Value:=Teritory;
+      Params[1].Name:='Rajon';
+      Params[1].Value:=frmRajoniEdit.edtRajon.Text;
       Params.Add;
-      Params[2].Name:='Rajon';
-      Params[2].Value:=frmRajoniEdit.edtRajon.Text;
-      Params.Add;
-      Params[3].Name:='Kod';
-      Params[3].Value:=frmRajoniEdit.edtKod.Text;
+      Params[2].Name:='Kod';
+      Params[2].Value:=frmRajoniEdit.edtKod.Text;
+      Open;
     end;
-    frmRajoni.qDistrict.Open;
     frmMain.trAzz.CommitRetaining;
     frmRajoniEdit.Close;
     frmRajoni.aUpdateExecute(sender);
@@ -287,20 +263,6 @@ begin
       frmRajoniEdit.edtRajon.SetFocus;
       exit;
     end;
-    if frmRajoniEdit.cbMinistry.Text='' then
-    begin
-      frmRajoniEdit.aMinistryUpdateExecute(sender);
-      frmRajoniEdit.cbMinistry.SetFocus;
-      exit;
-    end;
-    frmRajoni.qTeritory.SQL.Clear;
-    frmRajoni.qTeritory.SQL.Text:='select * from MINISTRY where MINISTRY=:Ministry order by MINISTRY';
-    frmRajoni.qTeritory.Params.Clear;
-    frmRajoni.qTeritory.Params.Add;
-    frmRajoni.qTeritory.Params[0].Name:='Ministry';
-    frmRajoni.qTeritory.Params[0].Value:=frmRajoni.cbMinistry.Text;
-    frmRajoni.qTeritory.Open;
-    if frmRajoni.qTeritory.Locate('MINISTRY',cbMinistry.Text,[]) then Ministry:=frmRajoni.qTeritory.FieldByName('KOD').Value else Ministry:=0;
     if frmRajoniEdit.cbTeritory.Text='' then
     begin
       frmRajoniEdit.aTeritoryUpdateExecute(sender);
@@ -308,11 +270,17 @@ begin
       exit;
     end;
     frmRajoni.qTeritory.SQL.Clear;
-    frmRajoni.qTeritory.SQL.Text:='select * from TERITORY, MINISTRY where TERITORY.MINISTRY=:Ministry order by TERITORY.TERITORY';
-    frmRajoni.qTeritory.Params.Clear;
-    frmRajoni.qTeritory.Params.Add;
-    frmRajoni.qTeritory.Params[0].Name:='Ministry';
-    frmRajoni.qTeritory.Params[0].Value:=Ministry;
+    frmRajoni.qTeritory.SQL.Text:='select * from TERITORY order by TERITORY';
+    frmRajoni.qTeritory.Open;
+    if frmRajoni.qTeritory.Locate('TERITORY',frmRajoniEdit.cbTeritory.Text,[]) then Teritory:=frmRajoni.qTeritory.FieldByName('KOD').Value else Teritory:=0;
+    if frmRajoniEdit.edtRajon.Text='' then
+    begin
+      frmRajoniEdit.aTeritoryUpdateExecute(sender);
+      frmRajoniEdit.edtRajon.SetFocus;
+      exit;
+    end;
+    frmRajoni.qTeritory.SQL.Clear;
+    frmRajoni.qTeritory.SQL.Text:='select * from TERITORY order by TERITORY';
     frmRajoni.qTeritory.Open;
     if frmRajoni.qTeritory.Locate('TERITORY',frmRajoniEdit.cbTeritory.Text,[]) then Teritory:=frmRajoni.qTeritory.FieldByName('KOD').Value else Teritory:=0;
     if frmRajoniEdit.edtRajon.Text='' then
@@ -320,64 +288,27 @@ begin
       frmRajoniEdit.edtRajon.SetFocus;
       exit;
     end;
-    with frmRajoni.qDistrict do
+    with frmRajoni.qTeritory do
     begin
       SQL.Clear;
-      SQL.Text:='update RAJONI set MINISTRY=:Ministry,TERITORY=:Teritory,RAJON=:Rajon where KOD=:Kod';
+      SQL.Text:='update RAJONI set TERITORY=:Teritory,RAJON=:Rajon where KOD=:Kod';
       Params.Clear;
       Params.Add;
-      Params[0].Name:='Ministry';
-      Params[0].Value:=Ministry;
+      Params[0].Name:='Teritory';
+      Params[0].Value:=Teritory;
       Params.Add;
-      Params[1].Name:='Teritory';
-      Params[1].Value:=Teritory;
+      Params[1].Name:='Rajon';
+      Params[1].Value:=frmRajoniEdit.edtRajon.Text;
       Params.Add;
-      Params[2].Name:='Rajon';
-      Params[2].Value:=frmRajoniEdit.edtRajon.Text;
-      Params.Add;
-      Params[3].Name:='Kod';
-      Params[3].Value:=frmRajoniEdit.edtKod.Text;
+      Params[2].Name:='Kod';
+      Params[2].Value:=frmRajoniEdit.edtKod.Text;
+      Open;
     end;
-    frmRajoni.qDistrict.Open;
     frmMain.trAzz.CommitRetaining;
     frmRajoniEdit.Close;
     frmRajoni.aUpdateExecute(sender);
     exit;
   end;
-end;
-
-procedure TfrmRajoniEdit.aMinistryUpdateExecute(Sender: TObject);
-begin
-  with frmRajoni do
-  begin
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from MINISTRY order by MINISTRY';
-    qTeritory.Open;
-    frmRajoniEdit.cbMinistry.Text:='';
-    frmRajoniEdit.cbMinistry.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      frmRajoniEdit.cbMinistry.Items.Add(frmRajoni.qTeritory.FIeldByName('MINISTRY').Value);
-      qTeritory.Next;
-    end;
-    frmRajoniEdit.cbTeritory.Text:='';
-    frmRajoniEdit.cbTeritory.Items.Clear;
-  end;
-end;
-
-procedure TfrmRajoniEdit.aMinistryChoiceExecute(Sender: TObject);
-begin
-  frmRajoniEdit.Enabled:=false;
-  frmMain.aMinistryExecute(sender);
-  frmMinistry.aChoice.Enabled:=true;
-  frmMinistry.Left:=frmMain.Left+70;
-  frmMinistry.Top:=frmMain.Top+70;
-  frmMinistry.Width:=frmMain.Width-70;
-  frmMinistry.Height:=frmMain.Height-70;
-  frmMinistry.Position:=poMainFormCenter;
-  frmMinistry.FormStyle:=fsNormal;
-  frmMinistry.BorderStyle:=bsDialog;
 end;
 
 procedure TfrmRajoniEdit.aTeritoryChoiceExecute(Sender: TObject);
@@ -392,28 +323,6 @@ begin
   frmTeritory.Position:=poMainFormCenter;
   frmTeritory.FormStyle:=fsNormal;
   frmTeritory.BorderStyle:=bsDialog;
-end;
-
-procedure TfrmRajoniEdit.aMinistryChangeExecute(Sender: TObject);
-begin
-  with frmRajoni do
-  begin
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from TERITORY, MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Ministry';
-    qTeritory.Params[0].Value:=frmRajoniEdit.cbMinistry.Text;
-    qTeritory.Open;
-    frmRajoniEdit.cbTeritory.Text:='';
-    frmRajoniEdit.cbTeritory.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      frmRajoniEdit.cbTeritory.Items.Add(qTeritory.FieldByName('TERITORY').Value);
-      qTeritory.Next;
-    end;
-  end;
 end;
 
 end.

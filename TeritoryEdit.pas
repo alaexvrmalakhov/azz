@@ -71,7 +71,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmRajoniEdit') then
   begin
     frmTeritory.Enabled:=true;
@@ -87,7 +87,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+{
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmTeritory.Enabled:=true;
@@ -132,7 +132,6 @@ procedure TfrmTeritoryEdit.aOKExecute(Sender: TObject);
 begin
   if frmTeritoryEdit.Caption='Вибрати територію' then
   begin
-{
 //    if frmMain.IsFormOpen('frmPosadiEdit') then
 //    begin
 //      frmPosadiEdit.cbTeritory.Text:=frmTeritoryEdit.edtTeritory.Text;
@@ -158,7 +157,7 @@ begin
       frmTeritory.Close;
       exit;
     end;
-
+{
     if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
     begin
       frmSpivrobitnikiEdit.cbTeritory.Text:=frmTeritoryEdit.edtTeritory.Text;
