@@ -3,7 +3,7 @@ unit ProProgramu;
 interface
 
 uses
-  Forms, StdCtrls, Controls, Classes, ExtCtrls, Graphics;
+  Forms, StdCtrls, Controls, Classes, ExtCtrls, Graphics, SysUtils, Dialogs;
 
 type
   TfrmProProgramu = class(TForm)
@@ -19,6 +19,7 @@ type
     btnClose: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnCloseClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   end;
 
 var
@@ -41,6 +42,11 @@ end;
 procedure TfrmProProgramu.btnCloseClick(Sender: TObject);
 begin
   frmProProgramu.Close;
+end;
+
+procedure TfrmProProgramu.FormActivate(Sender: TObject);
+begin
+  frmProProgramu.Label3.Caption:='Версія програми '+GetMyVersion;
 end;
 
 end.

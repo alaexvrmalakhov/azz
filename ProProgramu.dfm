@@ -1,6 +1,6 @@
 object frmProProgramu: TfrmProProgramu
-  Left = 325
-  Top = 207
+  Left = 1084
+  Top = 95
   Width = 428
   Height = 340
   Caption = 'frmHelpAbout'
@@ -11,6 +11,7 @@ object frmProProgramu: TfrmProProgramu
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
   OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
@@ -2188,9 +2189,9 @@ object frmProProgramu: TfrmProProgramu
   object Label4: TLabel
     Left = 184
     Top = 92
-    Width = 79
+    Width = 71
     Height = 13
-    Caption = #1042#1077#1088#1077#1089#1077#1085#1100', 2011'
+    Caption = #1043#1088#1091#1076#1077#1085#1100', 2016'
   end
   object Label5: TLabel
     Left = 184
