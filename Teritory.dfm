@@ -1,6 +1,6 @@
 object frmTeritory: TfrmTeritory
-  Left = 186
-  Top = 111
+  Left = 256
+  Top = 116
   Width = 360
   Height = 254
   Caption = 'frmTeritory'
@@ -16,7 +16,6 @@ object frmTeritory: TfrmTeritory
   PopupMenu = PopupMenu
   OnActivate = FormActivate
   OnClose = FormClose
-  OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
   object DBGrid1: TDBGrid
@@ -25,6 +24,7 @@ object frmTeritory: TfrmTeritory
     Width = 245
     Height = 73
     DataSource = dsTeritory
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -32,28 +32,16 @@ object frmTeritory: TfrmTeritory
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'KOD'
-        Title.Caption = #1050#1086#1076
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'TERITORY'
-        Title.Caption = #1058#1077#1088#1080#1090#1086#1088#1080#1103
-        Visible = True
-      end>
   end
   object Panel1: TPanel
-    Left = 277
-    Top = 21
+    Left = 269
+    Top = 0
     Width = 75
-    Height = 206
+    Height = 216
     Align = alRight
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 1
     object btnDodati: TButton
       Left = 0
@@ -105,34 +93,6 @@ object frmTeritory: TfrmTeritory
       TabOrder = 5
     end
   end
-  object Panel2: TPanel
-    Left = 0
-    Top = 0
-    Width = 352
-    Height = 21
-    Align = alTop
-    AutoSize = True
-    BevelOuter = bvNone
-    TabOrder = 2
-    object cbMinistry: TComboBox
-      Left = 0
-      Top = 0
-      Width = 141
-      Height = 21
-      ItemHeight = 13
-      TabOrder = 0
-      Text = 'cbMinistry'
-      OnChange = cbMinistryChange
-    end
-    object btnMinistry: TButton
-      Left = 196
-      Top = 0
-      Width = 21
-      Height = 21
-      Action = aMinistryUpdate
-      TabOrder = 1
-    end
-  end
   object alTeritory: TActionList
     Left = 16
     Top = 116
@@ -171,10 +131,6 @@ object frmTeritory: TfrmTeritory
       Hint = #1047#1072#1082#1088#1080#1090#1080' '#1074#1110#1082#1085#1086' '#1076#1086#1074#1110#1076#1085#1080#1082#1072
       ShortCut = 27
       OnExecute = aCloseExecute
-    end
-    object aMinistryUpdate: TAction
-      Caption = '...'
-      OnExecute = aMinistryUpdateExecute
     end
     object aSortByKod: TAction
       Caption = #1047#1072' '#1082#1086#1076#1086#1084
@@ -232,16 +188,12 @@ object frmTeritory: TfrmTeritory
   object qTeritory: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 140
     Top = 120
   end
   object qMinistry: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 216
     Top = 116
   end

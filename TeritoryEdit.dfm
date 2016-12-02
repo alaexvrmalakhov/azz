@@ -1,8 +1,8 @@
 object frmTeritoryEdit: TfrmTeritoryEdit
-  Left = 556
-  Top = 130
-  Width = 555
-  Height = 196
+  Left = 617
+  Top = 114
+  Width = 567
+  Height = 164
   Caption = 'frmTeritoryEdit'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,16 +21,9 @@ object frmTeritoryEdit: TfrmTeritoryEdit
     Height = 13
     Caption = #1050#1086#1076
   end
-  object Label2: TLabel
-    Left = 16
-    Top = 52
-    Width = 65
-    Height = 13
-    Caption = #1052#1110#1085#1110#1089#1090#1077#1088#1089#1090#1074#1086
-  end
   object Label3: TLabel
     Left = 16
-    Top = 88
+    Top = 52
     Width = 50
     Height = 13
     Caption = #1058#1077#1088#1080#1090#1086#1088#1110#1103
@@ -52,57 +45,31 @@ object frmTeritoryEdit: TfrmTeritoryEdit
     Action = aKodUpdate
     TabOrder = 1
   end
-  object cbMinistry: TComboBox
-    Left = 100
-    Top = 52
-    Width = 389
-    Height = 21
-    ImeName = 'Russian'
-    ItemHeight = 13
-    TabOrder = 2
-    Text = 'cbMinistry'
-  end
-  object btnMinistryUpdate: TButton
-    Left = 492
-    Top = 52
-    Width = 21
-    Height = 21
-    Action = aMinistryUpdate
-    TabOrder = 3
-  end
   object edtTeritory: TEdit
     Left = 100
-    Top = 88
+    Top = 52
     Width = 437
     Height = 21
     ImeName = 'Russian'
-    TabOrder = 5
+    TabOrder = 2
     Text = 'edtTeritory'
   end
   object btnVikonati: TButton
     Left = 197
-    Top = 124
+    Top = 88
     Width = 75
     Height = 25
     Action = aOK
     Default = True
-    TabOrder = 6
+    TabOrder = 3
   end
   object btnVidminiti: TButton
     Left = 277
-    Top = 124
+    Top = 88
     Width = 75
     Height = 25
     Action = aCancel
     Cancel = True
-    TabOrder = 7
-  end
-  object btnMinistryChoice: TButton
-    Left = 516
-    Top = 52
-    Width = 21
-    Height = 21
-    Action = aMinistryChoice
     TabOrder = 4
   end
   object alTeritoryEdit: TActionList
@@ -111,14 +78,6 @@ object frmTeritoryEdit: TfrmTeritoryEdit
     object aKodUpdate: TAction
       Caption = '...'
       OnExecute = aKodUpdateExecute
-    end
-    object aMinistryUpdate: TAction
-      Caption = '@'
-      OnExecute = aMinistryUpdateExecute
-    end
-    object aMinistryChoice: TAction
-      Caption = '...'
-      OnExecute = aMinistryChoiceExecute
     end
     object aCancel: TAction
       Caption = #1042#1110#1076#1084#1110#1085#1080#1090#1080
@@ -135,6 +94,6 @@ object frmTeritoryEdit: TfrmTeritoryEdit
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
     Left = 40
-    Top = 112
+    Top = 76
   end
 end
