@@ -4,7 +4,7 @@ interface
 
 uses
   Forms, DB, IBCustomDataSet, IBQuery, Menus, Classes, ActnList, Controls,
-  StdCtrls, ExtCtrls, Grids, DBGrids, IniFiles, SysUtils;
+  StdCtrls, ExtCtrls, Grids, DBGrids, IniFiles, SysUtils, Dialogs;
 
 type
   TfrmSpivrobitniki = class(TForm)
@@ -16,7 +16,6 @@ type
     btnZaktiti: TButton;
     btnVibrati: TButton;
     Panel2: TPanel;
-    cbMinistry: TComboBox;
     cbTeritory: TComboBox;
     cbRajon: TComboBox;
     btnMin_Ter_Raj: TButton;
@@ -46,7 +45,6 @@ type
     qSpivrobitniki: TIBQuery;
     qTeritory: TIBQuery;
     aTeritoryUpdate: TAction;
-    aMinistryChange: TAction;
     aTeritoryChange: TAction;
     aRajonChange: TAction;
     mnSortByKod: TMenuItem;
@@ -66,7 +64,6 @@ type
     procedure aSortByViddilennyExecute(Sender: TObject);
     procedure aSortByKodExecute(Sender: TObject);
     procedure aTeritoryUpdateExecute(Sender: TObject);
-    procedure aMinistryChangeExecute(Sender: TObject);
     procedure aTeritoryChangeExecute(Sender: TObject);
     procedure cbRajonChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -157,13 +154,11 @@ end;
 
 procedure TfrmSpivrobitniki.FormResize(Sender: TObject);
 begin
-  frmSpivrobitniki.btnMin_Ter_Raj.Left:=frmSpivrobitniki.Width-29;
-  frmSpivrobitniki.cbMinistry.Left:=4;
-  frmSpivrobitniki.cbMinistry.Width:=trunc(frmSpivrobitniki.Width/3)-14;
-  frmSpivrobitniki.cbTeritory.Left:=frmSpivrobitniki.cbMinistry.Left+frmSpivrobitniki.cbMinistry.Width+4;
-  frmSpivrobitniki.cbTeritory.Width:=trunc(frmSpivrobitniki.Width/3)-14;
+  frmSpivrobitniki.btnMin_Ter_Raj.Left:=frmSpivrobitniki.Width-90;
+  frmSpivrobitniki.cbTeritory.Left:=8;
+  frmSpivrobitniki.cbTeritory.Width:=trunc(frmSpivrobitniki.Width/2)-52;
   frmSpivrobitniki.cbRajon.Left:=frmSpivrobitniki.cbTeritory.Left+frmSpivrobitniki.cbTeritory.Width+4;
-  frmSpivrobitniki.cbRajon.Width:=trunc(frmSpivrobitniki.Width/3)-14;
+  frmSpivrobitniki.cbRajon.Width:=trunc(frmSpivrobitniki.Width/2)-52;
 end;
 
 procedure TfrmSpivrobitniki.aAddExecute(Sender: TObject);
@@ -171,14 +166,14 @@ begin
   if not frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmSpivrobitnikiEdit:=TfrmSpivrobitnikiEdit.Create(self);
   frmMain.Enabled:=false;
   frmSpivrobitnikiEdit.Show;
-  if frmMain.IsFormOpen('frmKoristuvachiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmOpechanuvanny') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmRaport') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmFilter') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmKoristuvachiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmOpechanuvanny') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmRaport') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmSpivrobitniki.Enabled:=false;
   frmSpivrobitnikiEdit.Caption:='Додавання нового співробітника';
   frmSpivrobitnikiEdit.BorderStyle:=bsDialog;
   frmSpivrobitnikiEdit.Position:=poMainFormCenter;
@@ -187,15 +182,6 @@ begin
   frmSpivrobitnikiEdit.edtKodSpivrobitnika.Enabled:=false;
   frmSpivrobitnikiEdit.btnKodSpivrobitnika.Enabled:=false;
 
-  frmSpivrobitnikiEdit.aMinistryUpdateExecute(sender);
-  frmSpivrobitnikiEdit.cbMinistry.Enabled:=true;
-  frmSpivrobitnikiEdit.btnMinistryUpdate.Enabled:=true;
-  frmSpivrobitnikiEdit.btnMinistryChoice.Enabled:=true;
-  INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
-  frmSpivrobitnikiEdit.cbMinistry.Text:=INIAZZ.ReadString('Teritory','Ministry',frmSpivrobitnikiEdit.cbMinistry.Text);
-  INIAZZ.Free;
-  if frmSpivrobitniki.qTeritory.Locate('KOD',StrToInt(frmSpivrobitnikiEdit.cbMinistry.Text),[]) then frmSpivrobitnikiEdit.cbMinistry.Text:=frmSpivrobitniki.qTeritory.FieldByName('MINISTRY').Value else frmSpivrobitnikiEdit.cbMinistry.Text:='';
-
   frmSpivrobitnikiEdit.aTeritoryUpdateExecute(sender);
   frmSpivrobitnikiEdit.cbTeritory.Enabled:=true;
   frmSpivrobitnikiEdit.btnTeritoryUpdate.Enabled:=true;
@@ -203,6 +189,12 @@ begin
   INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
   frmSpivrobitnikiEdit.cbTeritory.Text:=INIAZZ.ReadString('Teritory','Teritory',frmSpivrobitnikiEdit.cbTeritory.Text);
   INIAZZ.Free;
+  with frmSpivrobitniki.qTeritory do
+  begin
+    SQL.Clear;
+    SQL.Text:='select * from TERITORY order by KOD';
+    Open;
+  end;
   if frmSpivrobitniki.qTeritory.Locate('KOD',StrToInt(frmSpivrobitnikiEdit.cbTeritory.Text),[]) then frmSpivrobitnikiEdit.cbTeritory.Text:=frmSpivrobitniki.qTeritory.FieldByName('TERITORY').Value else frmSpivrobitnikiEdit.cbTeritory.Text:='';
 
   frmSpivrobitnikiEdit.aRajonUpdateExecute(sender);
@@ -240,18 +232,19 @@ begin
   if not frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmSpivrobitnikiEdit:=TfrmSpivrobitnikiEdit.Create(self);
   frmMain.Enabled:=false;
   frmSpivrobitnikiEdit.Show;
-  if frmMain.IsFormOpen('frmKoristuvachiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmOpechanuvanny') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmRaport') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmFilter') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmKoristuvachiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmOpechanuvanny') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmRaport') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmSpivrobitniki.Enabled:=false;
   frmSpivrobitnikiEdit.Caption:='Редагування відомостей про співробітника';
   frmSpivrobitnikiEdit.BorderStyle:=bsDialog;
   frmSpivrobitnikiEdit.Position:=poMainFormCenter;
 
+{
   if not frmSpivrobitniki.qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').IsNull then frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').Value) else frmSpivrobitnikiEdit.aKodUpdateExecute(sender);
   frmSpivrobitnikiEdit.edtKodSpivrobitnika.Enabled:=false;
   frmSpivrobitnikiEdit.btnKodSpivrobitnika.Enabled:=false;
@@ -299,6 +292,7 @@ begin
   frmSpivrobitnikiEdit.edtPrizvische_TV.Enabled:=true;
   frmSpivrobitnikiEdit.btnVidminok.Enabled:=true;
   frmSpivrobitnikiEdit.edtPrizvische.SetFocus;
+}
 end;
 
 procedure TfrmSpivrobitniki.aDeleteExecute(Sender: TObject);
@@ -307,18 +301,19 @@ begin
   if not frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmSpivrobitnikiEdit:=TfrmSpivrobitnikiEdit.Create(self);
   frmMain.Enabled:=false;
   frmSpivrobitnikiEdit.Show;
-  if frmMain.IsFormOpen('frmKoristuvachiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmOpechanuvanny') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmRaport') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmFilter') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmKoristuvachiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmOpechanuvanny') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmRaport') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmSpivrobitniki.Enabled:=false;
   frmSpivrobitnikiEdit.Caption:='Видалення відомостей про співробітника';
   frmSpivrobitnikiEdit.BorderStyle:=bsDialog;
   frmSpivrobitnikiEdit.Position:=poMainFormCenter;
 
+{
   if not frmSpivrobitniki.qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').IsNull then frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').Value) else frmSpivrobitnikiEdit.aKodUpdateExecute(sender);
   frmSpivrobitnikiEdit.edtKodSpivrobitnika.Enabled:=false;
   frmSpivrobitnikiEdit.btnKodSpivrobitnika.Enabled:=false;
@@ -366,6 +361,7 @@ begin
   frmSpivrobitnikiEdit.edtPrizvische_TV.Enabled:=false;
   frmSpivrobitnikiEdit.btnVidminok.Enabled:=false;
   frmSpivrobitnikiEdit.btnVidmina.SetFocus;
+}
 end;
 
 procedure TfrmSpivrobitniki.aChoiceExecute(Sender: TObject);
@@ -373,19 +369,20 @@ begin
   if frmSpivrobitniki.qSpivrobitniki.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmSpivrobitnikiEdit:=TfrmSpivrobitnikiEdit.Create(self);
   frmMain.Enabled:=false;
-  if frmMain.IsFormOpen('frmKoristuvachiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmOpechanuvanny') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmRaport') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmSpivrobitniki.Enabled:=false;
-  if frmMain.IsFormOpen('frmFilter') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmKoristuvachiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmOpechanuvanny') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmRaport') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmSpivrobitniki.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmSpivrobitniki.Enabled:=false;
   frmSpivrobitnikiEdit.Show;
   frmSpivrobitnikiEdit.Caption:='Вибір відомостей про співробітника';
   frmSpivrobitnikiEdit.BorderStyle:=bsDialog;
   frmSpivrobitnikiEdit.Position:=poMainFormCenter;
 
+{
   if not frmSpivrobitniki.qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').IsNull then frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').Value) else frmSpivrobitnikiEdit.aKodUpdateExecute(sender);
   frmSpivrobitnikiEdit.edtKodSpivrobitnika.Enabled:=false;
   frmSpivrobitnikiEdit.btnKodSpivrobitnika.Enabled:=false;
@@ -433,6 +430,7 @@ begin
   frmSpivrobitnikiEdit.edtPrizvische_TV.Enabled:=false;
   frmSpivrobitnikiEdit.btnVidminok.Enabled:=false;
   frmSpivrobitnikiEdit.btnVikonati.SetFocus;
+}
 end;
 
 procedure TfrmSpivrobitniki.aUpdateExecute(Sender: TObject);
@@ -440,7 +438,26 @@ begin
   with frmSpivrobitniki do
   begin
     qSpivrobitniki.SQL.Clear;
-    qSpivrobitniki.SQL.Text:='select * from SPIVROBITNIKI,RAJONI,VIDDILENNY,POSADI where RAJONI.RAJON=:Rajon and SPIVROBITNIKI.RAJON=RAJONI.KOD and SPIVROBITNIKI.KODVIDDILENNY=VIDDILENNY.KODVIDDILENNY and SPIVROBITNIKI.KODPOSADI=POSADI.KODPOSADI order by SPIVROBITNIKI.PRIZVISXHE';
+    qSpivrobitniki.SQL.Text:='select ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODSPIVROBITNIKA as "Код співробітника", ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.PRIZVISXHE as "Прізвище", ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  VIDDILENNY.NAZVAVIDDILENNY as "Відділення", ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  POSADI.NAZVAPOSADI as "Посада"  ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'from ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI,';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  RAJONI,';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  VIDDILENNY,';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  POSADI ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'where ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  RAJONI.RAJON=:Rajon ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  and ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.RAJON=RAJONI.KOD ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  and ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODVIDDILENNY=VIDDILENNY.KODVIDDILENNY ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  and ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODPOSADI=POSADI.KODPOSADI ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'order by ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.PRIZVISXHE';
     qSpivrobitniki.Params.Clear;
     qSpivrobitniki.Params.Add;
     qSpivrobitniki.Params[0].Name:='Rajon';
@@ -460,20 +477,7 @@ end;
 
 procedure TfrmSpivrobitniki.aSortByPrizvischeExecute(Sender: TObject);
 begin
-  with frmSpivrobitniki do
-  begin
-    qSpivrobitniki.SQL.Clear;
-    qSpivrobitniki.SQL.Text:='select * from SPIVROBITNIKI,RAJONI,VIDDILENNY,POSADI where RAJONI.RAJON=:Rajon and SPIVROBITNIKI.RAJON=RAJONI.KOD and SPIVROBITNIKI.KODVIDDILENNY=VIDDILENNY.KODVIDDILENNY and SPIVROBITNIKI.KODPOSADI=POSADI.KODPOSADI order by SPIVROBITNIKI.PRIZVISXHE';
-    qSpivrobitniki.Params.Clear;
-    qSpivrobitniki.Params.Add;
-    qSpivrobitniki.Params[0].Name:='Rajon';
-    qSpivrobitniki.Params[0].Value:=frmSpivrobitniki.cbRajon.Text;
-    qSpivrobitniki.Open;
-    aSortByKod.Checked:=false;
-    aSortByViddilenny.Checked:=false;
-    aSortByPosada.Checked:=false;
-    aSortByPrizvische.Checked:=true;
-  end;
+  frmSpivrobitniki.aUpdateExecute(sender);
 end;
 
 procedure TfrmSpivrobitniki.aSortByPosadaExecute(Sender: TObject);
@@ -481,7 +485,26 @@ begin
   with frmSpivrobitniki do
   begin
     qSpivrobitniki.SQL.Clear;
-    qSpivrobitniki.SQL.Text:='select * from SPIVROBITNIKI,RAJONI,VIDDILENNY,POSADI where RAJONI.RAJON=:Rajon and SPIVROBITNIKI.RAJON=RAJONI.KOD and SPIVROBITNIKI.KODVIDDILENNY=VIDDILENNY.KODVIDDILENNY and SPIVROBITNIKI.KODPOSADI=POSADI.KODPOSADI order by POSADI.NAZVAPOSADI';
+    qSpivrobitniki.SQL.Text:='select ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODSPIVROBITNIKA as "Код співробітника", ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.PRIZVISXHE as "Прізвище", ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  VIDDILENNY.NAZVAVIDDILENNY as "Відділення", ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  POSADI.NAZVAPOSADI as "Посада"  ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'from ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI,';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  RAJONI,';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  VIDDILENNY,';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  POSADI ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'where ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  RAJONI.RAJON=:Rajon ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  and ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.RAJON=RAJONI.KOD ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  and ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODVIDDILENNY=VIDDILENNY.KODVIDDILENNY ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  and ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODPOSADI=POSADI.KODPOSADI ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'order by ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  POSADI.NAZVAPOSADI';
     qSpivrobitniki.Params.Clear;
     qSpivrobitniki.Params.Add;
     qSpivrobitniki.Params[0].Name:='Rajon';
@@ -499,7 +522,26 @@ begin
   with frmSpivrobitniki do
   begin
     qSpivrobitniki.SQL.Clear;
-    qSpivrobitniki.SQL.Text:='select * from SPIVROBITNIKI,RAJONI,VIDDILENNY,POSADI where RAJONI.RAJON=:Rajon and SPIVROBITNIKI.RAJON=RAJONI.KOD and SPIVROBITNIKI.KODVIDDILENNY=VIDDILENNY.KODVIDDILENNY and SPIVROBITNIKI.KODPOSADI=POSADI.KODPOSADI order by VIDDILENNY.NAZVAVIDDILENNY';
+    qSpivrobitniki.SQL.Text:='select ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODSPIVROBITNIKA as "Код співробітника", ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.PRIZVISXHE as "Прізвище", ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  VIDDILENNY.NAZVAVIDDILENNY as "Відділення", ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  POSADI.NAZVAPOSADI as "Посада"  ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'from ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI,';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  RAJONI,';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  VIDDILENNY,';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  POSADI ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'where ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  RAJONI.RAJON=:Rajon ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  and ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.RAJON=RAJONI.KOD ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  and ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODVIDDILENNY=VIDDILENNY.KODVIDDILENNY ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  and ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODPOSADI=POSADI.KODPOSADI ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'order by ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  VIDDILENNY.NAZVAVIDDILENNY';
     qSpivrobitniki.Params.Clear;
     qSpivrobitniki.Params.Add;
     qSpivrobitniki.Params[0].Name:='Rajon';
@@ -517,7 +559,26 @@ begin
   with frmSpivrobitniki do
   begin
     qSpivrobitniki.SQL.Clear;
-    qSpivrobitniki.SQL.Text:='select * from SPIVROBITNIKI,RAJONI,VIDDILENNY,POSADI where RAJONI.RAJON=:Rajon and SPIVROBITNIKI.RAJON=RAJONI.KOD and SPIVROBITNIKI.KODVIDDILENNY=VIDDILENNY.KODVIDDILENNY and SPIVROBITNIKI.KODPOSADI=POSADI.KODPOSADI order by SPIVROBITNIKI.KODSPIVROBITNIKA';
+    qSpivrobitniki.SQL.Text:='select ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODSPIVROBITNIKA as "Код співробітника", ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.PRIZVISXHE as "Прізвище", ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  VIDDILENNY.NAZVAVIDDILENNY as "Відділення", ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  POSADI.NAZVAPOSADI as "Посада"  ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'from ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI,';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  RAJONI,';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  VIDDILENNY,';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  POSADI ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'where ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  RAJONI.RAJON=:Rajon ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  and ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.RAJON=RAJONI.KOD ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  and ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODVIDDILENNY=VIDDILENNY.KODVIDDILENNY ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  and ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODPOSADI=POSADI.KODPOSADI ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'order by ';
+    qSpivrobitniki.SQL.Text:=qSpivrobitniki.SQL.Text+'  SPIVROBITNIKI.KODSPIVROBITNIKA';
     qSpivrobitniki.Params.Clear;
     qSpivrobitniki.Params.Add;
     qSpivrobitniki.Params[0].Name:='Rajon';
@@ -535,27 +596,7 @@ begin
   with frmSpivrobitniki do
   begin
     qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from MINISTRY order by MINISTRY';
-    qTeritory.Open;
-    cbMinistry.Text:='';
-    cbMinistry.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      cbMinistry.Items.Add(qTeritory.FieldByName('MINISTRY').Value);
-      qTeritory.Next;
-    end;
-    INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
-    cbMinistry.Text:=INIAZZ.ReadString('Teritory','Ministry',cbMinistry.Text);
-    INIAZZ.Free;
-    if qTeritory.Locate('KOD',StrToInt(cbMinistry.Text),[]) then cbMinistry.Text:=qTeritory.FieldByName('MINISTRY').Value else cbMinistry.Text:='';
-
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Ministry';
-    qTeritory.Params[0].Value:=cbMinistry.Text;
+    qTeritory.SQL.Text:='select * from TERITORY where not TERITORY is null order by TERITORY';
     qTeritory.Open;
     cbTeritory.Text:='';
     cbTeritory.Items.Clear;
@@ -589,31 +630,7 @@ begin
     cbRajon.Text:=INIAZZ.ReadString('Teritory','District',cbRajon.Text);
     INIAZZ.Free;
     if qTeritory.Locate('KOD',StrToInt(cbRajon.Text),[]) then cbRajon.Text:=qTeritory.FieldByName('RAJON').Value else cbRajon.Text:='';
-    aUpdateExecute(sender);
-  end;
-end;
 
-procedure TfrmSpivrobitniki.aMinistryChangeExecute(Sender: TObject);
-begin
-  with frmSpivrobitniki do
-  begin
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Ministry';
-    qTeritory.Params[0].Value:=cbMinistry.Text;
-    qTeritory.Open;
-    cbTeritory.Text:='';
-    cbTeritory.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      cbTeritory.Items.Add(qTeritory.FieldByName('TERITORY').Value);
-      qTeritory.Next;
-    end;
-    cbRajon.Text:='';
-    cbRajon.Items.Clear;
     aUpdateExecute(sender);
   end;
 end;

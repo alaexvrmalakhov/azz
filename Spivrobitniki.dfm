@@ -1,6 +1,6 @@
 object frmSpivrobitniki: TfrmSpivrobitniki
-  Left = 862
-  Top = 199
+  Left = 253
+  Top = 113
   Width = 404
   Height = 254
   Caption = 'frmSpivrobitniki'
@@ -25,6 +25,7 @@ object frmSpivrobitniki: TfrmSpivrobitniki
     Width = 225
     Height = 93
     DataSource = dsSpivrobitniki
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -32,52 +33,16 @@ object frmSpivrobitniki: TfrmSpivrobitniki
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'KODSPIVROBITNIKA'
-        Title.Caption = #1050#1086#1076' '#1089#1087#1110#1074#1088#1086#1073#1110#1090#1085#1080#1082#1072
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'PRIZVISXHE'
-        Title.Caption = #1055#1088#1110#1079#1074#1080#1097#1077
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'PRIZVISXHE_RV'
-        Title.Caption = #1055#1088#1110#1079#1074#1080#1097#1077' '#1091' '#1056'.'#1042'.'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'PRIZVISXHE_TV'
-        Title.Caption = #1055#1088#1110#1079#1074#1080#1097#1077' '#1091' '#1058'.'#1042'.'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NAZVAVIDDILENNY'
-        Title.Caption = #1042#1110#1076#1076#1110#1083#1077#1085#1085#1103
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NAZVAPOSADI'
-        Title.Caption = #1055#1086#1089#1072#1076#1072
-        Visible = True
-      end>
   end
   object Panel1: TPanel
-    Left = 321
+    Left = 313
     Top = 21
     Width = 75
-    Height = 206
+    Height = 195
     Align = alRight
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 1
     object btnDodati: TButton
       Left = 0
@@ -132,29 +97,21 @@ object frmSpivrobitniki: TfrmSpivrobitniki
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 396
+    Width = 388
     Height = 21
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 2
-    object cbMinistry: TComboBox
-      Left = 4
-      Top = 0
-      Width = 81
-      Height = 21
-      ItemHeight = 13
-      TabOrder = 0
-      Text = 'cbMinistry'
-      OnChange = aMinistryChangeExecute
-    end
     object cbTeritory: TComboBox
       Left = 88
       Top = 0
       Width = 77
       Height = 21
+      ImeName = 'Russian'
       ItemHeight = 13
-      TabOrder = 1
+      TabOrder = 0
       Text = 'cbTeritory'
       OnChange = aTeritoryChangeExecute
     end
@@ -163,8 +120,9 @@ object frmSpivrobitniki: TfrmSpivrobitniki
       Top = 0
       Width = 69
       Height = 21
+      ImeName = 'Russian'
       ItemHeight = 13
-      TabOrder = 2
+      TabOrder = 1
       Text = 'cbRajon'
       OnChange = cbRajonChange
     end
@@ -174,7 +132,7 @@ object frmSpivrobitniki: TfrmSpivrobitniki
       Width = 21
       Height = 21
       Action = aTeritoryUpdate
-      TabOrder = 3
+      TabOrder = 2
     end
   end
   object alSpivrobitniki: TActionList
@@ -233,10 +191,6 @@ object frmSpivrobitniki: TfrmSpivrobitniki
     object aTeritoryUpdate: TAction
       Caption = '...'
       OnExecute = aTeritoryUpdateExecute
-    end
-    object aMinistryChange: TAction
-      Caption = 'aMinistryChange'
-      OnExecute = aMinistryChangeExecute
     end
     object aTeritoryChange: TAction
       Caption = 'aTeritoryChange'
@@ -297,16 +251,12 @@ object frmSpivrobitniki: TfrmSpivrobitniki
   object qSpivrobitniki: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 104
     Top = 32
   end
   object qTeritory: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 268
     Top = 44
   end

@@ -23,11 +23,8 @@ type
     btnVidminok: TButton;
     Label7: TLabel;
     btnRajonUpdate: TButton;
-    Label8: TLabel;
     Label9: TLabel;
     btnKodSpivrobitnika: TButton;
-    cbMinistry: TComboBox;
-    btnMinistryUpdate: TButton;
     cbTeritory: TComboBox;
     btnTeritoryUpdate: TButton;
     cbRajon: TComboBox;
@@ -36,41 +33,32 @@ type
     cbPosada: TComboBox;
     alSpivrobitnikiEdit: TActionList;
     aKodUpdate: TAction;
-    aMinistryUpdate: TAction;
-    aMinistryChange: TAction;
     aTeritoryUpdate: TAction;
     aTeritoryChange: TAction;
     aRajonUpdate: TAction;
-    aRajonChange: TAction;
     aViddilennyUpdate: TAction;
     aPosadaUpdate: TAction;
     aVidminokChange: TAction;
     aOK: TAction;
     aCancel: TAction;
-    btnMinistryChoice: TButton;
     btnTeritoryChoice: TButton;
     btnRajonChoice: TButton;
     btnViddilennyChoice: TButton;
     btnPosadaChoice: TButton;
-    aMinistryChoice: TAction;
     aTeritoryChoice: TAction;
     aRajonChoice: TAction;
     aViddilennyChoice: TAction;
     aPosadaChoice: TAction;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure aKodUpdateExecute(Sender: TObject);
-    procedure aMinistryUpdateExecute(Sender: TObject);
-    procedure aMinistryChangeExecute(Sender: TObject);
     procedure aTeritoryUpdateExecute(Sender: TObject);
     procedure aTeritoryChangeExecute(Sender: TObject);
     procedure aRajonUpdateExecute(Sender: TObject);
-    procedure aRajonChangeExecute(Sender: TObject);
     procedure aViddilennyUpdateExecute(Sender: TObject);
     procedure aPosadaUpdateExecute(Sender: TObject);
     procedure aVidminokChangeExecute(Sender: TObject);
     procedure aCancelExecute(Sender: TObject);
     procedure aOKExecute(Sender: TObject);
-    procedure aMinistryChoiceExecute(Sender: TObject);
     procedure aTeritoryChoiceExecute(Sender: TObject);
     procedure aRajonChoiceExecute(Sender: TObject);
     procedure aViddilennyChoiceExecute(Sender: TObject);
@@ -97,22 +85,21 @@ uses
 procedure TfrmSpivrobitnikiEdit.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-{
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
-  begin
-    frmFinansoviSankciiEdit.Enabled:=true;
-    frmMain.Enabled:=false;
-    if frmViddilennyEdit.Caption<>'Вибір відомостей про співробітника' then
-    begin
-      frmViddilenny.Enabled:=true;
-      frmFinansoviSankciiEdit.Enabled:=false;
-    end
-    else
-      frmViddilenny.Close;
-    Action:=caFree;
-    exit;
-  end;
-}
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
+//  begin
+//    frmFinansoviSankciiEdit.Enabled:=true;
+//    frmMain.Enabled:=false;
+//    if frmViddilennyEdit.Caption<>'Вибір відомостей про співробітника' then
+//    begin
+//      frmViddilenny.Enabled:=true;
+//      frmFinansoviSankciiEdit.Enabled:=false;
+//    end
+//    else
+//      frmViddilenny.Close;
+//    Action:=caFree;
+//    exit;
+//  end;
+
   if frmMain.IsFormOpen('frmKoristuvachiEdit') then
   begin
     frmSpivrobitniki.Enabled:=true;
@@ -247,68 +234,14 @@ procedure TfrmSpivrobitnikiEdit.aKodUpdateExecute(Sender: TObject);
 begin
   with frmSpivrobitniki do
   begin
-    qSpivrobitniki.SQL.Clear;
-    qSpivrobitniki.SQL.Text:='insert into SPIVROBITNIKI (KODSPIVROBITNIKA) values (gen_id(GET_DICTIONARIES_RECORD_ID,1))';
-    qSpivrobitniki.Open;
-    qSpivrobitniki.SQL.Clear;
-    qSpivrobitniki.SQL.Text:='select * from SPIVROBITNIKI order by KODSPIVROBITNIKA';
-    qSpivrobitniki.Open;
-    qSpivrobitniki.Last;
-    frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text:=IntToStr(qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').Value);
-  end;
-end;
-
-procedure TfrmSpivrobitnikiEdit.aMinistryUpdateExecute(Sender: TObject);
-begin
-  with frmSpivrobitniki do
-  begin
     qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from MINISTRY order by MINISTRY';
+    qTeritory.SQL.Text:='insert into SPIVROBITNIKI (KODSPIVROBITNIKA) values (gen_id(GET_DICTIONARIES_RECORD_ID,1))';
     qTeritory.Open;
-    frmSpivrobitnikiEdit.cbMinistry.Text:='';
-    frmSpivrobitnikiEdit.cbMinistry.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      frmSpivrobitnikiEdit.cbMinistry.Items.Add(qTeritory.FieldByName('MINISTRY').Value);
-      qTeritory.Next;
-    end;
-    frmSpivrobitnikiEdit.cbTeritory.Text:='';
-    frmSpivrobitnikiEdit.cbTeritory.Items.Clear;
-    frmSpivrobitnikiEdit.cbRajon.Text:='';
-    frmSpivrobitnikiEdit.cbRajon.Items.Clear;
-    frmSpivrobitnikiEdit.cbViddilenny.Text:='';
-    frmSpivrobitnikiEdit.cbViddilenny.Items.Clear;
-    frmSpivrobitnikiEdit.cbPosada.Text:='';
-    frmSpivrobitnikiEdit.cbPosada.Items.Clear;
-  end;
-end;
-
-procedure TfrmSpivrobitnikiEdit.aMinistryChangeExecute(Sender: TObject);
-begin
-  with frmSpivrobitniki do
-  begin
     qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Ministry';
-    qTeritory.Params[0].Value:=frmSpivrobitnikiEdit.cbMinistry.Text;
+    qTeritory.SQL.Text:='select * from SPIVROBITNIKI order by KODSPIVROBITNIKA';
     qTeritory.Open;
-    frmSpivrobitnikiEdit.cbTeritory.Text:='';
-    frmSpivrobitnikiEdit.cbTeritory.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      frmSpivrobitnikiEdit.cbTeritory.Items.Add(qTeritory.FieldByName('TERITORY').Value);
-      qTeritory.Next;
-    end;
-    frmSpivrobitnikiEdit.cbRajon.Text:='';
-    frmSpivrobitnikiEdit.cbRajon.Items.Clear;
-    frmSpivrobitnikiEdit.cbViddilenny.Text:='';
-    frmSpivrobitnikiEdit.cbViddilenny.Items.Clear;
-    frmSpivrobitnikiEdit.cbPosada.Text:='';
-    frmSpivrobitnikiEdit.cbPosada.Items.Clear;
+    qTeritory.Last;
+    frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text:=IntToStr(qTeritory.FieldByName('KODSPIVROBITNIKA').Value);
   end;
 end;
 
@@ -317,11 +250,7 @@ begin
   with frmSpivrobitniki do
   begin
     qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Ministry';
-    qTeritory.Params[0].Value:=frmSpivrobitnikiEdit.cbMinistry.Text;
+    qTeritory.SQL.Text:='select * from TERITORY where not TERITORY is null order by TERITORY';
     qTeritory.Open;
     frmSpivrobitnikiEdit.cbTeritory.Text:='';
     frmSpivrobitnikiEdit.cbTeritory.Items.Clear;
@@ -331,12 +260,7 @@ begin
       frmSpivrobitnikiEdit.cbTeritory.Items.Add(qTeritory.FieldByName('TERITORY').Value);
       qTeritory.Next;
     end;
-    frmSpivrobitnikiEdit.cbRajon.Text:='';
-    frmSpivrobitnikiEdit.cbRajon.Items.Clear;
-    frmSpivrobitnikiEdit.cbViddilenny.Text:='';
-    frmSpivrobitnikiEdit.cbViddilenny.Items.Clear;
-    frmSpivrobitnikiEdit.cbPosada.Text:='';
-    frmSpivrobitnikiEdit.cbPosada.Items.Clear;
+    frmSpivrobitnikiEdit.aRajonUpdateExecute(sender);
   end;
 end;
 
@@ -359,10 +283,6 @@ begin
       frmSpivrobitnikiEdit.cbRajon.Items.Add(qTeritory.FieldByName('RAJON').Value);
       qTeritory.Next;
     end;
-    frmSpivrobitnikiEdit.cbViddilenny.Text:='';
-    frmSpivrobitnikiEdit.cbViddilenny.Items.Clear;
-    frmSpivrobitnikiEdit.cbPosada.Text:='';
-    frmSpivrobitnikiEdit.cbPosada.Items.Clear;
   end;
 end;
 
@@ -371,6 +291,7 @@ begin
   with frmSpivrobitniki do
   begin
     qTeritory.SQL.Clear;
+//    qTeritory.SQL.Text:='select * from RAJONI,TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.RAJON';
     qTeritory.SQL.Text:='select * from RAJONI,TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.RAJON';
     qTeritory.Params.Clear;
     qTeritory.Params.Add;
@@ -392,50 +313,13 @@ begin
   end;
 end;
 
-procedure TfrmSpivrobitnikiEdit.aRajonChangeExecute(Sender: TObject);
-begin
-  with frmSpivrobitniki do
-  begin
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from VIDDILENNY,RAJONI where RAJONI.RAJON=:Rajon and VIDDILENNY.RAJON=RAJONI.KOD order by VIDDILENNY.NAZVAVIDDILENNY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Rajon';
-    qTeritory.Params[0].Value:=frmSpivrobitnikiEdit.cbRajon.Text;
-    qTeritory.Open;
-    frmSpivrobitnikiEdit.cbViddilenny.Text:='';
-    frmSpivrobitnikiEdit.cbViddilenny.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      frmSpivrobitnikiEdit.cbViddilenny.Items.Add(qTeritory.FieldByName('NAZVAVIDDILENNY').Value);
-      qTeritory.Next;
-    end;
-
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from POSADI,RAJONI where RAJONI.RAJON='''+frmSpivrobitnikiEdit.cbRajon.Text+''' and POSADI.RAJON=RAJONI.KOD order by POSADI.NAZVAPOSADI';
-    qTeritory.Open;
-    frmSpivrobitnikiEdit.cbPosada.Text:='';
-    frmSpivrobitnikiEdit.cbPosada.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      frmSpivrobitnikiEdit.cbPosada.Items.Add(qTeritory.FieldByName('NAZVAPOSADI').Value);
-      qTeritory.Next;
-    end;
-  end;
-end;
-
 procedure TfrmSpivrobitnikiEdit.aViddilennyUpdateExecute(Sender: TObject);
 begin
   with frmSpivrobitniki do
   begin
     qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from VIDDILENNY,RAJONI where RAJONI.RAJON=:Rajon and VIDDILENNY.RAJON=RAJONI.KOD order by VIDDILENNY.NAZVAVIDDILENNY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Rajon';
-    qTeritory.Params[0].Value:=frmSpivrobitnikiEdit.cbRajon.Text;
+//    qTeritory.SQL.Text:='select * from VIDDILENNY,RAJONI where RAJONI.RAJON=:Rajon and VIDDILENNY.RAJON=RAJONI.KOD order by VIDDILENNY.NAZVAVIDDILENNY';
+    qTeritory.SQL.Text:='select * from VIDDILENNY where not NAZVAVIDDILENNY is null order by NAZVAVIDDILENNY';
     qTeritory.Open;
     frmSpivrobitnikiEdit.cbViddilenny.Text:='';
     frmSpivrobitnikiEdit.cbViddilenny.Items.Clear;
@@ -453,11 +337,8 @@ begin
   with frmSpivrobitniki do
   begin
     qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from POSADI,RAJONI where RAJONI.RAJON=:Rajon and POSADI.RAJON=RAJONI.KOD order by POSADI.NAZVAPOSADI';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Rajon';
-    qTeritory.Params[0].Value:=frmSpivrobitnikiEdit.cbRajon.Text;
+//    qTeritory.SQL.Text:='select * from POSADI,RAJONI where RAJONI.RAJON=:Rajon and POSADI.RAJON=RAJONI.KOD order by POSADI.NAZVAPOSADI';
+    qTeritory.SQL.Text:='select * from POSADI where not NAZVAPOSADI is null order by POSADI.NAZVAPOSADI';
     qTeritory.Open;
     frmSpivrobitnikiEdit.cbPosada.Text:='';
     frmSpivrobitnikiEdit.cbPosada.Items.Clear;
@@ -485,6 +366,7 @@ procedure TfrmSpivrobitnikiEdit.aOKExecute(Sender: TObject);
 var
   ministry,teritory,district,viddilenny,posada: integer;
 begin
+{
   if frmSpivrobitnikiEdit.Caption='Вибір відомостей про співробітника' then
   begin
     if frmMain.IsFormOpen('frmKoristuvachiEdit') then
@@ -858,20 +740,7 @@ begin
     frmSpivrobitniki.aUpdateExecute(sender);
     exit;
   end;
-end;
-
-procedure TfrmSpivrobitnikiEdit.aMinistryChoiceExecute(Sender: TObject);
-begin
-  frmSpivrobitnikiEdit.Enabled:=false;
-  frmMain.aMinistryExecute(sender);
-  frmMinistry.aChoice.Enabled:=true;
-  frmMinistry.Left:=frmMain.Left+70;
-  frmMinistry.Top:=frmMain.Top+70;
-  frmMinistry.Width:=frmMain.Width-70;
-  frmMinistry.Height:=frmMain.Height-70;
-  frmMinistry.Position:=poMainFormCenter;
-  frmMinistry.FormStyle:=fsNormal;
-  frmMinistry.BorderStyle:=bsDialog;
+}
 end;
 
 procedure TfrmSpivrobitnikiEdit.aTeritoryChoiceExecute(Sender: TObject);
@@ -890,6 +759,7 @@ end;
 
 procedure TfrmSpivrobitnikiEdit.aRajonChoiceExecute(Sender: TObject);
 begin
+{
   frmSpivrobitnikiEdit.Enabled:=false;
   frmMain.aDistrictExecute(sender);
   frmRajoni.aChoice.Enabled:=true;
@@ -900,10 +770,12 @@ begin
   frmRajoni.Position:=poMainFormCenter;
   frmRajoni.FormStyle:=fsNormal;
   frmRajoni.BorderStyle:=bsDialog;
+}
 end;
 
 procedure TfrmSpivrobitnikiEdit.aViddilennyChoiceExecute(Sender: TObject);
 begin
+{
   frmSpivrobitnikiEdit.Enabled:=false;
   frmMain.aViddilennyExecute(sender);
   frmViddilenny.aChoice.Enabled:=true;
@@ -914,10 +786,12 @@ begin
   frmViddilenny.Position:=poMainFormCenter;
   frmViddilenny.FormStyle:=fsNormal;
   frmViddilenny.BorderStyle:=bsDialog;
+}
 end;
 
 procedure TfrmSpivrobitnikiEdit.aPosadaChoiceExecute(Sender: TObject);
 begin
+{
   frmSpivrobitnikiEdit.Enabled:=false;
   frmMain.aPosadiExecute(sender);
   frmPosadi.aChoice.Enabled:=true;
@@ -928,6 +802,7 @@ begin
   frmPosadi.Position:=poMainFormCenter;
   frmPosadi.FormStyle:=fsNormal;
   frmPosadi.BorderStyle:=bsDialog;
+}
 end;
 
 end.
