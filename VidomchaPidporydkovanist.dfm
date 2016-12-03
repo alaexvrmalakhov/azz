@@ -1,6 +1,6 @@
 object frmVidomchaPidporydkovanist: TfrmVidomchaPidporydkovanist
-  Left = 177
-  Top = 0
+  Left = 257
+  Top = 113
   Width = 426
   Height = 270
   Caption = 'frmVidomchaPidporydkovanist'
@@ -18,13 +18,14 @@ object frmVidomchaPidporydkovanist: TfrmVidomchaPidporydkovanist
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
-    Left = 343
+    Left = 335
     Top = 0
     Width = 75
-    Height = 222
+    Height = 211
     Align = alRight
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 0
     object btnDodati: TButton
       Left = 0
@@ -81,6 +82,7 @@ object frmVidomchaPidporydkovanist: TfrmVidomchaPidporydkovanist
     Width = 197
     Height = 97
     DataSource = dsVidomchaPidporydkovanist
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
@@ -88,34 +90,23 @@ object frmVidomchaPidporydkovanist: TfrmVidomchaPidporydkovanist
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'KODVIDOMSTVA'
-        Title.Caption = #1050#1086#1076' '#1074#1110#1076#1086#1084#1089#1090#1074#1072
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'VIDOMSTVO'
-        Title.Caption = #1042#1110#1076#1086#1084#1089#1090#1074#1086
-        Visible = True
-      end>
   end
   object Panel2: TPanel
     Left = 0
-    Top = 222
-    Width = 418
+    Top = 211
+    Width = 410
     Height = 21
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 2
     object edtFind: TEdit
       Left = 4
       Top = 0
       Width = 121
       Height = 21
+      ImeName = 'Russian'
       TabOrder = 0
       Text = 'edtFind'
       OnChange = aFindChangeExecute
@@ -214,10 +205,14 @@ object frmVidomchaPidporydkovanist: TfrmVidomchaPidporydkovanist
   object qVidomchaPidporydkovanist: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     OnFilterRecord = qVidomchaPidporydkovanistFilterRecord
     Left = 248
     Top = 68
+  end
+  object qUpdate: TIBQuery
+    Database = frmMain.dbAzz
+    Transaction = frmMain.trAzz
+    Left = 220
+    Top = 132
   end
 end

@@ -259,6 +259,8 @@ type
     old4: TMenuItem;
     N14: TMenuItem;
     old5: TMenuItem;
+    N8: TMenuItem;
+    N15: TMenuItem;
     procedure ReadInit;
     procedure SaveInit;
     function IsFormOpen(const FormName : string): Boolean;
@@ -738,6 +740,7 @@ begin
   INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'AZZ.INI');
   frmShtrafi.udRik.Position:=INIAZZ.ReadInteger('System','Year',frmShtrafi.udRik.Position);
   INIAZZ.Free;
+
   with frmShtrafi do
   begin
     qTeritory.SQL.Clear;
@@ -1031,14 +1034,17 @@ begin
   frmVidomchaPidporydkovanist.DBGrid1.Align:=alClient;
   frmVidomchaPidporydkovanist.FormStyle:=fsMDIChild;
   frmVidomchaPidporydkovanist.aUpdateExecute(sender);
+{
   frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Last;
   frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.First;
+}
   frmVidomchaPidporydkovanist.aChoice.Enabled:=false;
   frmVidomchaPidporydkovanist.edtFind.Text:='';
 end;
 
 procedure TfrmMain.aObjektiExecute(Sender: TObject);
 begin
+{
   if not frmMain.IsFormOpen('frmObjekti') then frmObjekti:=TfrmObjekti.Create(self);
   frmObjekti.Show;
   frmObjekti.Caption:='Довідник об''єктів';
@@ -1051,6 +1057,7 @@ begin
   frmObjekti.edtFind_NazvaObjekta.Enabled:=true;
   frmObjekti.qObjekti.Last;
   frmObjekti.qObjekti.First;
+}
 end;
 
 procedure TfrmMain.aViddilennyExecute(Sender: TObject);
@@ -1470,7 +1477,6 @@ begin
   frmKoristuvachi.DBGrid1.Align:=alClient;
   frmKoristuvachi.Show;
   frmKoristuvachi.aChoice.Enabled:=false;
-  frmKoristuvachi.aTeritoryUpdateExecute(sender);
   frmKoristuvachi.aUpdateExecute(sender);
 end;
 

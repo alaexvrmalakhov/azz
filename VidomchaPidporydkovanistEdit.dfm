@@ -1,6 +1,6 @@
 object frmVidomchaPidporydkovanistEdit: TfrmVidomchaPidporydkovanistEdit
-  Left = 595
-  Top = 48
+  Left = 685
+  Top = 112
   Width = 485
   Height = 151
   Caption = 'frmVidomchaPidporydkovanistEdit'
@@ -33,6 +33,7 @@ object frmVidomchaPidporydkovanistEdit: TfrmVidomchaPidporydkovanistEdit
     Top = 12
     Width = 121
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 0
     Text = 'edtKodVidomstva'
   end
@@ -41,6 +42,7 @@ object frmVidomchaPidporydkovanistEdit: TfrmVidomchaPidporydkovanistEdit
     Top = 44
     Width = 365
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 2
     Text = 'edtVidomstvo'
   end

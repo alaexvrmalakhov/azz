@@ -42,6 +42,7 @@ type
     aSortByVidomstrvo: TAction;
     mnSortByKod: TMenuItem;
     mnSortByVidomstrvo: TMenuItem;
+    qUpdate: TIBQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure aAddExecute(Sender: TObject);
@@ -76,6 +77,7 @@ begin
   frmVidomchaPidporydkovanist.FormStyle:=fsMDIChild;
   frmVidomchaPidporydkovanist.BorderStyle:=bsSizeable;
 
+{
   if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
   begin
     frmFinansoviSankciiEdit.Enabled:=true;
@@ -115,6 +117,7 @@ begin
     Action:=caFree;
     exit;
   end;
+}
 
   frmMain.Enabled:=true;
   Action:=caFree;
@@ -130,15 +133,16 @@ procedure TfrmVidomchaPidporydkovanist.aAddExecute(Sender: TObject);
 begin
   if not frmMain.IsFormOpen('frmVidomchaPidporydkovanistEdit') then frmVidomchaPidporydkovanistEdit:=TfrmVidomchaPidporydkovanistEdit.Create(self);
   frmMain.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
   frmVidomchaPidporydkovanistEdit.Show;
   frmVidomchaPidporydkovanistEdit.Caption:='Додавання відомства';
   frmVidomchaPidporydkovanistEdit.BorderStyle:=bsDialog;
   frmVidomchaPidporydkovanistEdit.Position:=poMainFormCenter;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+
   frmVidomchaPidporydkovanistEdit.aKodUpdateExecute(sender);
   frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Enabled:=false;
   frmVidomchaPidporydkovanistEdit.btnKodVidomstva.Enabled:=false;
@@ -152,19 +156,20 @@ begin
   if frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmVidomchaPidporydkovanistEdit') then frmVidomchaPidporydkovanistEdit:=TfrmVidomchaPidporydkovanistEdit.Create(self);
   frmMain.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
   frmVidomchaPidporydkovanistEdit.Show;
   frmVidomchaPidporydkovanistEdit.Caption:='Редагування відомства';
   frmVidomchaPidporydkovanistEdit.BorderStyle:=bsDialog;
   frmVidomchaPidporydkovanistEdit.Position:=poMainFormCenter;
-  frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text:=IntToStr(frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('KODVIDOMSTVA').Value);
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+
+  frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text:=IntToStr(frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('Код').Value);
   frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Enabled:=false;
   frmVidomchaPidporydkovanistEdit.btnKodVidomstva.Enabled:=false;
-  frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text:=frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('VIDOMSTVO').Value;
+  frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text:=frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('Відомство').Value;
   frmVidomchaPidporydkovanistEdit.edtVidomstvo.Enabled:=true;
   frmVidomchaPidporydkovanistEdit.edtVidomstvo.SetFocus;
 end;
@@ -174,19 +179,20 @@ begin
   if frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmVidomchaPidporydkovanistEdit') then frmVidomchaPidporydkovanistEdit:=TfrmVidomchaPidporydkovanistEdit.Create(self);
   frmMain.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
   frmVidomchaPidporydkovanistEdit.Show;
   frmVidomchaPidporydkovanistEdit.Caption:='Видалення відомства';
   frmVidomchaPidporydkovanistEdit.BorderStyle:=bsDialog;
   frmVidomchaPidporydkovanistEdit.Position:=poMainFormCenter;
-  frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text:=IntToStr(frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('KODVIDOMSTVA').Value);
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+
+  frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text:=IntToStr(frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('Код').Value);
   frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Enabled:=false;
   frmVidomchaPidporydkovanistEdit.btnKodVidomstva.Enabled:=false;
-  frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text:=frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('VIDOMSTVO').Value;
+  frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text:=frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('Відомство').Value;
   frmVidomchaPidporydkovanistEdit.edtVidomstvo.Enabled:=false;
   frmVidomchaPidporydkovanistEdit.btnVidminiti.SetFocus;
 end;
@@ -196,20 +202,20 @@ begin
   if frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmVidomchaPidporydkovanistEdit') then frmVidomchaPidporydkovanistEdit:=TfrmVidomchaPidporydkovanistEdit.Create(self);
   frmMain.Enabled:=false;
-  frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-  if frmMain.IsFormOpen('frmObjektiEdit') then frmObjektiEdit.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
   frmVidomchaPidporydkovanistEdit.Show;
   frmVidomchaPidporydkovanistEdit.Caption:='Вибір відомства';
   frmVidomchaPidporydkovanistEdit.BorderStyle:=bsDialog;
   frmVidomchaPidporydkovanistEdit.Position:=poMainFormCenter;
-  frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text:=IntToStr(frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('KODVIDOMSTVA').Value);
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+
+  frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text:=IntToStr(frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('Код').Value);
   frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Enabled:=false;
   frmVidomchaPidporydkovanistEdit.btnKodVidomstva.Enabled:=false;
-  frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text:=frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('VIDOMSTVO').Value;
+  frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text:=frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('Відомство').Value;
   frmVidomchaPidporydkovanistEdit.edtVidomstvo.Enabled:=false;
   frmVidomchaPidporydkovanistEdit.btnVikonati.SetFocus;
 end;
@@ -224,10 +230,11 @@ begin
   with frmVidomchaPidporydkovanist do
   begin
     qVidomchaPidporydkovanist.SQL.Clear;
-    qVidomchaPidporydkovanist.SQL.Text:='select * from VIDOMCHAPIDPORYDKOVANIST order by VIDOMSTVO';
+    qVidomchaPidporydkovanist.SQL.Text:='select KODVIDOMSTVA as "Код", VIDOMSTVO as "Відомство" from VIDOMCHAPIDPORYDKOVANIST where not VIDOMSTVO is null order by VIDOMSTVO';
     qVidomchaPidporydkovanist.Open;
     aSortByKod.Checked:=false;
     aSortByVidomstrvo.Checked:=true;
+    edtFind.Text:='';
   end;
 end;
 
@@ -241,20 +248,13 @@ procedure TfrmVidomchaPidporydkovanist.qVidomchaPidporydkovanistFilterRecord(
   DataSet: TDataSet; var Accept: Boolean);
 begin
   if frmVidomchaPidporydkovanist.ActiveControl=frmVidomchaPidporydkovanist.edtFind then
-    if frmMain.PosN(frmVidomchaPidporydkovanist.edtFind.Text,frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('VIDOMSTVO').Value,0)>0 then Accept:=true else Accept:=false;
+    if frmMain.PosN(frmVidomchaPidporydkovanist.edtFind.Text,frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('Відомство').Value,0)>0 then Accept:=true else Accept:=false;
 end;
 
 procedure TfrmVidomchaPidporydkovanist.aSortByVidomstrvoExecute(
   Sender: TObject);
 begin
-  with frmVidomchaPidporydkovanist do
-  begin
-    qVidomchaPidporydkovanist.SQL.Clear;
-    qVidomchaPidporydkovanist.SQL.Text:='select * from VIDOMCHAPIDPORYDKOVANIST order by VIDOMSTVO';
-    qVidomchaPidporydkovanist.Open;
-    aSortByKod.Checked:=false;
-    aSortByVidomstrvo.Checked:=true;
-  end;
+  frmVidomchaPidporydkovanist.aUpdateExecute(sender);
 end;
 
 procedure TfrmVidomchaPidporydkovanist.aSortByKodExecute(Sender: TObject);
@@ -262,10 +262,11 @@ begin
   with frmVidomchaPidporydkovanist do
   begin
     qVidomchaPidporydkovanist.SQL.Clear;
-    qVidomchaPidporydkovanist.SQL.Text:='select * from VIDOMCHAPIDPORYDKOVANIST order by KODVIDOMSTVA';
+    qVidomchaPidporydkovanist.SQL.Text:='select KODVIDOMSTVA as "Код", VIDOMSTVO as "Відомство" from VIDOMCHAPIDPORYDKOVANIST where not VIDOMSTVO is null order by KODVIDOMSTVA';
     qVidomchaPidporydkovanist.Open;
     aSortByKod.Checked:=true;
     aSortByVidomstrvo.Checked:=false;
+    edtFind.Text:='';
   end;
 end;
 

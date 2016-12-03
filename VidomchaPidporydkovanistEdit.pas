@@ -39,6 +39,7 @@ uses
 procedure TfrmVidomchaPidporydkovanistEdit.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+{
   if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
   begin
     frmVidomchaPidporydkovanist.Enabled:=true;
@@ -113,6 +114,7 @@ begin
     Action:=caFree;
     exit;
   end;
+}
 
   frmMain.Enabled:=true;
   Action:=caFree;
@@ -124,14 +126,14 @@ begin
   with frmVidomchaPidporydkovanist do
   begin
     edtFind.Text:='';
-    qVidomchaPidporydkovanist.SQL.Clear;
-    qVidomchaPidporydkovanist.SQL.Text:='insert into VIDOMCHAPIDPORYDKOVANIST (KODVIDOMSTVA) values (gen_id(GET_DICTIONARIES_RECORD_ID,1))';
-    qVidomchaPidporydkovanist.Open;
-    qVidomchaPidporydkovanist.SQL.Clear;
-    qVidomchaPidporydkovanist.SQL.Text:='select * from VIDOMCHAPIDPORYDKOVANIST order by KODVIDOMSTVA';
-    qVidomchaPidporydkovanist.Open;
-    qVidomchaPidporydkovanist.Last;
-    frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text:=IntToStr(qVidomchaPidporydkovanist.FieldByName('KODVIDOMSTVA').Value);
+    qUpdate.SQL.Clear;
+    qUpdate.SQL.Text:='insert into VIDOMCHAPIDPORYDKOVANIST (KODVIDOMSTVA) values (gen_id(GET_DICTIONARIES_RECORD_ID,1))';
+    qUpdate.Open;
+    qUpdate.SQL.Clear;
+    qUpdate.SQL.Text:='select * from VIDOMCHAPIDPORYDKOVANIST order by KODVIDOMSTVA';
+    qUpdate.Open;
+    qUpdate.Last;
+    frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text:=IntToStr(qUpdate.FieldByName('KODVIDOMSTVA').Value);
   end;
 end;
 
@@ -144,6 +146,7 @@ procedure TfrmVidomchaPidporydkovanistEdit.aOKExecute(Sender: TObject);
 begin
   if frmVidomchaPidporydkovanistEdit.Caption='Вибір відомства' then
   begin
+{
     if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
     begin
       frmFinansoviSankciiEdit.edtVidomchaPidporydkovanist.Text:=frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text;
@@ -183,21 +186,25 @@ begin
       frmVidomchaPidporydkovanist.Close;
       exit;
     end;
+}
   end;
 
   if frmVidomchaPidporydkovanistEdit.Caption='Видалення відомства' then
   begin
     if MessageDlg('Увага!'+#13+'Видалення цього запису може відобразитись на інших відомостях!!!'+#13+'Відновлення запису буде неможливе!!!'+#13+'Ви дійсно бажаєте видалити цей запис?',mtWarning,[mbYes,mbNo],0)=mrYes then
     begin
-      frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.SQL.Clear;
-      frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.SQL.Text:='delete from VIDOMCHAPIDPORYDKOVANIST where KODVIDOMSTVA=:Kod';
-      frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params.Clear;
-      frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params.Add;
-      frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params[0].Name:='Kod';
-      frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params[0].Value:=frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text;
-      frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Open;
-      frmMain.trAzz.CommitRetaining;
+      with frmVidomchaPidporydkovanist.qUpdate do
+      begin
+        SQL.Clear;
+        SQL.Text:='delete from VIDOMCHAPIDPORYDKOVANIST where KODVIDOMSTVA=:Kod';
+        Params.Clear;
+        Params.Add;
+        Params[0].Name:='Kod';
+        Params[0].Value:=frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text;
+        Open;
+      end;
     end;
+    frmMain.trAzz.CommitRetaining;
     frmVidomchaPidporydkovanist.aUpdateExecute(sender);
     frmVidomchaPidporydkovanistEdit.Close;
     exit;
@@ -223,16 +230,19 @@ begin
       frmVidomchaPidporydkovanistEdit.edtVidomstvo.SetFocus;
       exit;
     end;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.SQL.Clear;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.SQL.Text:='update VIDOMCHAPIDPORYDKOVANIST set VIDOMSTVO=:Vidomstrvo where KODVIDOMSTVA=:Kod';
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params.Clear;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params.Add;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params[0].Name:='Vidomstvo';
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params[0].Value:=frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params.Add;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params[1].Name:='Kod';
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params[1].Value:=frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Open;
+    with frmVidomchaPidporydkovanist.qUpdate do
+    begin
+      SQL.Clear;
+      SQL.Text:='update VIDOMCHAPIDPORYDKOVANIST set VIDOMSTVO=:Vidomstrvo where KODVIDOMSTVA=:Kod';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='Vidomstvo';
+      Params[0].Value:=frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text;
+      Params.Add;
+      Params[1].Name:='Kod';
+      Params[1].Value:=frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text;
+      Open;
+    end;
     frmMain.trAzz.CommitRetaining;
     frmVidomchaPidporydkovanist.aUpdateExecute(sender);
     frmVidomchaPidporydkovanistEdit.Close;
@@ -259,16 +269,19 @@ begin
       frmVidomchaPidporydkovanistEdit.edtVidomstvo.SetFocus;
       exit;
     end;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.SQL.Clear;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.SQL.Text:='update VIDOMCHAPIDPORYDKOVANIST set VIDOMSTVO=:Vidomstrvo where KODVIDOMSTVA=:Kod';
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params.Clear;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params.Add;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params[0].Name:='Vidomstvo';
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params[0].Value:=frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params.Add;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params[1].Name:='Kod';
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Params[1].Value:=frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text;
-    frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.Open;
+    with frmVidomchaPidporydkovanist.qUpdate do
+    begin
+      SQL.Clear;
+      SQL.Text:='update VIDOMCHAPIDPORYDKOVANIST set VIDOMSTVO=:Vidomstrvo where KODVIDOMSTVA=:Kod';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='Vidomstvo';
+      Params[0].Value:=frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text;
+      Params.Add;
+      Params[1].Name:='Kod';
+      Params[1].Value:=frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text;
+      Open;
+    end;
     frmMain.trAzz.CommitRetaining;
     frmVidomchaPidporydkovanist.aUpdateExecute(sender);
     frmVidomchaPidporydkovanistEdit.Close;
