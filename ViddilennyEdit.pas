@@ -45,6 +45,7 @@ uses
 procedure TfrmViddilennyEdit.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+{
   if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
   begin
     frmFinansoviSankciiEdit.Enabled:=true;
@@ -89,19 +90,24 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmViddilenny.Enabled:=true;
     frmSpivrobitnikiEdit.Enabled:=true;
-    if frmViddilennyEdit.Caption<>'Вибір відділення' then
+    if frmSpivrobitnikiEdit.BorderStyle=bsDialog then
     begin
       frmViddilenny.Enabled:=true;
       frmSpivrobitnikiEdit.Enabled:=false;
-    end
-    else
-      frmViddilenny.Close;
-    frmMain.Enabled:=false;
+    end;
+//    if frmViddilennyEdit.Caption<>'Вибір відділення' then
+//    begin
+//      frmViddilenny.Enabled:=true;
+//      frmSpivrobitnikiEdit.Enabled:=false;
+//    end
+//    else
+//      frmViddilenny.Close;
+//    frmMain.Enabled:=false;
     Action:=caFree;
     exit;
   end;
@@ -174,7 +180,7 @@ begin
       frmViddilenny.Close;
       exit;
     end;
-
+}
     if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
     begin
       frmSpivrobitnikiEdit.cbViddilenny.Text:=frmViddilennyEdit.edtNazvaViddilenny.Text;
@@ -182,7 +188,6 @@ begin
       frmViddilenny.Close;
       exit;
     end;
-}
   end;
 
   if frmViddilennyEdit.Caption='Видалення відділення' then

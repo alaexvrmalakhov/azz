@@ -1,6 +1,6 @@
 object frmPosadi: TfrmPosadi
-  Left = 261
-  Top = 114
+  Left = 1022
+  Top = 99
   Width = 473
   Height = 269
   Caption = 'frmPosadi'

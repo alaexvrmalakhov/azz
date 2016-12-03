@@ -1,6 +1,6 @@
 object frmRajoni: TfrmRajoni
-  Left = 250
-  Top = 114
+  Left = 247
+  Top = 112
   Width = 386
   Height = 257
   Caption = 'frmRajoni'

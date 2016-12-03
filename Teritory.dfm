@@ -1,6 +1,6 @@
 object frmTeritory: TfrmTeritory
-  Left = 1008
-  Top = 101
+  Left = 686
+  Top = 113
   Width = 360
   Height = 254
   Caption = 'frmTeritory'

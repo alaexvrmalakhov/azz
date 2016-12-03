@@ -76,22 +76,26 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmSpivrobitnikiEdit.Enabled:=true;
-    if frmRajoniEdit.Caption<>'Вибрати район' then
-    begin
-      frmRajoni.Enabled:=true;
-      frmSpivrobitnikiEdit.Enabled:=false;
-    end
-    else
-      frmRajoni.Close;
+    frmRajoni.Enabled:=true;
     frmMain.Enabled:=false;
+    if frmSpivrobitnikiEdit.BorderStyle=bsDialog then
+    begin
+      frmSpivrobitnikiEdit.Enabled:=false;
+    end;
+//    if frmRajoniEdit.Caption<>'Вибрати район' then
+//    begin
+//      frmRajoni.Enabled:=true;
+//      frmSpivrobitnikiEdit.Enabled:=false;
+//    end;
+//    else
+//      frmRajoni.Close;
     Action:=caFree;
     exit;
   end;
-}
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -156,16 +160,15 @@ begin
 //      frmRajoni.Close;
 //      exit;
 //    end;
-
+}
     if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
     begin
       frmSpivrobitnikiEdit.cbRajon.Text:=frmRajoniEdit.edtRajon.Text;
       frmRajoniEdit.Close;
       frmRajoni.Close;
-      frmSpivrobitnikiEdit.aRajonChangeExecute(sender);
+//      frmSpivrobitnikiEdit.aRajonChangeExecute(sender);
       exit;
     end;
-}
   end;
 
   if frmRajoniEdit.Caption='Видалити район' then

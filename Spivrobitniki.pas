@@ -244,55 +244,63 @@ begin
   frmSpivrobitnikiEdit.BorderStyle:=bsDialog;
   frmSpivrobitnikiEdit.Position:=poMainFormCenter;
 
-{
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').IsNull then frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').Value) else frmSpivrobitnikiEdit.aKodUpdateExecute(sender);
+  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('Код співробітника').IsNull then frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('Код співробітника').Value) else frmSpivrobitnikiEdit.aKodUpdateExecute(sender);
   frmSpivrobitnikiEdit.edtKodSpivrobitnika.Enabled:=false;
   frmSpivrobitnikiEdit.btnKodSpivrobitnika.Enabled:=false;
 
-  frmSpivrobitnikiEdit.aMinistryUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('MINISTRY').IsNull then frmSpivrobitnikiEdit.cbMinistry.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('MINISTRY').Value) else frmSpivrobitnikiEdit.cbMinistry.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KOD',StrToInt(frmSpivrobitnikiEdit.cbMinistry.Text),[]) then frmSpivrobitnikiEdit.cbMinistry.Text:=frmSpivrobitniki.qTeritory.FieldByName('MINISTRY').Value else frmSpivrobitnikiEdit.cbMinistry.Text:='';
-  frmSpivrobitnikiEdit.cbMinistry.Enabled:=true;
-  frmSpivrobitnikiEdit.btnMinistryUpdate.Enabled:=true;
-  frmSpivrobitnikiEdit.btnMinistryChoice.Enabled:=true;
-
   frmSpivrobitnikiEdit.aTeritoryUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('TERITORY').IsNull then frmSpivrobitnikiEdit.cbTeritory.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('TERITORY').Value) else frmSpivrobitnikiEdit.cbTeritory.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KOD',StrToInt(frmSpivrobitnikiEdit.cbTeritory.Text),[]) then frmSpivrobitnikiEdit.cbTeritory.Text:=frmSpivrobitniki.qTeritory.FIeldByName('TERITORY').Value else frmSpivrobitniki.cbTeritory.Text:='';
+  frmSpivrobitnikiEdit.cbTeritory.Text:=frmSpivrobitniki.cbTeritory.Text;
   frmSpivrobitnikiEdit.cbTeritory.Enabled:=true;
   frmSpivrobitnikiEdit.btnTeritoryUpdate.Enabled:=true;
   frmSpivrobitnikiEdit.btnTeritoryChoice.Enabled:=true;
 
   frmSpivrobitnikiEdit.aRajonUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('RAJON').IsNull then frmSpivrobitnikiEdit.cbRajon.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('RAJON').Value) else frmSpivrobitnikiEdit.cbRajon.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KOD',StrToInt(frmSpivrobitnikiEdit.cbRajon.Text),[]) then frmSpivrobitnikiEdit.cbRajon.Text:=frmSpivrobitniki.qTeritory.FieldByName('RAJON').Value else frmSpivrobitnikiEdit.cbRajon.Text:='';
+  frmSpivrobitnikiEdit.cbRajon.Text:=frmSpivrobitniki.cbRajon.Text;
   frmSpivrobitnikiEdit.cbRajon.Enabled:=true;
   frmSpivrobitnikiEdit.btnRajonUpdate.Enabled:=true;
   frmSpivrobitnikiEdit.btnRajonChoice.Enabled:=true;
 
   frmSpivrobitnikiEdit.aViddilennyUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('KODVIDDILENNY').IsNull then frmSpivrobitnikiEdit.cbViddilenny.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('KODVIDDILENNY').Value) else frmSpivrobitnikiEdit.cbViddilenny.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KODVIDDILENNY',StrToInt(frmSpivrobitnikiEdit.cbViddilenny.Text),[]) then frmSpivrobitnikiEdit.cbViddilenny.Text:=frmSpivrobitniki.qTeritory.FieldByName('NAZVAVIDDILENNY').Value else frmSpivrobitnikiEdit.cbViddilenny.Text:='';
+  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('Відділення').IsNull then frmSpivrobitnikiEdit.cbViddilenny.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('Відділення').Value else frmSpivrobitnikiEdit.cbViddilenny.Text:='';
   frmSpivrobitnikiEdit.cbViddilenny.Enabled:=true;
   frmSpivrobitnikiEdit.btnViddilennyUpdate.Enabled:=true;
   frmSpivrobitnikiEdit.btnViddilennyChoice.Enabled:=true;
 
   frmSpivrobitnikiEdit.aPosadaUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('KODPOSADI').IsNull then frmSpivrobitnikiEdit.cbPosada.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('KODPOSADI').Value) else frmSpivrobitnikiEdit.cbPosada.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KODPOSADI',StrToInt(frmSpivrobitnikiEdit.cbPosada.Text),[]) then frmSpivrobitnikiEdit.cbPosada.Text:=frmSpivrobitniki.qTeritory.FieldByName('NAZVAPOSADI').Value else frmSpivrobitnikiEdit.cbPosada.Text:='';
+  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('Посада').IsNull then frmSpivrobitnikiEdit.cbPosada.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('Посада').Value else frmSpivrobitnikiEdit.cbPosada.Text:='';
   frmSpivrobitnikiEdit.cbPosada.Enabled:=true;
   frmSpivrobitnikiEdit.btnPosadaUpdate.Enabled:=true;
   frmSpivrobitnikiEdit.btnPosadaChoice.Enabled:=true;
 
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE').IsNull then frmSpivrobitnikiEdit.edtPrizvische.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE').Value else frmSpivrobitnikiEdit.edtPrizvische.Text:='';
+  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('Прізвище').IsNull then frmSpivrobitnikiEdit.edtPrizvische.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('Прізвище').Value else frmSpivrobitnikiEdit.edtPrizvische.Text:='';
   frmSpivrobitnikiEdit.edtPrizvische.Enabled:=true;
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE_RV').IsNull then frmSpivrobitnikiEdit.edtPrizvische_RV.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE_RV').Value else frmSpivrobitnikiEdit.edtPrizvische_RV.Text:='';
-  frmSpivrobitnikiEdit.edtPrizvische_RV.Enabled:=true;
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE_TV').IsNull then frmSpivrobitnikiEdit.edtPrizvische_TV.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE_TV').Value else frmSpivrobitnikiEdit.edtPrizvische_TV.Text:='';
+
+  with frmSpivrobitniki.qTeritory do
+  begin
+    SQL.Clear;
+    SQL.Text:='select * from SPIVROBITNIKI where KODSPIVROBITNIKA=:kod';
+    Params.Clear;
+    Params.Add;
+    Params[0].Name:='kod';
+    Params[0].Value:=frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text;
+    Open;
+  end;
+  if frmSpivrobitniki.qTeritory.Locate('KODSPIVROBITNIKA',frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text,[]) then
+  begin
+    if not frmSpivrobitniki.qTeritory.FieldByName('PRIZVISXHE_RV').IsNull then frmSpivrobitnikiEdit.edtPrizvische_RV.Text:=frmSpivrobitniki.qTeritory.FieldByName('PRIZVISXHE_RV').Value else frmSpivrobitnikiEdit.edtPrizvische_RV.Text:='';
+    frmSpivrobitnikiEdit.edtPrizvische_RV.Enabled:=true;
+    if not frmSpivrobitniki.qTeritory.FieldByName('PRIZVISXHE_TV').IsNull then frmSpivrobitnikiEdit.edtPrizvische_TV.Text:=frmSpivrobitniki.qTeritory.FieldByName('PRIZVISXHE_TV').Value else frmSpivrobitnikiEdit.edtPrizvische_TV.Text:='';
+    frmSpivrobitnikiEdit.edtPrizvische_TV.Enabled:=true;
+  end
+  else
+  begin
+    frmSpivrobitnikiEdit.edtPrizvische_RV.Text:='';
+    frmSpivrobitnikiEdit.edtPrizvische_RV.Enabled:=true;
+    frmSpivrobitnikiEdit.edtPrizvische_TV.Text:='';
   frmSpivrobitnikiEdit.edtPrizvische_TV.Enabled:=true;
+  end;
   frmSpivrobitnikiEdit.btnVidminok.Enabled:=true;
   frmSpivrobitnikiEdit.edtPrizvische.SetFocus;
-}
 end;
 
 procedure TfrmSpivrobitniki.aDeleteExecute(Sender: TObject);
@@ -313,55 +321,63 @@ begin
   frmSpivrobitnikiEdit.BorderStyle:=bsDialog;
   frmSpivrobitnikiEdit.Position:=poMainFormCenter;
 
-{
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').IsNull then frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').Value) else frmSpivrobitnikiEdit.aKodUpdateExecute(sender);
+  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('Код співробітника').IsNull then frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('Код співробітника').Value) else frmSpivrobitnikiEdit.aKodUpdateExecute(sender);
   frmSpivrobitnikiEdit.edtKodSpivrobitnika.Enabled:=false;
   frmSpivrobitnikiEdit.btnKodSpivrobitnika.Enabled:=false;
 
-  frmSpivrobitnikiEdit.aMinistryUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('MINISTRY').IsNull then frmSpivrobitnikiEdit.cbMinistry.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('MINISTRY').Value) else frmSpivrobitnikiEdit.cbMinistry.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KOD',StrToInt(frmSpivrobitnikiEdit.cbMinistry.Text),[]) then frmSpivrobitnikiEdit.cbMinistry.Text:=frmSpivrobitniki.qTeritory.FieldByName('MINISTRY').Value else frmSpivrobitnikiEdit.cbMinistry.Text:='';
-  frmSpivrobitnikiEdit.cbMinistry.Enabled:=false;
-  frmSpivrobitnikiEdit.btnMinistryUpdate.Enabled:=false;
-  frmSpivrobitnikiEdit.btnMinistryChoice.Enabled:=false;
-
   frmSpivrobitnikiEdit.aTeritoryUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('TERITORY').IsNull then frmSpivrobitnikiEdit.cbTeritory.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('TERITORY').Value) else frmSpivrobitnikiEdit.cbTeritory.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KOD',StrToInt(frmSpivrobitnikiEdit.cbTeritory.Text),[]) then frmSpivrobitnikiEdit.cbTeritory.Text:=frmSpivrobitniki.qTeritory.FIeldByName('TERITORY').Value else frmSpivrobitniki.cbTeritory.Text:='';
+  frmSpivrobitnikiEdit.cbTeritory.Text:=frmSpivrobitniki.cbTeritory.Text;
   frmSpivrobitnikiEdit.cbTeritory.Enabled:=false;
   frmSpivrobitnikiEdit.btnTeritoryUpdate.Enabled:=false;
   frmSpivrobitnikiEdit.btnTeritoryChoice.Enabled:=false;
 
   frmSpivrobitnikiEdit.aRajonUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('RAJON').IsNull then frmSpivrobitnikiEdit.cbRajon.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('RAJON').Value) else frmSpivrobitnikiEdit.cbRajon.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KOD',StrToInt(frmSpivrobitnikiEdit.cbRajon.Text),[]) then frmSpivrobitnikiEdit.cbRajon.Text:=frmSpivrobitniki.qTeritory.FieldByName('RAJON').Value else frmSpivrobitnikiEdit.cbRajon.Text:='';
+  frmSpivrobitnikiEdit.cbRajon.Text:=frmSpivrobitniki.cbRajon.Text;
   frmSpivrobitnikiEdit.cbRajon.Enabled:=false;
   frmSpivrobitnikiEdit.btnRajonUpdate.Enabled:=false;
   frmSpivrobitnikiEdit.btnRajonChoice.Enabled:=false;
 
   frmSpivrobitnikiEdit.aViddilennyUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('KODVIDDILENNY').IsNull then frmSpivrobitnikiEdit.cbViddilenny.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('KODVIDDILENNY').Value) else frmSpivrobitnikiEdit.cbViddilenny.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KODVIDDILENNY',StrToInt(frmSpivrobitnikiEdit.cbViddilenny.Text),[]) then frmSpivrobitnikiEdit.cbViddilenny.Text:=frmSpivrobitniki.qTeritory.FieldByName('NAZVAVIDDILENNY').Value else frmSpivrobitnikiEdit.cbViddilenny.Text:='';
+  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('Відділення').IsNull then frmSpivrobitnikiEdit.cbViddilenny.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('Відділення').Value else frmSpivrobitnikiEdit.cbViddilenny.Text:='';
   frmSpivrobitnikiEdit.cbViddilenny.Enabled:=false;
   frmSpivrobitnikiEdit.btnViddilennyUpdate.Enabled:=false;
   frmSpivrobitnikiEdit.btnViddilennyChoice.Enabled:=false;
 
   frmSpivrobitnikiEdit.aPosadaUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('KODPOSADI').IsNull then frmSpivrobitnikiEdit.cbPosada.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('KODPOSADI').Value) else frmSpivrobitnikiEdit.cbPosada.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KODPOSADI',StrToInt(frmSpivrobitnikiEdit.cbPosada.Text),[]) then frmSpivrobitnikiEdit.cbPosada.Text:=frmSpivrobitniki.qTeritory.FieldByName('NAZVAPOSADI').Value else frmSpivrobitnikiEdit.cbPosada.Text:='';
+  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('Посада').IsNull then frmSpivrobitnikiEdit.cbPosada.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('Посада').Value else frmSpivrobitnikiEdit.cbPosada.Text:='';
   frmSpivrobitnikiEdit.cbPosada.Enabled:=false;
   frmSpivrobitnikiEdit.btnPosadaUpdate.Enabled:=false;
   frmSpivrobitnikiEdit.btnPosadaChoice.Enabled:=false;
 
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE').IsNull then frmSpivrobitnikiEdit.edtPrizvische.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE').Value else frmSpivrobitnikiEdit.edtPrizvische.Text:='';
+  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('Прізвище').IsNull then frmSpivrobitnikiEdit.edtPrizvische.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('Прізвище').Value else frmSpivrobitnikiEdit.edtPrizvische.Text:='';
   frmSpivrobitnikiEdit.edtPrizvische.Enabled:=false;
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE_RV').IsNull then frmSpivrobitnikiEdit.edtPrizvische_RV.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE_RV').Value else frmSpivrobitnikiEdit.edtPrizvische_RV.Text:='';
-  frmSpivrobitnikiEdit.edtPrizvische_RV.Enabled:=false;
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE_TV').IsNull then frmSpivrobitnikiEdit.edtPrizvische_TV.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE_TV').Value else frmSpivrobitnikiEdit.edtPrizvische_TV.Text:='';
+
+  with frmSpivrobitniki.qTeritory do
+  begin
+    SQL.Clear;
+    SQL.Text:='select * from SPIVROBITNIKI where KODSPIVROBITNIKA=:kod';
+    Params.Clear;
+    Params.Add;
+    Params[0].Name:='kod';
+    Params[0].Value:=frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text;
+    Open;
+  end;
+  if frmSpivrobitniki.qTeritory.Locate('KODSPIVROBITNIKA',frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text,[]) then
+  begin
+    if not frmSpivrobitniki.qTeritory.FieldByName('PRIZVISXHE_RV').IsNull then frmSpivrobitnikiEdit.edtPrizvische_RV.Text:=frmSpivrobitniki.qTeritory.FieldByName('PRIZVISXHE_RV').Value else frmSpivrobitnikiEdit.edtPrizvische_RV.Text:='';
+    frmSpivrobitnikiEdit.edtPrizvische_RV.Enabled:=false;
+    if not frmSpivrobitniki.qTeritory.FieldByName('PRIZVISXHE_TV').IsNull then frmSpivrobitnikiEdit.edtPrizvische_TV.Text:=frmSpivrobitniki.qTeritory.FieldByName('PRIZVISXHE_TV').Value else frmSpivrobitnikiEdit.edtPrizvische_TV.Text:='';
+    frmSpivrobitnikiEdit.edtPrizvische_TV.Enabled:=false;
+  end
+  else
+  begin
+    frmSpivrobitnikiEdit.edtPrizvische_RV.Text:='';
+    frmSpivrobitnikiEdit.edtPrizvische_RV.Enabled:=false;
+    frmSpivrobitnikiEdit.edtPrizvische_TV.Text:='';
   frmSpivrobitnikiEdit.edtPrizvische_TV.Enabled:=false;
+  end;
   frmSpivrobitnikiEdit.btnVidminok.Enabled:=false;
   frmSpivrobitnikiEdit.btnVidmina.SetFocus;
-}
 end;
 
 procedure TfrmSpivrobitniki.aChoiceExecute(Sender: TObject);
@@ -382,55 +398,62 @@ begin
   frmSpivrobitnikiEdit.BorderStyle:=bsDialog;
   frmSpivrobitnikiEdit.Position:=poMainFormCenter;
 
-{
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').IsNull then frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('KODSPIVROBITNIKA').Value) else frmSpivrobitnikiEdit.aKodUpdateExecute(sender);
+  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('Код співробітника').IsNull then frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('Код співробітника').Value) else frmSpivrobitnikiEdit.aKodUpdateExecute(sender);
   frmSpivrobitnikiEdit.edtKodSpivrobitnika.Enabled:=false;
   frmSpivrobitnikiEdit.btnKodSpivrobitnika.Enabled:=false;
 
-  frmSpivrobitnikiEdit.aMinistryUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('MINISTRY').IsNull then frmSpivrobitnikiEdit.cbMinistry.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('MINISTRY').Value) else frmSpivrobitnikiEdit.cbMinistry.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KOD',StrToInt(frmSpivrobitnikiEdit.cbMinistry.Text),[]) then frmSpivrobitnikiEdit.cbMinistry.Text:=frmSpivrobitniki.qTeritory.FieldByName('MINISTRY').Value else frmSpivrobitnikiEdit.cbMinistry.Text:='';
-  frmSpivrobitnikiEdit.cbMinistry.Enabled:=false;
-  frmSpivrobitnikiEdit.btnMinistryUpdate.Enabled:=false;
-  frmSpivrobitnikiEdit.btnMinistryChoice.Enabled:=false;
-
   frmSpivrobitnikiEdit.aTeritoryUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('TERITORY').IsNull then frmSpivrobitnikiEdit.cbTeritory.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('TERITORY').Value) else frmSpivrobitnikiEdit.cbTeritory.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KOD',StrToInt(frmSpivrobitnikiEdit.cbTeritory.Text),[]) then frmSpivrobitnikiEdit.cbTeritory.Text:=frmSpivrobitniki.qTeritory.FIeldByName('TERITORY').Value else frmSpivrobitniki.cbTeritory.Text:='';
+  frmSpivrobitnikiEdit.cbTeritory.Text:=frmSpivrobitniki.cbTeritory.Text;
   frmSpivrobitnikiEdit.cbTeritory.Enabled:=false;
   frmSpivrobitnikiEdit.btnTeritoryUpdate.Enabled:=false;
   frmSpivrobitnikiEdit.btnTeritoryChoice.Enabled:=false;
 
   frmSpivrobitnikiEdit.aRajonUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('RAJON').IsNull then frmSpivrobitnikiEdit.cbRajon.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('RAJON').Value) else frmSpivrobitnikiEdit.cbRajon.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KOD',StrToInt(frmSpivrobitnikiEdit.cbRajon.Text),[]) then frmSpivrobitnikiEdit.cbRajon.Text:=frmSpivrobitniki.qTeritory.FieldByName('RAJON').Value else frmSpivrobitnikiEdit.cbRajon.Text:='';
+  frmSpivrobitnikiEdit.cbRajon.Text:=frmSpivrobitniki.cbRajon.Text;
   frmSpivrobitnikiEdit.cbRajon.Enabled:=false;
   frmSpivrobitnikiEdit.btnRajonUpdate.Enabled:=false;
   frmSpivrobitnikiEdit.btnRajonChoice.Enabled:=false;
 
   frmSpivrobitnikiEdit.aViddilennyUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('KODVIDDILENNY').IsNull then frmSpivrobitnikiEdit.cbViddilenny.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('KODVIDDILENNY').Value) else frmSpivrobitnikiEdit.cbViddilenny.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KODVIDDILENNY',StrToInt(frmSpivrobitnikiEdit.cbViddilenny.Text),[]) then frmSpivrobitnikiEdit.cbViddilenny.Text:=frmSpivrobitniki.qTeritory.FieldByName('NAZVAVIDDILENNY').Value else frmSpivrobitnikiEdit.cbViddilenny.Text:='';
+  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('Відділення').IsNull then frmSpivrobitnikiEdit.cbViddilenny.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('Відділення').Value else frmSpivrobitnikiEdit.cbViddilenny.Text:='';
   frmSpivrobitnikiEdit.cbViddilenny.Enabled:=false;
   frmSpivrobitnikiEdit.btnViddilennyUpdate.Enabled:=false;
   frmSpivrobitnikiEdit.btnViddilennyChoice.Enabled:=false;
 
   frmSpivrobitnikiEdit.aPosadaUpdateExecute(sender);
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('KODPOSADI').IsNull then frmSpivrobitnikiEdit.cbPosada.Text:=IntToStr(frmSpivrobitniki.qSpivrobitniki.FieldByName('KODPOSADI').Value) else frmSpivrobitnikiEdit.cbPosada.Text:='0';
-  if frmSpivrobitniki.qTeritory.Locate('KODPOSADI',StrToInt(frmSpivrobitnikiEdit.cbPosada.Text),[]) then frmSpivrobitnikiEdit.cbPosada.Text:=frmSpivrobitniki.qTeritory.FieldByName('NAZVAPOSADI').Value else frmSpivrobitnikiEdit.cbPosada.Text:='';
+  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('Посада').IsNull then frmSpivrobitnikiEdit.cbPosada.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('Посада').Value else frmSpivrobitnikiEdit.cbPosada.Text:='';
   frmSpivrobitnikiEdit.cbPosada.Enabled:=false;
   frmSpivrobitnikiEdit.btnPosadaUpdate.Enabled:=false;
   frmSpivrobitnikiEdit.btnPosadaChoice.Enabled:=false;
 
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE').IsNull then frmSpivrobitnikiEdit.edtPrizvische.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE').Value else frmSpivrobitnikiEdit.edtPrizvische.Text:='';
+  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('Прізвище').IsNull then frmSpivrobitnikiEdit.edtPrizvische.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('Прізвище').Value else frmSpivrobitnikiEdit.edtPrizvische.Text:='';
   frmSpivrobitnikiEdit.edtPrizvische.Enabled:=false;
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE_RV').IsNull then frmSpivrobitnikiEdit.edtPrizvische_RV.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE_RV').Value else frmSpivrobitnikiEdit.edtPrizvische_RV.Text:='';
-  frmSpivrobitnikiEdit.edtPrizvische_RV.Enabled:=false;
-  if not frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE_TV').IsNull then frmSpivrobitnikiEdit.edtPrizvische_TV.Text:=frmSpivrobitniki.qSpivrobitniki.FieldByName('PRIZVISXHE_TV').Value else frmSpivrobitnikiEdit.edtPrizvische_TV.Text:='';
-  frmSpivrobitnikiEdit.edtPrizvische_TV.Enabled:=false;
-  frmSpivrobitnikiEdit.btnVidminok.Enabled:=false;
+
+  with frmSpivrobitniki.qTeritory do
+  begin
+    SQL.Clear;
+    SQL.Text:='select * from SPIVROBITNIKI where KODSPIVROBITNIKA=:kod';
+    Params.Clear;
+    Params.Add;
+    Params[0].Name:='kod';
+    Params[0].Value:=frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text;
+    Open;
+  end;
+  if frmSpivrobitniki.qTeritory.Locate('KODSPIVROBITNIKA',frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text,[]) then
+  begin
+    if not frmSpivrobitniki.qTeritory.FieldByName('PRIZVISXHE_RV').IsNull then frmSpivrobitnikiEdit.edtPrizvische_RV.Text:=frmSpivrobitniki.qTeritory.FieldByName('PRIZVISXHE_RV').Value else frmSpivrobitnikiEdit.edtPrizvische_RV.Text:='';
+    frmSpivrobitnikiEdit.edtPrizvische_RV.Enabled:=false;
+    if not frmSpivrobitniki.qTeritory.FieldByName('PRIZVISXHE_TV').IsNull then frmSpivrobitnikiEdit.edtPrizvische_TV.Text:=frmSpivrobitniki.qTeritory.FieldByName('PRIZVISXHE_TV').Value else frmSpivrobitnikiEdit.edtPrizvische_TV.Text:='';
+    frmSpivrobitnikiEdit.edtPrizvische_TV.Enabled:=false;
+  end
+  else
+  begin
+    frmSpivrobitnikiEdit.edtPrizvische_RV.Text:='';
+    frmSpivrobitnikiEdit.edtPrizvische_RV.Enabled:=false;
+    frmSpivrobitnikiEdit.edtPrizvische_TV.Text:='';
+    frmSpivrobitnikiEdit.edtPrizvische_TV.Enabled:=false;
+  end;
   frmSpivrobitnikiEdit.btnVikonati.SetFocus;
-}
 end;
 
 procedure TfrmSpivrobitniki.aUpdateExecute(Sender: TObject);

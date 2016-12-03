@@ -1,6 +1,6 @@
 object frmSpivrobitnikiEdit: TfrmSpivrobitnikiEdit
-  Left = 656
-  Top = 113
+  Left = 654
+  Top = 107
   Width = 463
   Height = 341
   Caption = 'frmSpivrobitnikiEdit'

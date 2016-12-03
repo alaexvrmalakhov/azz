@@ -47,6 +47,7 @@ uses
 procedure TfrmPosadiEdit.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+{
 //  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
 //  begin
 //    frmFinansoviSankciiEdit.Enabled:=true;
@@ -194,18 +195,23 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmSpivrobitnikiEdit.Enabled:=true;
     frmMain.Enabled:=false;
-    if frmPosadiEdit.Caption<>'Вибір посади' then
+    if frmPosadi.BorderStyle=bsDialog then
     begin
       frmPosadi.Enabled:=true;
       frmSpivrobitnikiEdit.Enabled:=false;
-    end
-    else
-      frmPosadi.Close;
+    end;
+//    if frmPosadiEdit.Caption<>'Вибір посади' then
+//    begin
+//      frmPosadi.Enabled:=true;
+//      frmSpivrobitnikiEdit.Enabled:=false;
+//    end
+//    else
+//      frmPosadi.Close;
     Action:=caFree;
     exit;
   end;
@@ -311,7 +317,7 @@ begin
       frmPosadi.Close;
       exit;
     end;
-
+}
     if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
     begin
       frmSpivrobitnikiEdit.cbPosada.Text:=frmPosadiEdit.edtNazvaposadi.Text;
@@ -319,7 +325,6 @@ begin
       frmPosadi.Close;
       exit;
     end;
-}
   end;
 
   if frmPosadiEdit.Caption='Видалення посади' then

@@ -1,5 +1,5 @@
 object frmPosadiEdit: TfrmPosadiEdit
-  Left = 735
+  Left = 1325
   Top = 110
   Width = 505
   Height = 214

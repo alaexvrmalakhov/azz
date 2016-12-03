@@ -87,23 +87,22 @@ begin
     Action:=caFree;
     exit;
   end;
-{
+
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmTeritory.Enabled:=true;
     if frmTeritoryEdit.Caption<>'Вибрати територію' then
     begin
       frmTeritory.Enabled:=true;
-      frmPosadiEdit.Enabled:=false;
-    end
-    else
-      frmTeritory.Close;
+      frmSpivrobitnikiEdit.Enabled:=false;
+    end;
+//    else
+//      frmTeritory.Close;
     frmMain.Enabled:=false;
     frmSpivrobitnikiEdit.Enabled:=true;
     Action:=caFree;
     exit;
   end;
-}
 
   frmMain.Enabled:=true;
   Action:=caFree;
@@ -157,7 +156,7 @@ begin
       frmTeritory.Close;
       exit;
     end;
-{
+
     if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
     begin
       frmSpivrobitnikiEdit.cbTeritory.Text:=frmTeritoryEdit.edtTeritory.Text;
@@ -166,7 +165,6 @@ begin
       frmSpivrobitnikiEdit.aTeritoryChangeExecute(sender);
       exit;
     end;
-}
   end;
 
   if frmTeritoryEdit.Caption='Видалити територію' then

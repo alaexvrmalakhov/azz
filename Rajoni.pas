@@ -91,7 +91,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmSpivrobitnikiEdit.Enabled:=true;
@@ -99,7 +99,6 @@ begin
     Action:=caFree;
     exit;
   end;
-}
 
   frmMain.Enabled:=true;
   Action:=caFree;
@@ -165,7 +164,7 @@ begin
   frmRajoniEdit.Caption:='Додати район';
 //  if frmMain.IsFormOpen('frmPosadiEdit') then frmRajoni.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViddilennyEdit') then frmRajoni.Enabled:=false;
-//  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
+  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
 
   frmRajoniEdit.edtKod.Text:='';
   frmRajoniEdit.aKodUpdateExecute(sender);
@@ -199,7 +198,7 @@ begin
   frmRajoniEdit.Caption:='Редагувати район';
 //  if frmMain.IsFormOpen('frmPosadiEdit') then frmRajoni.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViddilennyEdit') then frmRajoni.Enabled:=false;
-//  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
+  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
 
   if not frmRajoni.qDistrict.FieldByName('Код району').IsNull then frmRajoniEdit.edtKod.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('Код району').Value) else frmRajoniEdit.aKodUpdateExecute(sender);
   frmRajoniEdit.edtKod.Enabled:=false;
@@ -229,7 +228,7 @@ begin
   frmRajoniEdit.Caption:='Видалити район';
 //  if frmMain.IsFormOpen('frmPosadiEdit') then frmRajoni.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViddilennyEdit') then frmRajoni.Enabled:=false;
-//  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
+  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
 
   if not frmRajoni.qDistrict.FieldByName('Код району').IsNull then frmRajoniEdit.edtKod.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('Код району').Value) else frmRajoniEdit.aKodUpdateExecute(sender);
   frmRajoniEdit.edtKod.Enabled:=false;
@@ -258,8 +257,8 @@ begin
   frmRajoniEdit.Position:=poMainFormCenter;
   frmRajoniEdit.Caption:='Вибрати район';
 //  if frmMain.IsFormOpen('frmPosadiEdit') then frmRajoni.Enabled:=false;
-//  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViddilennyEdit') then frmRajoni.Enabled:=false;
+  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmRajoni.Enabled:=false;
 
   if not frmRajoni.qDistrict.FieldByName('Код району').IsNull then frmRajoniEdit.edtKod.Text:=IntToStr(frmRajoni.qDistrict.FieldByName('Код району').Value) else frmRajoniEdit.aKodUpdateExecute(sender);
   frmRajoniEdit.edtKod.Enabled:=false;

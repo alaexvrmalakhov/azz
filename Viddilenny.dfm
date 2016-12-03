@@ -1,6 +1,6 @@
 object frmViddilenny: TfrmViddilenny
-  Left = 286
-  Top = 115
+  Left = 1085
+  Top = 100
   Width = 404
   Height = 269
   Caption = 'frmViddilenny'

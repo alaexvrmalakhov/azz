@@ -1,6 +1,6 @@
 object frmTeritoryEdit: TfrmTeritoryEdit
-  Left = 1353
-  Top = 189
+  Left = 941
+  Top = 114
   Width = 567
   Height = 164
   Caption = 'frmTeritoryEdit'

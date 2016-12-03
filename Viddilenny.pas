@@ -67,7 +67,7 @@ procedure TfrmViddilenny.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   frmViddilenny.qViddilenny.Close;
-
+{
   if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
   begin
     frmFinansoviSankciiEdit.Enabled:=true;
@@ -91,7 +91,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmSpivrobitnikiEdit.Enabled:=true;
@@ -109,9 +109,9 @@ begin
   if not frmMain.IsFormOpen('frmViddilennyEdit') then frmViddilennyEdit:=TfrmViddilennyEdit.Create(self);
   frmMain.Enabled:=false;
   frmViddilennyEdit.Show;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmViddilenny.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmViddilenny.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmViddilenny.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmViddilenny.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmViddilenny.Enabled:=false;
   frmViddilennyEdit.Caption:='Додавання нового відділення';
   frmViddilennyEdit.BorderStyle:=bsDialog;
@@ -136,9 +136,9 @@ begin
   if not frmMain.IsFormOpen('frmViddilennyEdit') then frmViddilennyEdit:=TfrmViddilennyEdit.Create(self);
   frmMain.Enabled:=false;
   frmViddilennyEdit.Show;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmViddilenny.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmViddilenny.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmViddilenny.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmViddilenny.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmViddilenny.Enabled:=false;
   frmViddilennyEdit.Caption:='Редагування відділення';
   frmViddilennyEdit.BorderStyle:=bsDialog;
@@ -178,9 +178,9 @@ begin
   if not frmMain.IsFormOpen('frmViddilennyEdit') then frmViddilennyEdit:=TfrmViddilennyEdit.Create(self);
   frmMain.Enabled:=false;
   frmViddilennyEdit.Show;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmViddilenny.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmViddilenny.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmViddilenny.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmViddilenny.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmViddilenny.Enabled:=false;
   frmViddilennyEdit.Caption:='Видалення відділення';
   frmViddilennyEdit.BorderStyle:=bsDialog;
@@ -216,18 +216,45 @@ end;
 
 procedure TfrmViddilenny.aChoiceExecute(Sender: TObject);
 begin
-{
   if frmViddilenny.qViddilenny.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmViddilennyEdit') then frmViddilennyEdit:=TfrmViddilennyEdit.Create(self);
   frmMain.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmViddilenny.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmViddilenny.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmViddilenny.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmViddilenny.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmViddilenny.Enabled:=false;
   frmViddilennyEdit.Show;
   frmViddilennyEdit.Caption:='Вибір відділення';
   frmViddilennyEdit.BorderStyle:=bsDialog;
   frmViddilennyEdit.Position:=poMainFormCenter;
+
+  with frmViddilenny do
+  begin
+    with qEdit do
+    begin
+      SQL.Clear;
+      SQL.Text:='select * from VIDDILENNY where KODVIDDILENNY=:kod';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='kod';
+      Params[0].Value:=frmViddilenny.qViddilenny.FieldByName('Код відділення').Value;
+      Open;
+    end;
+  end;
+
+  if not frmViddilenny.qEdit.FieldByName('KODVIDDILENNY').IsNull then frmViddilennyEdit.edtKodViddilenny.Text:=IntToStr(frmViddilenny.qEdit.FieldByName('KODVIDDILENNY').Value) else frmViddilennyEdit.aKodUpdateExecute(sender);
+  frmViddilennyEdit.edtKodViddilenny.Enabled:=false;
+  frmViddilennyEdit.btnKodViddilenny.Enabled:=false;
+
+  if not frmViddilenny.qEdit.FieldByName('NAZVAVIDDILENNY').IsNull then frmViddilennyEdit.edtNazvaViddilenny.Text:=frmViddilenny.qEdit.FieldByName('NAZVAVIDDILENNY').Value else frmViddilennyEdit.edtNazvaViddilenny.Text:='';
+  frmViddilennyEdit.edtNazvaViddilenny.Enabled:=false;
+  if not frmViddilenny.qEdit.FieldByName('NAZVAVIDDILENNY_RV').IsNull then frmViddilennyEdit.edtNazvaViddilenny_RV.Text:=frmViddilenny.qEdit.FieldByName('NAZVAVIDDILENNY_RV').Value else frmViddilennyEdit.edtNazvaViddilenny_RV.Text:='';
+  frmViddilennyEdit.edtNazvaViddilenny_RV.Enabled:=false;
+  if not frmViddilenny.qEdit.FieldByName('NAZVAVIDDILENNY_TV').IsNull then frmViddilennyEdit.edtNazvaViddilenny_TV.Text:=frmViddilenny.qEdit.FieldByName('NAZVAVIDDILENNY_TV').Value else frmViddilennyEdit.edtNazvaViddilenny_TV.Text:='';
+  frmViddilennyEdit.edtNazvaViddilenny_TV.Enabled:=false;
+  frmViddilennyEdit.btnVidminok.Enabled:=false;
+  frmViddilennyEdit.btnVikonati.SetFocus;
+{
 
   if not frmViddilenny.qViddilenny.FieldByName('KODVIDDILENNY').IsNull then frmViddilennyEdit.edtKodViddilenny.Text:=IntToStr(frmViddilenny.qViddilenny.FieldByName('KODVIDDILENNY').Value) else frmViddilennyEdit.aKodUpdateExecute(sender);
   frmViddilennyEdit.edtKodViddilenny.Enabled:=false;
@@ -261,7 +288,6 @@ begin
   if not frmViddilenny.qViddilenny.FieldByName('NAZVAVIDDILENNY_TV').IsNull then frmViddilennyEdit.edtNazvaViddilenny_TV.Text:=frmViddilenny.qViddilenny.FieldByName('NAZVAVIDDILENNY_TV').Value else frmViddilennyEdit.edtNazvaViddilenny_TV.Text:='';
   frmViddilennyEdit.edtNazvaViddilenny_TV.Enabled:=false;
   frmViddilennyEdit.btnVidminok.Enabled:=false;
-  frmViddilennyEdit.btnVikonati.SetFocus;
 }
 end;
 

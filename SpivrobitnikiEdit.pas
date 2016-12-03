@@ -78,7 +78,8 @@ implementation
 uses
   Main, Spivrobitniki, FinansoviSankciiEdit, ViluchennyZRealizaciiEdit,
   Raport, Opechanuvanny, AdminZapobizhZahodiEdit, ShtrafiEdit, Posadi,
-  Ministry, Teritory, Rajoni, Viddilenny, Filter, KoristuvachiEdit;
+  Ministry, Teritory, Rajoni, Viddilenny, Filter, KoristuvachiEdit,
+  IBQuery;
 
 {$R *.dfm}
 
@@ -306,10 +307,10 @@ begin
       frmSpivrobitnikiEdit.cbRajon.Items.Add(qTeritory.FieldByName('RAJON').Value);
       qTeritory.Next;
     end;
-    frmSpivrobitnikiEdit.cbViddilenny.Text:='';
-    frmSpivrobitnikiEdit.cbViddilenny.Items.Clear;
-    frmSpivrobitnikiEdit.cbPosada.Text:='';
-    frmSpivrobitnikiEdit.cbPosada.Items.Clear;
+//    frmSpivrobitnikiEdit.cbViddilenny.Text:='';
+//    frmSpivrobitnikiEdit.cbViddilenny.Items.Clear;
+//    frmSpivrobitnikiEdit.cbPosada.Text:='';
+//    frmSpivrobitnikiEdit.cbPosada.Items.Clear;
   end;
 end;
 
@@ -364,11 +365,11 @@ end;
 
 procedure TfrmSpivrobitnikiEdit.aOKExecute(Sender: TObject);
 var
-  ministry,teritory,district,viddilenny,posada: integer;
+  teritory,district,viddilenny,posada: integer;
 begin
-{
   if frmSpivrobitnikiEdit.Caption='Вибір відомостей про співробітника' then
   begin
+{
     if frmMain.IsFormOpen('frmKoristuvachiEdit') then
     begin
       frmKoristuvachiEdit.cbPIB.Text:=frmSpivrobitnikiEdit.edtPrizvische.Text;
@@ -441,19 +442,23 @@ begin
       frmSpivrobitniki.Close;
       exit;
     end;
+}
   end;
 
   if frmSpivrobitnikiEdit.Caption='Видалення відомостей про співробітника' then
   begin
     if MessageDlg('Видалення відомостей про співробітника може відобразитись на інших даних!!!'+#13+'Ви дійсно бажаєти видалити цей запис',mtWarning,[mbYes,mbNo],0)=mrYes then
     begin
-      frmSpivrobitniki.qSpivrobitniki.SQL.Clear;
-      frmSpivrobitniki.qSpivrobitniki.SQL.Text:='delete from SPIVROBITNIKI where KODSPIVROBITNIKA=:Kod';
-      frmSpivrobitniki.qSpivrobitniki.Params.Clear;
-      frmSpivrobitniki.qSpivrobitniki.Params.Add;
-      frmSpivrobitniki.qSpivrobitniki.Params[0].Name:='Kod';
-      frmSpivrobitniki.qSpivrobitniki.Params[0].Value:=frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text;
-      frmSpivrobitniki.qSpivrobitniki.Open;
+      with frmSpivrobitniki.qTeritory do
+      begin
+        SQL.Clear;
+        SQL.Text:='delete from SPIVROBITNIKI where KODSPIVROBITNIKA=:Kod';
+        Params.Clear;
+        Params.Add;
+        Params[0].Name:='Kod';
+        Params[0].Value:=frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text;
+        Open;
+      end;
       frmMain.trAzz.CommitRetaining;
       frmSpivrobitnikiEdit.Close;
       frmSpivrobitniki.aUpdateExecute(sender);
@@ -477,17 +482,6 @@ begin
       exit;
     end;
 
-    if frmSpivrobitnikiEdit.cbMinistry.Text='' then
-    begin
-      frmSpivrobitnikiEdit.aMinistryUpdateExecute(sender);
-      frmSpivrobitnikiEdit.cbMinistry.SetFocus;
-      exit;
-    end;
-    frmSpivrobitniki.qTeritory.SQL.Clear;
-    frmSpivrobitniki.qTeritory.SQL.Text:='select * from MINISTRY order by MINISTRY';
-    frmSpivrobitniki.qTeritory.Open;
-    if frmSpivrobitniki.qTeritory.Locate('MINISTRY',frmSpivrobitnikiEdit.cbMinistry.Text,[]) then ministry:=frmSpivrobitniki.qTeritory.FieldByName('KOD').Value else ministry:=0;
-
     if frmSpivrobitnikiEdit.cbTeritory.Text='' then
     begin
       frmSpivrobitnikiEdit.aTeritoryUpdateExecute(sender);
@@ -495,11 +489,7 @@ begin
       exit;
     end;
     frmSpivrobitniki.qTeritory.SQL.Clear;
-    frmSpivrobitniki.qTeritory.SQL.Text:='select * from TERITORY where MINISTRY=:Ministry order by TERITORY';
-    frmSpivrobitniki.qTeritory.Params.Clear;
-    frmSpivrobitniki.qTeritory.Params.Add;
-    frmSpivrobitniki.qTeritory.Params[0].Name:='Ministry';
-    frmSpivrobitniki.qTeritory.Params[0].Value:=ministry;
+    frmSpivrobitniki.qTeritory.SQL.Text:='select * from TERITORY order by TERITORY';
     frmSpivrobitniki.qTeritory.Open;
     if frmSpivrobitniki.qTeritory.Locate('TERITORY',frmSpivrobitnikiEdit.cbTeritory.Text,[]) then teritory:=frmSpivrobitniki.qTeritory.FieldByName('KOD').Value else teritory:=0;
 
@@ -525,11 +515,7 @@ begin
       exit;
     end;
     frmSpivrobitniki.qTeritory.SQL.Clear;
-    frmSpivrobitniki.qTeritory.SQL.Text:='select * from VIDDILENNY where RAJON=:Rajon order by NAZVAVIDDILENNY';
-    frmSpivrobitniki.qTeritory.Params.Clear;
-    frmSpivrobitniki.qTeritory.Params.Add;
-    frmSpivrobitniki.qTeritory.Params[0].Name:='Rajon';
-    frmSpivrobitniki.qTeritory.Params[0].Value:=district;
+    frmSpivrobitniki.qTeritory.SQL.Text:='select * from VIDDILENNY order by NAZVAVIDDILENNY';
     frmSpivrobitniki.qTeritory.Open;
     if frmSpivrobitniki.qTeritory.Locate('NAZVAVIDDILENNY',frmSpivrobitnikiEdit.cbViddilenny.Text,[]) then viddilenny:=frmSpivrobitniki.qTeritory.FieldByName('KODVIDDILENNY').Value else viddilenny:=0;
 
@@ -540,11 +526,7 @@ begin
       exit;
     end;
     frmSpivrobitniki.qTeritory.SQL.Clear;
-    frmSpivrobitniki.qTeritory.SQL.Text:='select * from POSADI where RAJON=:Rajon order by NAZVAPOSADI';
-    frmSpivrobitniki.qTeritory.Params.Clear;
-    frmSpivrobitniki.qTeritory.Params.Add;
-    frmSpivrobitniki.qTeritory.Params[0].Name:='Rajon';
-    frmSpivrobitniki.qTeritory.Params[0].Value:=district;
+    frmSpivrobitniki.qTeritory.SQL.Text:='select * from POSADI order by NAZVAPOSADI';
     frmSpivrobitniki.qTeritory.Open;
     if frmSpivrobitniki.qTeritory.Locate('NAZVAPOSADI',frmSpivrobitnikiEdit.cbPosada.Text,[]) then posada:=frmSpivrobitniki.qTeritory.FieldByName('KODPOSADI').Value else posada:=0;
 
@@ -564,37 +546,37 @@ begin
       exit;
     end;
 
-    frmSpivrobitniki.qSpivrobitniki.SQL.Clear;
-    frmSpivrobitniki.qSpivrobitniki.SQL.Text:='update SPIVROBITNIKI set MINISTRY=:Ministry,TERITORY=:Teritory,RAJON=:Rajon,KODVIDDILENNY=:Viddilenny,KODPOSADI=:Posada,PRIZVISXHE=:Prizvische,PRIZVISXHE_RV=:Prizvische_RV,PRIZVISXHE_TV=:Prizvische_TV where KODSPIVROBITNIKA=:Kod';
-    frmSpivrobitniki.qSpivrobitniki.Params.Clear;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[0].Name:='Ministry';
-    frmSpivrobitniki.qSpivrobitniki.Params[0].Value:=ministry;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[1].Name:='Teritory';
-    frmSpivrobitniki.qSpivrobitniki.Params[1].Value:=teritory;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[2].Name:='Rajon';
-    frmSpivrobitniki.qSpivrobitniki.Params[2].Value:=district;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[3].Name:='Viddilenny';
-    frmSpivrobitniki.qSpivrobitniki.Params[3].Value:=viddilenny;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[4].Name:='Posada';
-    frmSpivrobitniki.qSpivrobitniki.Params[4].Value:=posada;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[5].Name:='Prizvische';
-    frmSpivrobitniki.qSpivrobitniki.Params[5].Value:=frmSpivrobitnikiEdit.edtPrizvische.Text;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[6].Name:='Prizvische_RV';
-    frmSpivrobitniki.qSpivrobitniki.Params[6].Value:=frmSpivrobitnikiEdit.edtPrizvische_RV.Text;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[7].Name:='Prizvische_TV';
-    frmSpivrobitniki.qSpivrobitniki.Params[7].Value:=frmSpivrobitnikiEdit.edtPrizvische_TV.Text;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[8].Name:='Kod';
-    frmSpivrobitniki.qSpivrobitniki.Params[8].Value:=frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text;
-    frmSpivrobitniki.qSpivrobitniki.Open;
+    with frmSpivrobitniki.qTeritory do
+    begin
+      SQL.Clear;
+      SQL.Text:='update SPIVROBITNIKI set TERITORY=:Teritory,RAJON=:Rajon,KODVIDDILENNY=:Viddilenny,KODPOSADI=:Posada,PRIZVISXHE=:Prizvische,PRIZVISXHE_RV=:Prizvische_RV,PRIZVISXHE_TV=:Prizvische_TV where KODSPIVROBITNIKA=:Kod';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='Teritory';
+      Params[0].Value:=teritory;
+      Params.Add;
+      Params[1].Name:='Rajon';
+      Params[1].Value:=district;
+      Params.Add;
+      Params[2].Name:='Viddilenny';
+      Params[2].Value:=viddilenny;
+      Params.Add;
+      Params[3].Name:='Posada';
+      Params[3].Value:=posada;
+      Params.Add;
+      Params[4].Name:='Prizvische';
+      Params[4].Value:=frmSpivrobitnikiEdit.edtPrizvische.Text;
+      Params.Add;
+      Params[5].Name:='Prizvische_RV';
+      Params[5].Value:=frmSpivrobitnikiEdit.edtPrizvische_RV.Text;
+      Params.Add;
+      Params[6].Name:='Prizvische_TV';
+      Params[6].Value:=frmSpivrobitnikiEdit.edtPrizvische_TV.Text;
+      Params.Add;
+      Params[7].Name:='Kod';
+      Params[7].Value:=frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text;
+      Open;
+    end;
     frmMain.trAzz.CommitRetaining;
     frmSpivrobitnikiEdit.Close;
     frmSpivrobitniki.aUpdateExecute(sender);
@@ -617,17 +599,6 @@ begin
       exit;
     end;
 
-    if frmSpivrobitnikiEdit.cbMinistry.Text='' then
-    begin
-      frmSpivrobitnikiEdit.aMinistryUpdateExecute(sender);
-      frmSpivrobitnikiEdit.cbMinistry.SetFocus;
-      exit;
-    end;
-    frmSpivrobitniki.qTeritory.SQL.Clear;
-    frmSpivrobitniki.qTeritory.SQL.Text:='select * from MINISTRY order by MINISTRY';
-    frmSpivrobitniki.qTeritory.Open;
-    if frmSpivrobitniki.qTeritory.Locate('MINISTRY',frmSpivrobitnikiEdit.cbMinistry.Text,[]) then ministry:=frmSpivrobitniki.qTeritory.FieldByName('KOD').Value else ministry:=0;
-
     if frmSpivrobitnikiEdit.cbTeritory.Text='' then
     begin
       frmSpivrobitnikiEdit.aTeritoryUpdateExecute(sender);
@@ -635,11 +606,7 @@ begin
       exit;
     end;
     frmSpivrobitniki.qTeritory.SQL.Clear;
-    frmSpivrobitniki.qTeritory.SQL.Text:='select * from TERITORY where MINISTRY=:Ministry order by TERITORY';
-    frmSpivrobitniki.qTeritory.Params.Clear;
-    frmSpivrobitniki.qTeritory.Params.Add;
-    frmSpivrobitniki.qTeritory.Params[0].Name:='Ministry';
-    frmSpivrobitniki.qTeritory.Params[0].Value:=ministry;
+    frmSpivrobitniki.qTeritory.SQL.Text:='select * from TERITORY order by TERITORY';
     frmSpivrobitniki.qTeritory.Open;
     if frmSpivrobitniki.qTeritory.Locate('TERITORY',frmSpivrobitnikiEdit.cbTeritory.Text,[]) then teritory:=frmSpivrobitniki.qTeritory.FieldByName('KOD').Value else teritory:=0;
 
@@ -665,11 +632,7 @@ begin
       exit;
     end;
     frmSpivrobitniki.qTeritory.SQL.Clear;
-    frmSpivrobitniki.qTeritory.SQL.Text:='select * from VIDDILENNY where RAJON=:Rajon order by NAZVAVIDDILENNY';
-    frmSpivrobitniki.qTeritory.Params.Clear;
-    frmSpivrobitniki.qTeritory.Params.Add;
-    frmSpivrobitniki.qTeritory.Params[0].Name:='Rajon';
-    frmSpivrobitniki.qTeritory.Params[0].Value:=district;
+    frmSpivrobitniki.qTeritory.SQL.Text:='select * from VIDDILENNY order by NAZVAVIDDILENNY';
     frmSpivrobitniki.qTeritory.Open;
     if frmSpivrobitniki.qTeritory.Locate('NAZVAVIDDILENNY',frmSpivrobitnikiEdit.cbViddilenny.Text,[]) then viddilenny:=frmSpivrobitniki.qTeritory.FieldByName('KODVIDDILENNY').Value else viddilenny:=0;
 
@@ -680,11 +643,7 @@ begin
       exit;
     end;
     frmSpivrobitniki.qTeritory.SQL.Clear;
-    frmSpivrobitniki.qTeritory.SQL.Text:='select * from POSADI where RAJON=:Rajon order by NAZVAPOSADI';
-    frmSpivrobitniki.qTeritory.Params.Clear;
-    frmSpivrobitniki.qTeritory.Params.Add;
-    frmSpivrobitniki.qTeritory.Params[0].Name:='Rajon';
-    frmSpivrobitniki.qTeritory.Params[0].Value:=district;
+    frmSpivrobitniki.qTeritory.SQL.Text:='select * from POSADI order by NAZVAPOSADI';
     frmSpivrobitniki.qTeritory.Open;
     if frmSpivrobitniki.qTeritory.Locate('NAZVAPOSADI',frmSpivrobitnikiEdit.cbPosada.Text,[]) then posada:=frmSpivrobitniki.qTeritory.FieldByName('KODPOSADI').Value else posada:=0;
 
@@ -704,43 +663,42 @@ begin
       exit;
     end;
 
-    frmSpivrobitniki.qSpivrobitniki.SQL.Clear;
-    frmSpivrobitniki.qSpivrobitniki.SQL.Text:='update SPIVROBITNIKI set MINISTRY=:Ministry,TERITORY=:Teritory,RAJON=:Rajon,KODVIDDILENNY=:Viddilenny,KODPOSADI=:Posada,PRIZVISXHE=:Prizvische,PRIZVISXHE_RV=:Prizvische_RV,PRIZVISXHE_TV=:Prizvische_TV where KODSPIVROBITNIKA=:Kod';
-    frmSpivrobitniki.qSpivrobitniki.Params.Clear;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[0].Name:='Ministry';
-    frmSpivrobitniki.qSpivrobitniki.Params[0].Value:=ministry;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[1].Name:='Teritory';
-    frmSpivrobitniki.qSpivrobitniki.Params[1].Value:=teritory;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[2].Name:='Rajon';
-    frmSpivrobitniki.qSpivrobitniki.Params[2].Value:=district;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[3].Name:='Viddilenny';
-    frmSpivrobitniki.qSpivrobitniki.Params[3].Value:=viddilenny;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[4].Name:='Posada';
-    frmSpivrobitniki.qSpivrobitniki.Params[4].Value:=posada;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[5].Name:='Prizvische';
-    frmSpivrobitniki.qSpivrobitniki.Params[5].Value:=frmSpivrobitnikiEdit.edtPrizvische.Text;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[6].Name:='Prizvische_RV';
-    frmSpivrobitniki.qSpivrobitniki.Params[6].Value:=frmSpivrobitnikiEdit.edtPrizvische_RV.Text;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[7].Name:='Prizvische_TV';
-    frmSpivrobitniki.qSpivrobitniki.Params[7].Value:=frmSpivrobitnikiEdit.edtPrizvische_TV.Text;
-    frmSpivrobitniki.qSpivrobitniki.Params.Add;
-    frmSpivrobitniki.qSpivrobitniki.Params[8].Name:='Kod';
-    frmSpivrobitniki.qSpivrobitniki.Params[8].Value:=frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text;
-    frmSpivrobitniki.qSpivrobitniki.Open;
+    with frmSpivrobitniki.qTeritory do
+    begin
+      SQL.Clear;
+      SQL.Text:='update SPIVROBITNIKI set TERITORY=:Teritory,RAJON=:Rajon,KODVIDDILENNY=:Viddilenny,KODPOSADI=:Posada,PRIZVISXHE=:Prizvische,PRIZVISXHE_RV=:Prizvische_RV,PRIZVISXHE_TV=:Prizvische_TV where KODSPIVROBITNIKA=:Kod';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='Teritory';
+      Params[0].Value:=teritory;
+      Params.Add;
+      Params[1].Name:='Rajon';
+      Params[1].Value:=district;
+      Params.Add;
+      Params[2].Name:='Viddilenny';
+      Params[2].Value:=viddilenny;
+      Params.Add;
+      Params[3].Name:='Posada';
+      Params[3].Value:=posada;
+      Params.Add;
+      Params[4].Name:='Prizvische';
+      Params[4].Value:=frmSpivrobitnikiEdit.edtPrizvische.Text;
+      Params.Add;
+      Params[5].Name:='Prizvische_RV';
+      Params[5].Value:=frmSpivrobitnikiEdit.edtPrizvische_RV.Text;
+      Params.Add;
+      Params[6].Name:='Prizvische_TV';
+      Params[6].Value:=frmSpivrobitnikiEdit.edtPrizvische_TV.Text;
+      Params.Add;
+      Params[7].Name:='Kod';
+      Params[7].Value:=frmSpivrobitnikiEdit.edtKodSpivrobitnika.Text;
+      Open;
+    end;
     frmMain.trAzz.CommitRetaining;
     frmSpivrobitnikiEdit.Close;
     frmSpivrobitniki.aUpdateExecute(sender);
     exit;
   end;
-}
 end;
 
 procedure TfrmSpivrobitnikiEdit.aTeritoryChoiceExecute(Sender: TObject);
@@ -759,7 +717,6 @@ end;
 
 procedure TfrmSpivrobitnikiEdit.aRajonChoiceExecute(Sender: TObject);
 begin
-{
   frmSpivrobitnikiEdit.Enabled:=false;
   frmMain.aDistrictExecute(sender);
   frmRajoni.aChoice.Enabled:=true;
@@ -770,12 +727,10 @@ begin
   frmRajoni.Position:=poMainFormCenter;
   frmRajoni.FormStyle:=fsNormal;
   frmRajoni.BorderStyle:=bsDialog;
-}
 end;
 
 procedure TfrmSpivrobitnikiEdit.aViddilennyChoiceExecute(Sender: TObject);
 begin
-{
   frmSpivrobitnikiEdit.Enabled:=false;
   frmMain.aViddilennyExecute(sender);
   frmViddilenny.aChoice.Enabled:=true;
@@ -786,12 +741,10 @@ begin
   frmViddilenny.Position:=poMainFormCenter;
   frmViddilenny.FormStyle:=fsNormal;
   frmViddilenny.BorderStyle:=bsDialog;
-}
 end;
 
 procedure TfrmSpivrobitnikiEdit.aPosadaChoiceExecute(Sender: TObject);
 begin
-{
   frmSpivrobitnikiEdit.Enabled:=false;
   frmMain.aPosadiExecute(sender);
   frmPosadi.aChoice.Enabled:=true;
@@ -802,7 +755,6 @@ begin
   frmPosadi.Position:=poMainFormCenter;
   frmPosadi.FormStyle:=fsNormal;
   frmPosadi.BorderStyle:=bsDialog;
-}
 end;
 
 end.

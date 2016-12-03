@@ -68,7 +68,7 @@ procedure TfrmPosadi.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   frmPosadi.qTeritory.Close;
   frmPosadi.qPosadi.Close;
-
+{
   if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
   begin
     frmFinansoviSankciiEdit.Enabled:=true;
@@ -140,13 +140,13 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmSpivrobitnikiEdit.Enabled:=true;
     frmMain.Enabled:=false;
     Action:=caFree;
-    exit; 
+    exit;
   end;
 
   frmMain.Enabled:=true;
@@ -170,16 +170,16 @@ begin
   if not frmMain.IsFormOpen('frmPosadiEdit') then frmPosadiEdit:=TfrmPosadiEdit.Create(self);
   frmMain.Enabled:=false;
   frmPosadiEdit.Show;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmFilter') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmRaport') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmOpechanuvanny') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmNapravlenoDoVidoma') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmNapravlennyEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmRaport') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmOpechanuvanny') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmNapravlenoDoVidoma') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmNapravlennyEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
   frmPosadiEdit.Caption:='Додавання нової посади';
   frmPosadiEdit.BorderStyle:=bsDialog;
   frmPosadiEdit.Position:=poMainFormCenter;
@@ -204,16 +204,16 @@ begin
   if not frmMain.IsFormOpen('frmPosadiEdit') then frmPosadiEdit:=TfrmPosadiEdit.Create(self);
   frmMain.Enabled:=false;
   frmPosadiEdit.Show;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmFilter') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmRaport') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmOpechanuvanny') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmNapravlenoDoVidoma') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmNapravlennyEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmRaport') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmOpechanuvanny') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmNapravlenoDoVidoma') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmNapravlennyEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
   frmPosadiEdit.Caption:='Редагування посади';
   frmPosadiEdit.BorderStyle:=bsDialog;
   frmPosadiEdit.Position:=poMainFormCenter;
@@ -248,16 +248,16 @@ begin
   if not frmMain.IsFormOpen('frmPosadiEdit') then frmPosadiEdit:=TfrmPosadiEdit.Create(self);
   frmMain.Enabled:=false;
   frmPosadiEdit.Show;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmFilter') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmRaport') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmOpechanuvanny') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmNapravlenoDoVidoma') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmNapravlennyEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmRaport') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmOpechanuvanny') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmNapravlenoDoVidoma') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmNapravlennyEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
   frmPosadiEdit.Caption:='Видалення посади';
   frmPosadiEdit.BorderStyle:=bsDialog;
   frmPosadiEdit.Position:=poMainFormCenter;
@@ -288,59 +288,46 @@ end;
 
 procedure TfrmPosadi.aChoiceExecute(Sender: TObject);
 begin
-{
   if frmPosadi.qPosadi.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmPosadiEdit') then frmPosadiEdit:=TfrmPosadiEdit.Create(self);
   frmMain.Enabled:=false;
   frmPosadiEdit.Show;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmFilter') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmRaport') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmOpechanuvanny') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmNapravlenoDoVidoma') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmNapravlennyEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmRaport') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmOpechanuvanny') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmNapravlenoDoVidoma') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmNapravlennyEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmPosadi.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmPosadi.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
   frmPosadiEdit.Caption:='Вибір посади';
   frmPosadiEdit.BorderStyle:=bsDialog;
   frmPosadiEdit.Position:=poMainFormCenter;
 
-  if not frmPosadi.qPosadi.FieldByName('KODPOSADI').IsNull then frmPosadiEdit.edtKodPosadi.Text:=IntToStr(frmPosadi.qPosadi.FieldByName('KODPOSADI').Value) else frmPosadiEdit.aKodUpdateExecute(sender);
+  with frmPosadi.qTeritory do
+  begin
+    SQL.Clear;
+    SQL.Text:='select * from POSADI where KODPOSADI=:kod';
+    Params.Clear;
+    Params.Add;
+    Params[0].Name:='kod';
+    Params[0].Value:=frmPosadi.qPosadi.FieldByName('Код посади').Value;
+    Open;
+  end;
+  if not frmPosadi.qTeritory.FieldByName('KODPOSADI').IsNull then frmPosadiEdit.edtKodPosadi.Text:=IntToStr(frmPosadi.qTeritory.FieldByName('KODPOSADI').Value) else frmPosadiEdit.aKodUpdateExecute(sender);
   frmPosadiEdit.edtKodPosadi.Enabled:=false;
   frmPosadiEdit.btnKodPosadi.Enabled:=false;
 
-  frmPosadiEdit.aMinistrUpdateExecute(sender);
-  if not frmPosadi.qPosadi.FieldByName('MINISTRY').IsNull then frmPosadiEdit.cbMinistry.Text:=IntToStr(frmPosadi.qPosadi.FieldByName('MINISTRY').Value) else frmPosadiEdit.cbMinistry.Text:='0';
-  if frmPosadi.qTeritory.Locate('KOD',StrToInt(frmPosadiEdit.cbMinistry.Text),[]) then frmPosadiEdit.cbMinistry.Text:=frmPosadi.qTeritory.FieldByName('MINISTRY').Value else frmPosadiEdit.cbMinistry.Text:='';
-  frmPosadiEdit.cbMinistry.Enabled:=false;
-  frmPosadiEdit.btnMinistryUpdate.Enabled:=false;
-  frmPosadiEdit.btnMinistryChoice.Enabled:=false;
-
-  frmPosadiEdit.aTeritoryUpdateExecute(sender);
-  if not frmPosadi.qPosadi.FieldByName('TERITORY').IsNull then frmPosadiEdit.cbTeritory.Text:=IntToStr(frmPosadi.qPosadi.FieldByName('TERITORY').Value) else frmPosadiEdit.cbTeritory.Text:='0';
-  frmPosadiEdit.cbTeritory.Enabled:=false;
-  frmPosadiEdit.btnTeritoryUpdate.Enabled:=false;
-  frmPosadiEdit.btnTeritoryChoice.Enabled:=false;
-  if frmPosadi.qTeritory.Locate('KOD',StrToInt(frmPosadiEdit.cbTeritory.Text),[]) then frmPosadiEdit.cbTeritory.Text:=frmPosadi.qTeritory.FieldByName('TERITORY').Value else frmPosadiEdit.cbTeritory.Text:='';
-
-  frmPosadiEdit.aDistrictUpdateExecute(sender);
-  if not frmPosadi.qPosadi.FieldByName('RAJON').IsNull then frmPosadiEdit.cbRajon.Text:=IntToStr(frmPosadi.qPosadi.FieldByName('RAJON').Value) else frmPosadiEdit.cbRajon.Text:='0';
-  frmPosadiEdit.cbRajon.Enabled:=false;
-  frmPosadiEdit.btnRajonUpdate.Enabled:=false;
-  frmPosadiEdit.btnRajonChoice.Enabled:=false;
-  if frmPosadi.qTeritory.Locate('KOD',StrToInt(frmPosadiEdit.cbRajon.Text),[]) then frmPosadiEdit.cbRajon.Text:=frmPosadi.qTeritory.FieldByName('RAJON').Value else frmPosadiEdit.cbRajon.Text:='';
-
-  if not frmPosadi.qPosadi.FieldByName('NAZVAPOSADI').IsNull then frmPosadiEdit.edtNazvaposadi.Text:=frmPosadi.qPosadi.FieldByName('NAZVAPOSADI').Value else frmPosadiEdit.edtNazvaposadi.Text:='';
+  if not frmPosadi.qTeritory.FieldByName('NAZVAPOSADI').IsNull then frmPosadiEdit.edtNazvaposadi.Text:=frmPosadi.qTeritory.FieldByName('NAZVAPOSADI').Value else frmPosadiEdit.edtNazvaposadi.Text:='';
   frmPosadiEdit.edtNazvaposadi.Enabled:=false;
-  if not frmPosadi.qPosadi.FieldByName('NAZVAPOSADI_RV').IsNull then frmPosadiEdit.edtNazvaposadi_RV.Text:=frmPosadi.qPosadi.FieldByName('NAZVAPOSADI_RV').Value else frmPosadiEdit.edtNazvaposadi_RV.Text:='';
+  if not frmPosadi.qTeritory.FieldByName('NAZVAPOSADI_RV').IsNull then frmPosadiEdit.edtNazvaposadi_RV.Text:=frmPosadi.qTeritory.FieldByName('NAZVAPOSADI_RV').Value else frmPosadiEdit.edtNazvaposadi_RV.Text:='';
   frmPosadiEdit.edtNazvaposadi_RV.Enabled:=false;
-  if not frmPosadi.qPosadi.FieldByName('NAZVAPOSADI_TV').IsNull then frmPosadiEdit.edtNazvaposadi_TV.Text:=frmPosadi.qPosadi.FieldByName('NAZVAPOSADI_TV').Value else frmPosadiEdit.edtNazvaposadi_TV.Text:='';
+  if not frmPosadi.qTeritory.FieldByName('NAZVAPOSADI_TV').IsNull then frmPosadiEdit.edtNazvaposadi_TV.Text:=frmPosadi.qTeritory.FieldByName('NAZVAPOSADI_TV').Value else frmPosadiEdit.edtNazvaposadi_TV.Text:='';
   frmPosadiEdit.edtNazvaposadi_TV.Enabled:=false;
   frmPosadiEdit.btnVidminok.Enabled:=false;
   frmPosadiEdit.btnVikonati.SetFocus;
-}
 end;
 
 procedure TfrmPosadi.aCloseExecute(Sender: TObject);

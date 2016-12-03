@@ -1,8 +1,8 @@
 object frmRajoniEdit: TfrmRajoniEdit
-  Left = 638
-  Top = 113
+  Left = 392
+  Top = 116
   Width = 459
-  Height = 200
+  Height = 195
   Caption = 'frmRajoniEdit'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET

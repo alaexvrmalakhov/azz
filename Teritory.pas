@@ -94,13 +94,6 @@ begin
 //    exit;
 //  end;
 }
-  if frmMain.IsFormOpen('frmRajoniEdit') then
-  begin
-    frmRajoniEdit.Enabled:=true;
-    frmMain.Enabled:=false;
-    Action:=caFree;
-    exit;
-  end;
 {
   if frmMain.IsFormOpen('frmViddilennyEdit') then
   begin
@@ -109,7 +102,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmSpivrobitnikiEdit.Enabled:=true;
@@ -117,7 +110,14 @@ begin
     Action:=caFree;
     exit;
   end;
-}
+
+  if frmMain.IsFormOpen('frmRajoniEdit') then
+  begin
+    frmRajoniEdit.Enabled:=true;
+    frmMain.Enabled:=false;
+    Action:=caFree;
+    exit;
+  end;
 
   frmMain.Enabled:=true;
   Action:=caFree;
@@ -128,7 +128,7 @@ begin
   if not frmMain.IsFormOpen('frmTeritoryEdit') then frmTeritoryEdit:=TfrmTeritoryEdit.Create(self);
   frmMain.Enabled:=false;
   frmTeritoryEdit.Show;
-//  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmTeritory.Enabled:=false;
+  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmTeritory.Enabled:=false;
   if frmMain.IsFormOpen('frmRajoniEdit') then frmTeritory.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViddilennyEdit') then frmTeritory.Enabled:=false;
 //  if frmMain.IsFormOpen('frmPosadiEdit') then frmTeritory.Enabled:=false;
@@ -153,7 +153,7 @@ begin
   frmTeritoryEdit.BorderStyle:=bsDialog;
   frmTeritoryEdit.Position:=poMainFormCenter;
   frmTeritoryEdit.Caption:='Редагувати територію';
-//  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmTeritory.Enabled:=false;
+  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmTeritory.Enabled:=false;
   if frmMain.IsFormOpen('frmRajoniEdit') then frmTeritory.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViddilennyEdit') then frmTeritory.Enabled:=false;
 //  if frmMain.IsFormOpen('frmPosadiEdit') then frmTeritory.Enabled:=false;
@@ -175,7 +175,7 @@ begin
   frmTeritoryEdit.BorderStyle:=bsDialog;
   frmTeritoryEdit.Position:=poMainFormCenter;
   frmTeritoryEdit.Caption:='Видалити територію';
-//  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmTeritory.Enabled:=false;
+  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmTeritory.Enabled:=false;
   if frmMain.IsFormOpen('frmRajoniEdit') then frmTeritory.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViddilennyEdit') then frmTeritory.Enabled:=false;
 //  if frmMain.IsFormOpen('frmPosadiEdit') then frmTeritory.Enabled:=false;
@@ -197,7 +197,7 @@ begin
   frmTeritoryEdit.BorderStyle:=bsDialog;
   frmTeritoryEdit.Position:=poMainFormCenter;
   frmTeritoryEdit.Caption:='Вибрати територію';
-//  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmTeritory.Enabled:=false;
+  if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmTeritory.Enabled:=false;
   if frmMain.IsFormOpen('frmRajoniEdit') then frmTeritory.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViddilennyEdit') then frmTeritory.Enabled:=false;
 //  if frmMain.IsFormOpen('frmPosadiEdit') then frmTeritory.Enabled:=false;
