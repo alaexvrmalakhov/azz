@@ -1,6 +1,6 @@
 object frmMain: TfrmMain
-  Left = 1403
-  Top = 114
+  Left = 1400
+  Top = 112
   Width = 516
   Height = 167
   Caption = 'frmMain'
@@ -363,6 +363,12 @@ object frmMain: TfrmMain
           Enabled = False
         end
       end
+      object N19: TMenuItem
+        Caption = '-'
+      end
+      object mnDovidnikiViznatiVinnim: TMenuItem
+        Action = aViznatiVinnim
+      end
       object N16: TMenuItem
         Caption = '-'
       end
@@ -376,9 +382,6 @@ object frmMain: TfrmMain
           object mnDovidnikiDatasDataTypes: TMenuItem
             Action = aDataTypes
           end
-        end
-        object mnDovidnikiViznatiVinnim: TMenuItem
-          Action = aViznatiVinnim
         end
         object mnDovidnikiRozdil_T23_F18: TMenuItem
           Action = aRozdil_t23_f18
@@ -781,7 +784,7 @@ object frmMain: TfrmMain
     end
     object aViznatiVinnim: TAction
       Category = #1044#1086#1074#1110#1076#1085#1080#1082#1080
-      Caption = #1042#1080#1079#1085#1072#1090#1080' '#1074#1080#1085#1085#1080#1084
+      Caption = #1057#1091#1090#1100' '#1087#1086#1088#1091#1096#1077#1085#1085#1103
       Hint = #1044#1086#1074#1110#1076#1085#1080#1082' '#1086#1073#1074#1080#1085#1091#1074#1072#1095#1077#1085#1100
       OnExecute = aViznatiVinnimExecute
     end

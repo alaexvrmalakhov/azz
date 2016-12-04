@@ -1,6 +1,6 @@
 object frmVizmatiVinnimEdit: TfrmVizmatiVinnimEdit
-  Left = 718
-  Top = 428
+  Left = 737
+  Top = 101
   Width = 562
   Height = 312
   Caption = 'frmVizmatiVinnimEdit'
@@ -58,6 +58,7 @@ object frmVizmatiVinnimEdit: TfrmVizmatiVinnimEdit
     Top = 12
     Width = 121
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 0
     Text = 'edtKodPoly'
   end
@@ -71,6 +72,7 @@ object frmVizmatiVinnimEdit: TfrmVizmatiVinnimEdit
     Font.Height = -11
     Font.Name = 'Courier New'
     Font.Style = []
+    ImeName = 'Russian'
     Lines.Strings = (
       'reViznatiVinnim')
     ParentFont = False
@@ -82,6 +84,7 @@ object frmVizmatiVinnimEdit: TfrmVizmatiVinnimEdit
     Top = 44
     Width = 485
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 2
     Text = 'edtZmist'
   end

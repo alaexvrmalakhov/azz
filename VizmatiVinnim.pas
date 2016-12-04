@@ -45,6 +45,7 @@ type
     mnSortByZmist: TMenuItem;
     qViznatiVinnim: TIBQuery;
     dsViznatiVinnim: TDataSource;
+    qTemp: TIBQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure edtFindChange(Sender: TObject);
@@ -77,6 +78,7 @@ procedure TfrmVizmatiVinnim.FormClose(Sender: TObject;
 begin
   frmVizmatiVinnim.qViznatiVinnim.Close;
 
+{
   if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then
   begin
     frmAdminZapobizhZahodiEdit.Enabled:=true;
@@ -92,7 +94,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -114,8 +116,8 @@ begin
   if not frmMain.IsFormOpen('frmVizmatiVinnimEdit') then frmVizmatiVinnimEdit:=TfrmVizmatiVinnimEdit.Create(self);
   frmMain.Enabled:=false;
   frmVizmatiVinnimEdit.Show;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodi') then frmVizmatiVinnim.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodi') then frmVizmatiVinnim.Enabled:=false;
   frmVizmatiVinnimEdit.Caption:='Додавання суті порушення';
   frmVizmatiVinnimEdit.Position:=poMainFormCenter;
   frmVizmatiVinnimEdit.BorderStyle:=bsDialog;
@@ -142,28 +144,28 @@ begin
   if not frmMain.IsFormOpen('frmVizmatiVinnimEdit') then frmVizmatiVinnimEdit:=TfrmVizmatiVinnimEdit.Create(self);
   frmMain.Enabled:=false;
   frmVizmatiVinnimEdit.Show;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodi') then frmVizmatiVinnim.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodi') then frmVizmatiVinnim.Enabled:=false;
   frmVizmatiVinnimEdit.Caption:='Редагування суті порушення';
   frmVizmatiVinnimEdit.Position:=poMainFormCenter;
   frmVizmatiVinnimEdit.BorderStyle:=bsDialog;
 
-  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('KODPOLY').IsNull then frmVizmatiVinnimEdit.edtKodPoly.Text:=IntToStr(frmVizmatiVinnim.qViznatiVinnim.FieldByName('KODPOLY').Value) else frmVizmatiVinnimEdit.aKodUpdateExecute(sender);
+  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('Код').IsNull then frmVizmatiVinnimEdit.edtKodPoly.Text:=IntToStr(frmVizmatiVinnim.qViznatiVinnim.FieldByName('Код').Value) else frmVizmatiVinnimEdit.aKodUpdateExecute(sender);
   frmVizmatiVinnimEdit.edtKodPoly.Enabled:=false;
   frmVizmatiVinnimEdit.btnKodPoly.Enabled:=false;
 
-  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('ZMIST').IsNull then frmVizmatiVinnimEdit.edtZmist.Text:=frmVizmatiVinnim.qViznatiVinnim.FieldByName('ZMIST').Value else frmVizmatiVinnimEdit.edtZmist.Text:='';
+  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('Зміст обвинувачення').IsNull then frmVizmatiVinnimEdit.edtZmist.Text:=frmVizmatiVinnim.qViznatiVinnim.FieldByName('Зміст обвинувачення').Value else frmVizmatiVinnimEdit.edtZmist.Text:='';
   frmVizmatiVinnimEdit.edtZmist.Enabled:=true;
 
-  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('VIZVINNIM').IsNull then
+  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('Суть').IsNull then
   begin
     frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Clear;
     frmVizmatiVinnimEdit.reViznatiVinnim.MaxLength:=$7FFFFFF0;
     BlobStream:=TMemoryStream.Create;
     try
-      (frmVizmatiVinnim.qViznatiVinnim.FieldByName('VIZVINNIM') as TBlobField).SaveToStream(BlobStream);
+      (frmVizmatiVinnim.qViznatiVinnim.FieldByName('Суть') as TBlobField).SaveToStream(BlobStream);
       BlobStream.Position:=0;
-      if BlobStream<>nil then frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Assign(frmVizmatiVinnim.qViznatiVinnim.FieldByName('VIZVINNIM') as TBlobField) else frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Clear;
+      if BlobStream<>nil then frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Assign(frmVizmatiVinnim.qViznatiVinnim.FieldByName('Суть') as TBlobField) else frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Clear;
     finally
       BlobStream.Free;
     end;
@@ -185,28 +187,28 @@ begin
   if not frmMain.IsFormOpen('frmVizmatiVinnimEdit') then frmVizmatiVinnimEdit:=TfrmVizmatiVinnimEdit.Create(self);
   frmMain.Enabled:=false;
   frmVizmatiVinnimEdit.Show;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodi') then frmVizmatiVinnim.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodi') then frmVizmatiVinnim.Enabled:=false;
   frmVizmatiVinnimEdit.Caption:='Видалення суті порушення';
   frmVizmatiVinnimEdit.Position:=poMainFormCenter;
   frmVizmatiVinnimEdit.BorderStyle:=bsDialog;
 
-  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('KODPOLY').IsNull then frmVizmatiVinnimEdit.edtKodPoly.Text:=IntToStr(frmVizmatiVinnim.qViznatiVinnim.FieldByName('KODPOLY').Value) else frmVizmatiVinnimEdit.aKodUpdateExecute(sender);
+  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('Код').IsNull then frmVizmatiVinnimEdit.edtKodPoly.Text:=IntToStr(frmVizmatiVinnim.qViznatiVinnim.FieldByName('Код').Value) else frmVizmatiVinnimEdit.aKodUpdateExecute(sender);
   frmVizmatiVinnimEdit.edtKodPoly.Enabled:=false;
   frmVizmatiVinnimEdit.btnKodPoly.Enabled:=false;
 
-  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('ZMIST').IsNull then frmVizmatiVinnimEdit.edtZmist.Text:=frmVizmatiVinnim.qViznatiVinnim.FieldByName('ZMIST').Value else frmVizmatiVinnimEdit.edtZmist.Text:='';
+  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('Зміст обвинувачення').IsNull then frmVizmatiVinnimEdit.edtZmist.Text:=frmVizmatiVinnim.qViznatiVinnim.FieldByName('Зміст обвинувачення').Value else frmVizmatiVinnimEdit.edtZmist.Text:='';
   frmVizmatiVinnimEdit.edtZmist.Enabled:=false;
 
-  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('VIZVINNIM').IsNull then
+  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('Суть').IsNull then
   begin
     frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Clear;
     frmVizmatiVinnimEdit.reViznatiVinnim.MaxLength:=$7FFFFFF0;
     BlobStream:=TMemoryStream.Create;
     try
-      (frmVizmatiVinnim.qViznatiVinnim.FieldByName('VIZVINNIM') as TBlobField).SaveToStream(BlobStream);
+      (frmVizmatiVinnim.qViznatiVinnim.FieldByName('Суть') as TBlobField).SaveToStream(BlobStream);
       BlobStream.Position:=0;
-      if BlobStream<>nil then frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Assign(frmVizmatiVinnim.qViznatiVinnim.FieldByName('VIZVINNIM') as TBlobField) else frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Clear;
+      if BlobStream<>nil then frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Assign(frmVizmatiVinnim.qViznatiVinnim.FieldByName('Суть') as TBlobField) else frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Clear;
     finally
       BlobStream.Free;
     end;
@@ -227,29 +229,29 @@ begin
   if frmVizmatiVinnim.qViznatiVinnim.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmVizmatiVinnimEdit') then frmVizmatiVinnimEdit:=TfrmVizmatiVinnimEdit.Create(self);
   frmMain.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodi') then frmVizmatiVinnim.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodi') then frmVizmatiVinnim.Enabled:=false;
   frmVizmatiVinnimEdit.Show;
   frmVizmatiVinnimEdit.Caption:='Вибір суті порушення';
   frmVizmatiVinnimEdit.Position:=poMainFormCenter;
   frmVizmatiVinnimEdit.BorderStyle:=bsDialog;
 
-  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('KODPOLY').IsNull then frmVizmatiVinnimEdit.edtKodPoly.Text:=IntToStr(frmVizmatiVinnim.qViznatiVinnim.FieldByName('KODPOLY').Value) else frmVizmatiVinnimEdit.aKodUpdateExecute(sender);
+  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('Код').IsNull then frmVizmatiVinnimEdit.edtKodPoly.Text:=IntToStr(frmVizmatiVinnim.qViznatiVinnim.FieldByName('Код').Value) else frmVizmatiVinnimEdit.aKodUpdateExecute(sender);
   frmVizmatiVinnimEdit.edtKodPoly.Enabled:=false;
   frmVizmatiVinnimEdit.btnKodPoly.Enabled:=false;
 
-  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('ZMIST').IsNull then frmVizmatiVinnimEdit.edtZmist.Text:=frmVizmatiVinnim.qViznatiVinnim.FieldByName('ZMIST').Value else frmVizmatiVinnimEdit.edtZmist.Text:='';
+  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('Зміст обвинувачення').IsNull then frmVizmatiVinnimEdit.edtZmist.Text:=frmVizmatiVinnim.qViznatiVinnim.FieldByName('Зміст обвинувачення').Value else frmVizmatiVinnimEdit.edtZmist.Text:='';
   frmVizmatiVinnimEdit.edtZmist.Enabled:=false;
 
-  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('VIZVINNIM').IsNull then
+  if not frmVizmatiVinnim.qViznatiVinnim.FieldByName('Суть').IsNull then
   begin
     frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Clear;
     frmVizmatiVinnimEdit.reViznatiVinnim.MaxLength:=$7FFFFFF0;
     BlobStream:=TMemoryStream.Create;
     try
-      (frmVizmatiVinnim.qViznatiVinnim.FieldByName('VIZVINNIM') as TBlobField).SaveToStream(BlobStream);
+      (frmVizmatiVinnim.qViznatiVinnim.FieldByName('Суть') as TBlobField).SaveToStream(BlobStream);
       BlobStream.Position:=0;
-      if BlobStream<>nil then frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Assign(frmVizmatiVinnim.qViznatiVinnim.FieldByName('VIZVINNIM') as TBlobField) else frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Clear;
+      if BlobStream<>nil then frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Assign(frmVizmatiVinnim.qViznatiVinnim.FieldByName('Суть') as TBlobField) else frmVizmatiVinnimEdit.reViznatiVinnim.Lines.Clear;
     finally
       BlobStream.Free;
     end;
@@ -268,7 +270,8 @@ begin
   with frmVizmatiVinnim do
   begin
     qViznatiVinnim.SQL.Clear;
-    qViznatiVinnim.SQL.Text:='select * from VIZNATIVINNIM order by ZMIST';
+//    qViznatiVinnim.SQL.Text:='select * from VIZNATIVINNIM order by ZMIST';
+    qViznatiVinnim.SQL.Text:='select KODPOLY as "Код", ZMIST as "Зміст обвинувачення", VIZVINNIM as "Суть" from VIZNATIVINNIM where not ZMIST is null order by ZMIST';
     qViznatiVinnim.Open;
     aSortByKod.Checked:=false;
     aSortByZmist.Checked:=true;
@@ -290,7 +293,8 @@ begin
   with frmVizmatiVinnim do
   begin
     qViznatiVinnim.SQL.Clear;
-    qViznatiVinnim.SQL.Text:='select * from VIZNATIVINNIM order by KODPOLY';
+//    qViznatiVinnim.SQL.Text:='select * from VIZNATIVINNIM order by ZMIST';
+    qViznatiVinnim.SQL.Text:='select KODPOLY as "Код", ZMIST as "Зміст обвинувачення", VIZVINNIM as "Суть" from VIZNATIVINNIM where not ZMIST is null order by KODPOLY';
     qViznatiVinnim.Open;
     aSortByKod.Checked:=true;
     aSortByZmist.Checked:=false;
@@ -299,6 +303,8 @@ end;
 
 procedure TfrmVizmatiVinnim.aSortByZmistExecute(Sender: TObject);
 begin
+  frmVizmatiVinnim.aUpdateExecute(sender);
+{
   with frmVizmatiVinnim do
   begin
     qViznatiVinnim.SQL.Clear;
@@ -307,13 +313,14 @@ begin
     aSortByKod.Checked:=false;
     aSortByZmist.Checked:=true;
   end;
+}
 end;
 
 procedure TfrmVizmatiVinnim.qViznatiVinnimFilterRecord(DataSet: TDataSet;
   var Accept: Boolean);
 begin
   if frmVizmatiVinnim.ActiveControl=frmVizmatiVinnim.edtFind then
-    if frmMain.PosN(frmVizmatiVinnim.edtFind.Text,frmVizmatiVinnim.qViznatiVinnim.FieldByName('VIZVINNIM').Value,0)>0 then Accept:=true else Accept:=false;
+    if frmMain.PosN(frmVizmatiVinnim.edtFind.Text,frmVizmatiVinnim.qViznatiVinnim.FieldByName('Суть').Value,0)>0 then Accept:=true else Accept:=false;
 end;
 
 procedure TfrmVizmatiVinnim.FormActivate(Sender: TObject);

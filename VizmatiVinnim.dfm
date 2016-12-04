@@ -1,6 +1,6 @@
 object frmVizmatiVinnim: TfrmVizmatiVinnim
-  Left = 822
-  Top = 191
+  Left = 279
+  Top = 114
   Width = 458
   Height = 379
   Caption = 'frmVizmatiVinnim'
@@ -23,6 +23,7 @@ object frmVizmatiVinnim: TfrmVizmatiVinnim
     Width = 213
     Height = 85
     DataSource = dsViznatiVinnim
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -30,29 +31,16 @@ object frmVizmatiVinnim: TfrmVizmatiVinnim
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'KODPOLY'
-        Title.Caption = #1050#1086#1076
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'ZMIST'
-        Title.Caption = #1047#1084#1110#1089#1090' '#1089#1091#1090#1110' '#1087#1086#1088#1091#1096#1077#1085#1085#1103
-        Width = 610
-        Visible = True
-      end>
   end
   object Panel1: TPanel
-    Left = 375
+    Left = 367
     Top = 0
     Width = 75
-    Height = 243
+    Height = 232
     Align = alRight
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 1
     object btnDodati: TButton
       Left = 0
@@ -114,20 +102,22 @@ object frmVizmatiVinnim: TfrmVizmatiVinnim
   end
   object Panel2: TPanel
     Left = 0
-    Top = 264
-    Width = 450
+    Top = 253
+    Width = 442
     Height = 88
     Align = alBottom
+    ParentBackground = True
     TabOrder = 2
     Visible = False
     object DBRichEdit1: TDBRichEdit
       Left = 1
       Top = 1
-      Width = 448
+      Width = 440
       Height = 86
       Align = alClient
-      DataField = 'VIZVINNIM'
+      DataField = #1057#1091#1090#1100
       DataSource = dsViznatiVinnim
+      ImeName = 'Russian'
       ReadOnly = True
       ScrollBars = ssBoth
       TabOrder = 0
@@ -135,18 +125,20 @@ object frmVizmatiVinnim: TfrmVizmatiVinnim
   end
   object Panel3: TPanel
     Left = 0
-    Top = 243
-    Width = 450
+    Top = 232
+    Width = 442
     Height = 21
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 3
     object edtFind: TEdit
       Left = 0
       Top = 0
       Width = 121
       Height = 21
+      ImeName = 'Russian'
       TabOrder = 0
       Text = 'edtFind'
       OnChange = edtFindChange
@@ -240,8 +232,6 @@ object frmVizmatiVinnim: TfrmVizmatiVinnim
   object qViznatiVinnim: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     OnFilterRecord = qViznatiVinnimFilterRecord
     Left = 232
     Top = 104
@@ -250,5 +240,11 @@ object frmVizmatiVinnim: TfrmVizmatiVinnim
     DataSet = qViznatiVinnim
     Left = 192
     Top = 108
+  end
+  object qTemp: TIBQuery
+    Database = frmMain.dbAzz
+    Transaction = frmMain.trAzz
+    Left = 284
+    Top = 40
   end
 end
