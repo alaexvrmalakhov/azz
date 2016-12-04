@@ -12,7 +12,6 @@ type
     alObjekti: TActionList;
     aTeritoryUpdate: TAction;
     Panel1: TPanel;
-    cbMinistry: TComboBox;
     cbTeritory: TComboBox;
     cbDistrict: TComboBox;
     btnTeritoryUpdate: TButton;
@@ -42,7 +41,6 @@ type
     N6: TMenuItem;
     aClose: TAction;
     N7: TMenuItem;
-    aMinistryChange: TAction;
     aTeritoryChange: TAction;
     aDistrictChange: TAction;
     Panel3: TPanel;
@@ -53,6 +51,8 @@ type
     N9: TMenuItem;
     aDelete: TAction;
     N10: TMenuItem;
+    N11: TMenuItem;
+    N12: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure aTeritoryUpdateExecute(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -63,7 +63,6 @@ type
     procedure aSortByVidomchaPidporydkovanistExecute(Sender: TObject);
     procedure aChoiceExecute(Sender: TObject);
     procedure aCloseExecute(Sender: TObject);
-    procedure aMinistryChangeExecute(Sender: TObject);
     procedure aTeritoryChangeExecute(Sender: TObject);
     procedure aDistrictChangeExecute(Sender: TObject);
     procedure qObjektiFilterRecord(DataSet: TDataSet; var Accept: Boolean);
@@ -87,6 +86,7 @@ uses
 
 procedure TfrmObjekti.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+{
   frmObjekti.qObjekti.Close;
   frmObjekti.qTeritory.Close;
   if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
@@ -139,38 +139,18 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
 
 procedure TfrmObjekti.aTeritoryUpdateExecute(Sender: TObject);
-var
-  ministry: integer;
 begin
   INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
   with frmObjekti do
   begin
     qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from MINISTRY order by MINISTRY';
-    qTeritory.Open;
-    cbMinistry.Text:='';
-    cbMinistry.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      cbMinistry.Items.Add(qTeritory.FieldByName('MINISTRY').Value);
-      qTeritory.Next;
-    end;
-    ministry:=INIAZZ.ReadInteger('Teritory','Ministry',ministry);
-    if qTeritory.Locate('KOD',ministry,[]) then cbMinistry.Text:=qTeritory.FieldByName('MINISTRY').Value else cbMinistry.Text:='';
-
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from TERITORY where MINISTRY=:Ministry order by TERITORY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Ministry';
-    qTeritory.Params[0].Value:=ministry;
+    qTeritory.SQL.Text:='select * from TERITORY where not TERITORY is null order by TERITORY';
     qTeritory.Open;
     cbTeritory.Text:='';
     cbTeritory.Items.Clear;
@@ -209,15 +189,13 @@ procedure TfrmObjekti.FormResize(Sender: TObject);
 begin
   with frmObjekti do
   begin
-    cbMinistry.Left:=4;
-    cbMinistry.Width:=trunc(int(Width/3)-17);
-    cbTeritory.Left:=cbMinistry.Width+cbMinistry.Left+4;
-    cbTeritory.Width:=trunc(int(Width/3)-17);
+    cbTeritory.Left:=4;
+    cbTeritory.Width:=trunc(int(Width/2)-28);
     cbDistrict.Left:=cbTeritory.Left+cbTeritory.Width+4;
-    cbDistrict.Width:=trunc(int(Width/3)-17);
+    cbDistrict.Width:=trunc(int(Width/2)-28);
     btnTeritoryUpdate.Left:=cbDistrict.Left+cbDistrict.Width+4;
     edtFind_NazvaObjekta.Left:=4;
-    edtFind_NazvaObjekta.Width:=Width-16;
+    edtFind_NazvaObjekta.Width:=Width-24;
   end;
 end;
 
@@ -226,7 +204,25 @@ begin
   with frmObjekti do
   begin
     qObjekti.SQL.Clear;
-    qObjekti.SQL.Text:='select * from OBJEKTI,RAJONI where RAJONI.RAJON=:District and OBJEKTI.RAJON=RAJONI.KOD order by OBJEKTI.NAZVAOBJEKTA';
+    qObjekti.SQL.Text:='';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'select ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KODOBJEKTA as "Код", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.NAZVAOBJEKTA as "Назва об''єкта", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.ADRESAOBJEKTA as "Адреса об''єкта", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.VIDOMCHAPIPORYDKOVANIST as "Відомча підпорядкованість", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.VIDDILENNY_BANKU as "Відділення банку", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KOD_DKPP as "Код ДКПП", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KOD_MFO as "Код МФО", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.ROZRAHUNKOVIJ_RAHUNOK as "Розрахунковий рахунок"';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'from ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI,';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  RAJONI ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'where ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  RAJONI.RAJON=:District ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  and ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.RAJON=RAJONI.KOD ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'order by ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.NAZVAOBJEKTA';
     qObjekti.Params.Clear;
     qObjekti.Params.Add;
     qObjekti.Params[0].Name:='District';
@@ -242,20 +238,7 @@ end;
 
 procedure TfrmObjekti.aSortByNazvaExecute(Sender: TObject);
 begin
-  with frmObjekti do
-  begin
-    qObjekti.SQL.Clear;
-    qObjekti.SQL.Text:='select * from OBJEKTI,RAJONI where RAJONI.RAJON=:District and OBJEKTI.RAJON=RAJONI.KOD order by OBJEKTI.NAZVAOBJEKTA';
-    qObjekti.Params.Clear;
-    qObjekti.Params.Add;
-    qObjekti.Params[0].Name:='District';
-    qObjekti.Params[0].Value:=cbDistrict.Text;
-    qObjekti.Open;
-    aSortByKod.Checked:=false;
-    aSortByNazva.Checked:=true;
-    aSortByAdresa.Checked:=false;
-    aSortByVidomchaPidporydkovanist.Checked:=false;
-  end;
+  frmObjekti.aUpdateExecute(sender);
 end;
 
 procedure TfrmObjekti.aSortByKodExecute(Sender: TObject);
@@ -263,7 +246,25 @@ begin
   with frmObjekti do
   begin
     qObjekti.SQL.Clear;
-    qObjekti.SQL.Text:='select * from OBJEKTI,RAJONI where RAJONI.RAJON=:District and OBJEKTI.RAJON=RAJONI.KOD order by OBJEKTI.KODOBJEKTA';
+    qObjekti.SQL.Text:='';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'select ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KODOBJEKTA as "Код", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.NAZVAOBJEKTA as "Назва об''єкта", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.ADRESAOBJEKTA as "Адреса об''єкта", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.VIDOMCHAPIPORYDKOVANIST as "Відомча підпорядкованість", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.VIDDILENNY_BANKU as "Відділення банку", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KOD_DKPP as "Код ДКПП", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KOD_MFO as "Код МФО", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.ROZRAHUNKOVIJ_RAHUNOK as "Розрахунковий рахунок"';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'from ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI,';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  RAJONI ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'where ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  RAJONI.RAJON=:District ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  and ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.RAJON=RAJONI.KOD ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'order by ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KODOBJEKTA';
     qObjekti.Params.Clear;
     qObjekti.Params.Add;
     qObjekti.Params[0].Name:='District';
@@ -273,6 +274,7 @@ begin
     aSortByNazva.Checked:=false;
     aSortByAdresa.Checked:=false;
     aSortByVidomchaPidporydkovanist.Checked:=false;
+    edtFind_NazvaObjekta.Text:='';
   end;
 end;
 
@@ -281,7 +283,25 @@ begin
   with frmObjekti do
   begin
     qObjekti.SQL.Clear;
-    qObjekti.SQL.Text:='select * from OBJEKTI,RAJONI where RAJONI.RAJON=:District and OBJEKTI.RAJON=RAJONI.KOD order by OBJEKTI.ADRESAOBJEKTA';
+    qObjekti.SQL.Text:='';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'select ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KODOBJEKTA as "Код", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.NAZVAOBJEKTA as "Назва об''єкта", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.ADRESAOBJEKTA as "Адреса об''єкта", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.VIDOMCHAPIPORYDKOVANIST as "Відомча підпорядкованість", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.VIDDILENNY_BANKU as "Відділення банку", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KOD_DKPP as "Код ДКПП", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KOD_MFO as "Код МФО", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.ROZRAHUNKOVIJ_RAHUNOK as "Розрахунковий рахунок"';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'from ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI,';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  RAJONI ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'where ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  RAJONI.RAJON=:District ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  and ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.RAJON=RAJONI.KOD ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'order by ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.ADRESAOBJEKTA';
     qObjekti.Params.Clear;
     qObjekti.Params.Add;
     qObjekti.Params[0].Name:='District';
@@ -291,6 +311,7 @@ begin
     aSortByNazva.Checked:=false;
     aSortByAdresa.Checked:=true;
     aSortByVidomchaPidporydkovanist.Checked:=false;
+    edtFind_NazvaObjekta.Text:='';
   end;
 end;
 
@@ -300,7 +321,24 @@ begin
   with frmObjekti do
   begin
     qObjekti.SQL.Clear;
-    qObjekti.SQL.Text:='select * from OBJEKTI,RAJONI where RAJONI.RAJON=:District and OBJEKTI.RAJON=RAJONI.KOD order by OBJEKTI.VIDOMCHAPIPORYDKOVANIST';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'select ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KODOBJEKTA as "Код", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.NAZVAOBJEKTA as "Назва об''єкта", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.ADRESAOBJEKTA as "Адреса об''єкта", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.VIDOMCHAPIPORYDKOVANIST as "Відомча підпорядкованість", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.VIDDILENNY_BANKU as "Відділення банку", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KOD_DKPP as "Код ДКПП", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.KOD_MFO as "Код МФО", ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.ROZRAHUNKOVIJ_RAHUNOK as "Розрахунковий рахунок"';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'from ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI,';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  RAJONI ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'where ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  RAJONI.RAJON=:District ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  and ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.RAJON=RAJONI.KOD ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'order by ';
+    qObjekti.SQL.Text:=qObjekti.SQL.Text+'  OBJEKTI.VIDOMCHAPIPORYDKOVANIST';
     qObjekti.Params.Clear;
     qObjekti.Params.Add;
     qObjekti.Params[0].Name:='District';
@@ -310,61 +348,86 @@ begin
     aSortByNazva.Checked:=false;
     aSortByAdresa.Checked:=false;
     aSortByVidomchaPidporydkovanist.Checked:=true;
+    edtFind_NazvaObjekta.Text:='';
   end;
 end;
 
 procedure TfrmObjekti.aChoiceExecute(Sender: TObject);
+var
+  Teritory, Rajon: integer;
 begin
   if frmObjekti.qObjekti.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmObjektiEdit') then frmObjektiEdit:=TfrmObjektiEdit.Create(self);
   frmMain.Enabled:=false;
-  if frmMain.IsFormOpen('frmFilter') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmOpechanuvanny') then frmObjekti.Enabled:=false;
   frmObjektiEdit.Show;
   frmObjektiEdit.Caption:='Вибрати відомості про об''єкт';
   frmObjektiEdit.Position:=poMainFormCenter;
   frmObjektiEdit.BorderStyle:=bsDialog;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmOpechanuvanny') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmObjekti.Enabled:=false;
 
-  frmObjektiEdit.edtKodObjekta.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('KODOBJEKTA').Value);
+  frmObjektiEdit.edtKodObjekta.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('Код').Value);
   frmObjektiEdit.edtKodObjekta.Enabled:=false;
   frmObjektiEdit.btnKodObjekta.Enabled:=false;
 
-  frmObjektiEdit.aMinistryUpdateExecute(sender);
-  frmObjektiEdit.cbMinistry.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('MINISTRY').Value);
-  if frmObjekti.qTeritory.Locate('KOD',StrToInt(frmObjektiEdit.cbMinistry.Text),[]) then frmObjektiEdit.cbMinistry.Text:=frmObjekti.qTeritory.FieldByName('MINISTRY').Value else frmObjektiEdit.cbMinistry.Text:='';
-  frmObjektiEdit.cbMinistry.Enabled:=false;
-  frmObjektiEdit.btnMinistryUpdate.Enabled:=false;
+  with frmObjekti.qTeritory do
+  begin
+    SQL.Clear;
+    SQL.Text:='select * from OBJEKTI where KODOBJEKTA=:kod';
+    Params.Clear;
+    Params.Add;
+    Params[0].Name:='kod';
+    Params[0].Value:=frmObjektiEdit.edtKodObjekta.Text;
+    Open;
+  end;
+  if frmObjekti.qTeritory.Locate('KODOBJEKTA',StrToInt(frmObjektiEdit.edtKodObjekta.Text),[]) then
+  begin
+    Teritory:=frmObjekti.qTeritory.FieldByName('TERITORY').Value;
+    Rajon:=frmObjekti.qTeritory.FieldByName('RAJON').Value;
+
+    frmObjektiEdit.edtNazvaObjekta.Text:=frmObjekti.qTeritory.FieldByName('NAZVAOBJEKTA').Value;
+    frmObjektiEdit.edtVidomchaPidporydkovanist.Text:=frmObjekti.qTeritory.FieldByName('VIDOMCHAPIPORYDKOVANIST').Value;
+    frmObjektiEdit.edtAdresaObjekta.Text:=frmObjekti.qTeritory.FieldByName('ADRESAOBJEKTA').Value;
+    frmObjektiEdit.edtViddilennyBanku.Text:=frmObjekti.qTeritory.FieldByName('VIDDILENNY_BANKU').Value;
+    frmObjektiEdit.edtKod_DKPP.Text:=frmObjekti.qTeritory.FieldByName('KOD_DKPP').Value;
+    frmObjektiEdit.edtKod_MFO.Text:=frmObjekti.qTeritory.FieldByName('KOD_MFO').Value;
+    frmObjektiEdit.edtRozrahunkovijRahunok.Text:=frmObjekti.qTeritory.FieldByName('ROZRAHUNKOVIJ_RAHUNOK').Value;
+  end
+  else
+  begin
+    Teritory:=-1;
+    Rajon:=-1;
+
+    frmObjektiEdit.edtNazvaObjekta.Text:='';
+    frmObjektiEdit.edtVidomchaPidporydkovanist.Text:='';
+    frmObjektiEdit.edtAdresaObjekta.Text:='';
+    frmObjektiEdit.edtViddilennyBanku.Text:='';
+    frmObjektiEdit.edtKod_DKPP.Text:='';
+    frmObjektiEdit.edtKod_MFO.Text:='';
+    frmObjektiEdit.edtRozrahunkovijRahunok.Text:='';
+  end;
 
   frmObjektiEdit.aTeritoryUpdateExecute(sender);
-  frmObjektiEdit.cbTeritory.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('TERITORY').Value);
-  if frmObjekti.qTeritory.Locate('KOD',StrToInt(frmObjektiEdit.cbTeritory.Text),[]) then frmObjektiEdit.cbTeritory.Text:=frmObjekti.qTeritory.FieldByName('TERITORY').Value else frmObjektiEdit.cbTeritory.Text:='';
+  if frmObjekti.qTeritory.Locate('KOD',Teritory,[]) then frmObjektiEdit.cbTeritory.Text:=frmObjekti.qTeritory.FieldByName('TERITORY').Value else frmObjektiEdit.cbTeritory.Text:='';
   frmObjektiEdit.cbTeritory.Enabled:=false;
   frmObjektiEdit.btnTeritory.Enabled:=false;
 
   frmObjektiEdit.aDistrictUpdateExecute(sender);
-  frmObjektiEdit.cbDistrict.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('RAJON').Value);
-  if frmObjekti.qTeritory.Locate('KOD',StrToInt(frmObjektiEdit.cbDistrict.Text),[]) then frmObjektiEdit.cbDistrict.Text:=frmObjekti.qTeritory.FieldByName('RAJON').Value else frmObjektiEdit.cbDistrict.Text:='';
+  if frmObjekti.qTeritory.Locate('KOD',Rajon,[]) then frmObjektiEdit.cbDistrict.Text:=frmObjekti.qTeritory.FieldByName('RAJON').Value else frmObjektiEdit.cbDistrict.Text:='';
   frmObjektiEdit.cbDistrict.Enabled:=false;
   frmObjektiEdit.btnDistrict.Enabled:=false;
 
-  frmObjektiEdit.edtNazvaObjekta.Text:=frmObjekti.qObjekti.FieldByName('NAZVAOBJEKTA').Value;
   frmObjektiEdit.edtNazvaObjekta.Enabled:=false;
-  frmObjektiEdit.edtVidomchaPidporydkovanist.Text:=frmObjekti.qObjekti.FieldByName('VIDOMCHAPIPORYDKOVANIST').Value;
   frmObjektiEdit.edtVidomchaPidporydkovanist.Enabled:=false;
   frmObjektiEdit.btnVidomchaPidporydkovanist.Enabled:=false;
-  frmObjektiEdit.edtAdresaObjekta.Text:=frmObjekti.qObjekti.FieldByName('ADRESAOBJEKTA').Value;
   frmObjektiEdit.edtAdresaObjekta.Enabled:=false;
-  frmObjektiEdit.edtViddilennyBanku.Text:=frmObjekti.qObjekti.FieldByName('VIDDILENNY_BANKU').Value;
   frmObjektiEdit.edtViddilennyBanku.Enabled:=false;
-  frmObjektiEdit.edtKod_DKPP.Text:=frmObjekti.qObjekti.FieldByName('KOD_DKPP').Value;
   frmObjektiEdit.edtKod_DKPP.Enabled:=false;
-  frmObjektiEdit.edtKod_MFO.Text:=frmObjekti.qObjekti.FieldByName('KOD_MFO').Value;
   frmObjektiEdit.edtKod_MFO.Enabled:=false;
-  frmObjektiEdit.edtRozrahunkovijRahunok.Text:=frmObjekti.qObjekti.FieldByName('ROZRAHUNKOVIJ_RAHUNOK').Value;
   frmObjektiEdit.edtRozrahunkovijRahunok.Enabled:=false;
 
   frmObjektiEdit.DBGrid1.Align:=alClient;
@@ -381,31 +444,6 @@ end;
 procedure TfrmObjekti.aCloseExecute(Sender: TObject);
 begin
   frmObjekti.Close;
-end;
-
-procedure TfrmObjekti.aMinistryChangeExecute(Sender: TObject);
-begin
-  with frmObjekti do
-  begin
-    cbTeritory.Text:='';
-    cbTeritory.Items.Clear;
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Ministry';
-    qTeritory.Params[0].Value:=cbMinistry.Text;
-    qTeritory.Open;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      cbTeritory.Items.Add(qTeritory.FieldByName('TERITORY').Value);
-      qTeritory.Next;
-    end;
-    cbDistrict.Text:='';
-    cbDistrict.Items.Clear;
-    aUpdateExecute(sender);
-  end;
 end;
 
 procedure TfrmObjekti.aTeritoryChangeExecute(Sender: TObject);
@@ -440,7 +478,7 @@ procedure TfrmObjekti.qObjektiFilterRecord(DataSet: TDataSet;
   var Accept: Boolean);
 begin
   if frmObjekti.ActiveControl=frmObjekti.edtFind_NazvaObjekta then
-    if (frmMain.PosN(frmObjekti.edtFind_NazvaObjekta.Text,frmObjekti.qObjekti.FieldByName('NAZVAOBJEKTA').Value,0)>0)or(frmMain.PosN(frmObjekti.edtFind_NazvaObjekta.Text,qObjekti.FieldByName('ADRESAOBJEKTA').Value,0)>0) then Accept:=true else Accept:=false;
+    if (frmMain.PosN(frmObjekti.edtFind_NazvaObjekta.Text,frmObjekti.qObjekti.FieldByName('Назва об''єкта').Value,0)>0)or(frmMain.PosN(frmObjekti.edtFind_NazvaObjekta.Text,qObjekti.FieldByName('Адреса об''єкта').Value,0)>0) then Accept:=true else Accept:=false;
 end;
 
 procedure TfrmObjekti.edtFind_NazvaObjektaChange(Sender: TObject);
@@ -455,26 +493,18 @@ begin
   frmMain.Enabled:=false;
   frmObjektiEdit.Show;
   frmObjektiEdit.Caption:='Додати об''єкт нагляду';
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmFilter') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmOpechanuvanny') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmObjekti.Enabled:=false;
   frmObjektiEdit.Position:=poMainFormCenter;
   frmObjektiEdit.BorderStyle:=bsDialog;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmOpechanuvanny') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmObjekti.Enabled:=false;
 
   frmObjektiEdit.aKodUpdateExecute(sender);
   frmObjektiEdit.edtKodObjekta.Enabled:=false;
   frmObjektiEdit.btnKodObjekta.Enabled:=false;
-
-  frmObjektiEdit.aMinistryUpdateExecute(sender);
-  INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
-  frmObjektiEdit.cbMinistry.Text:=INIAZZ.ReadString('Teritory','Ministry',frmObjektiEdit.cbMinistry.Text);
-  INIAZZ.Free;
-  if frmObjekti.qTeritory.Locate('KOD',StrToInt(frmObjektiEdit.cbMinistry.Text),[]) then frmObjektiEdit.cbMinistry.Text:=frmObjekti.qTeritory.FieldByName('MINISTRY').Value else frmObjektiEdit.cbMinistry.Text:='';
-  frmObjektiEdit.cbMinistry.Enabled:=true;
-  frmObjektiEdit.btnMinistryUpdate.Enabled:=true;
 
   frmObjektiEdit.aTeritoryUpdateExecute(sender);
   INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
@@ -520,6 +550,8 @@ begin
 end;
 
 procedure TfrmObjekti.aEditExecute(Sender: TObject);
+var
+  Teritory, Rajon: integer;
 begin
   if frmObjekti.qObjekti.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmObjektiEdit') then frmObjektiEdit:=TfrmObjektiEdit.Create(self);
@@ -528,49 +560,71 @@ begin
   frmObjektiEdit.Caption:='Редагувати відомості про об''єкт';
   frmObjektiEdit.Position:=poMainFormCenter;
   frmObjektiEdit.BorderStyle:=bsDialog;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmFilter') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmOpechanuvanny') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmOpechanuvanny') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmObjekti.Enabled:=false;
 
-  frmObjektiEdit.edtKodObjekta.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('KODOBJEKTA').Value);
+  frmObjektiEdit.edtKodObjekta.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('Код').Value);
   frmObjektiEdit.edtKodObjekta.Enabled:=false;
   frmObjektiEdit.btnKodObjekta.Enabled:=false;
 
-  frmObjektiEdit.aMinistryUpdateExecute(sender);
-  frmObjektiEdit.cbMinistry.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('MINISTRY').Value);
-  if frmObjekti.qTeritory.Locate('KOD',StrToInt(frmObjektiEdit.cbMinistry.Text),[]) then frmObjektiEdit.cbMinistry.Text:=frmObjekti.qTeritory.FieldByName('MINISTRY').Value else frmObjektiEdit.cbMinistry.Text:='';
-  frmObjektiEdit.cbMinistry.Enabled:=true;
-  frmObjektiEdit.btnMinistryUpdate.Enabled:=true;
+  with frmObjekti.qTeritory do
+  begin
+    SQL.Clear;
+    SQL.Text:='select * from OBJEKTI where KODOBJEKTA=:kod';
+    Params.Clear;
+    Params.Add;
+    Params[0].Name:='kod';
+    Params[0].Value:=frmObjektiEdit.edtKodObjekta.Text;
+    Open;
+  end;
+  if frmObjekti.qTeritory.Locate('KODOBJEKTA',StrToInt(frmObjektiEdit.edtKodObjekta.Text),[]) then
+  begin
+    Teritory:=frmObjekti.qTeritory.FieldByName('TERITORY').Value;
+    Rajon:=frmObjekti.qTeritory.FieldByName('RAJON').Value;
+
+    frmObjektiEdit.edtNazvaObjekta.Text:=frmObjekti.qTeritory.FieldByName('NAZVAOBJEKTA').Value;
+    frmObjektiEdit.edtVidomchaPidporydkovanist.Text:=frmObjekti.qTeritory.FieldByName('VIDOMCHAPIPORYDKOVANIST').Value;
+    frmObjektiEdit.edtAdresaObjekta.Text:=frmObjekti.qTeritory.FieldByName('ADRESAOBJEKTA').Value;
+    frmObjektiEdit.edtViddilennyBanku.Text:=frmObjekti.qTeritory.FieldByName('VIDDILENNY_BANKU').Value;
+    frmObjektiEdit.edtKod_DKPP.Text:=frmObjekti.qTeritory.FieldByName('KOD_DKPP').Value;
+    frmObjektiEdit.edtKod_MFO.Text:=frmObjekti.qTeritory.FieldByName('KOD_MFO').Value;
+    frmObjektiEdit.edtRozrahunkovijRahunok.Text:=frmObjekti.qTeritory.FieldByName('ROZRAHUNKOVIJ_RAHUNOK').Value;
+  end
+  else
+  begin
+    Teritory:=-1;
+    Rajon:=-1;
+
+    frmObjektiEdit.edtNazvaObjekta.Text:='';
+    frmObjektiEdit.edtVidomchaPidporydkovanist.Text:='';
+    frmObjektiEdit.edtAdresaObjekta.Text:='';
+    frmObjektiEdit.edtViddilennyBanku.Text:='';
+    frmObjektiEdit.edtKod_DKPP.Text:='';
+    frmObjektiEdit.edtKod_MFO.Text:='';
+    frmObjektiEdit.edtRozrahunkovijRahunok.Text:='';
+  end;
 
   frmObjektiEdit.aTeritoryUpdateExecute(sender);
-  frmObjektiEdit.cbTeritory.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('TERITORY').Value);
-  if frmObjekti.qTeritory.Locate('KOD',StrToInt(frmObjektiEdit.cbTeritory.Text),[]) then frmObjektiEdit.cbTeritory.Text:=frmObjekti.qTeritory.FieldByName('TERITORY').Value else frmObjektiEdit.cbTeritory.Text:='';
+  if frmObjekti.qTeritory.Locate('KOD',Teritory,[]) then frmObjektiEdit.cbTeritory.Text:=frmObjekti.qTeritory.FieldByName('TERITORY').Value else frmObjektiEdit.cbTeritory.Text:='';
   frmObjektiEdit.cbTeritory.Enabled:=true;
   frmObjektiEdit.btnTeritory.Enabled:=true;
 
   frmObjektiEdit.aDistrictUpdateExecute(sender);
-  frmObjektiEdit.cbDistrict.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('RAJON').Value);
-  if frmObjekti.qTeritory.Locate('KOD',StrToInt(frmObjektiEdit.cbDistrict.Text),[]) then frmObjektiEdit.cbDistrict.Text:=frmObjekti.qTeritory.FieldByName('RAJON').Value else frmObjektiEdit.cbDistrict.Text:='';
+  if frmObjekti.qTeritory.Locate('KOD',Rajon,[]) then frmObjektiEdit.cbDistrict.Text:=frmObjekti.qTeritory.FieldByName('RAJON').Value else frmObjektiEdit.cbDistrict.Text:='';
   frmObjektiEdit.cbDistrict.Enabled:=true;
   frmObjektiEdit.btnDistrict.Enabled:=true;
 
-  frmObjektiEdit.edtNazvaObjekta.Text:=frmObjekti.qObjekti.FieldByName('NAZVAOBJEKTA').Value;
   frmObjektiEdit.edtNazvaObjekta.Enabled:=true;
-  frmObjektiEdit.edtVidomchaPidporydkovanist.Text:=frmObjekti.qObjekti.FieldByName('VIDOMCHAPIPORYDKOVANIST').Value;
   frmObjektiEdit.edtVidomchaPidporydkovanist.Enabled:=true;
   frmObjektiEdit.btnVidomchaPidporydkovanist.Enabled:=true;
-  frmObjektiEdit.edtAdresaObjekta.Text:=frmObjekti.qObjekti.FieldByName('ADRESAOBJEKTA').Value;
   frmObjektiEdit.edtAdresaObjekta.Enabled:=true;
-  frmObjektiEdit.edtViddilennyBanku.Text:=frmObjekti.qObjekti.FieldByName('VIDDILENNY_BANKU').Value;
   frmObjektiEdit.edtViddilennyBanku.Enabled:=true;
-  frmObjektiEdit.edtKod_DKPP.Text:=frmObjekti.qObjekti.FieldByName('KOD_DKPP').Value;
   frmObjektiEdit.edtKod_DKPP.Enabled:=true;
-  frmObjektiEdit.edtKod_MFO.Text:=frmObjekti.qObjekti.FieldByName('KOD_MFO').Value;
   frmObjektiEdit.edtKod_MFO.Enabled:=true;
-  frmObjektiEdit.edtRozrahunkovijRahunok.Text:=frmObjekti.qObjekti.FieldByName('ROZRAHUNKOVIJ_RAHUNOK').Value;
   frmObjektiEdit.edtRozrahunkovijRahunok.Enabled:=true;
 
   frmObjektiEdit.DBGrid1.Align:=alClient;
@@ -585,6 +639,8 @@ begin
 end;
 
 procedure TfrmObjekti.aDeleteExecute(Sender: TObject);
+var
+  Teritory, Rajon: integer;
 begin
   if frmObjekti.qObjekti.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmObjektiEdit') then frmObjektiEdit:=TfrmObjektiEdit.Create(self);
@@ -593,49 +649,71 @@ begin
   frmObjektiEdit.Caption:='Видалити відомості про об''єкт';
   frmObjektiEdit.Position:=poMainFormCenter;
   frmObjektiEdit.BorderStyle:=bsDialog;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmFilter') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmOpechanuvanny') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmObjekti.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmOpechanuvanny') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmObjekti.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmObjekti.Enabled:=false;
 
-  frmObjektiEdit.edtKodObjekta.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('KODOBJEKTA').Value);
+  frmObjektiEdit.edtKodObjekta.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('Код').Value);
   frmObjektiEdit.edtKodObjekta.Enabled:=false;
   frmObjektiEdit.btnKodObjekta.Enabled:=false;
 
-  frmObjektiEdit.aMinistryUpdateExecute(sender);
-  frmObjektiEdit.cbMinistry.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('MINISTRY').Value);
-  if frmObjekti.qTeritory.Locate('KOD',StrToInt(frmObjektiEdit.cbMinistry.Text),[]) then frmObjektiEdit.cbMinistry.Text:=frmObjekti.qTeritory.FieldByName('MINISTRY').Value else frmObjektiEdit.cbMinistry.Text:='';
-  frmObjektiEdit.cbMinistry.Enabled:=false;
-  frmObjektiEdit.btnMinistryUpdate.Enabled:=false;
+  with frmObjekti.qTeritory do
+  begin
+    SQL.Clear;
+    SQL.Text:='select * from OBJEKTI where KODOBJEKTA=:kod';
+    Params.Clear;
+    Params.Add;
+    Params[0].Name:='kod';
+    Params[0].Value:=frmObjektiEdit.edtKodObjekta.Text;
+    Open;
+  end;
+  if frmObjekti.qTeritory.Locate('KODOBJEKTA',StrToInt(frmObjektiEdit.edtKodObjekta.Text),[]) then
+  begin
+    Teritory:=frmObjekti.qTeritory.FieldByName('TERITORY').Value;
+    Rajon:=frmObjekti.qTeritory.FieldByName('RAJON').Value;
+
+    frmObjektiEdit.edtNazvaObjekta.Text:=frmObjekti.qTeritory.FieldByName('NAZVAOBJEKTA').Value;
+    frmObjektiEdit.edtVidomchaPidporydkovanist.Text:=frmObjekti.qTeritory.FieldByName('VIDOMCHAPIPORYDKOVANIST').Value;
+    frmObjektiEdit.edtAdresaObjekta.Text:=frmObjekti.qTeritory.FieldByName('ADRESAOBJEKTA').Value;
+    frmObjektiEdit.edtViddilennyBanku.Text:=frmObjekti.qTeritory.FieldByName('VIDDILENNY_BANKU').Value;
+    frmObjektiEdit.edtKod_DKPP.Text:=frmObjekti.qTeritory.FieldByName('KOD_DKPP').Value;
+    frmObjektiEdit.edtKod_MFO.Text:=frmObjekti.qTeritory.FieldByName('KOD_MFO').Value;
+    frmObjektiEdit.edtRozrahunkovijRahunok.Text:=frmObjekti.qTeritory.FieldByName('ROZRAHUNKOVIJ_RAHUNOK').Value;
+  end
+  else
+  begin
+    Teritory:=-1;
+    Rajon:=-1;
+
+    frmObjektiEdit.edtNazvaObjekta.Text:='';
+    frmObjektiEdit.edtVidomchaPidporydkovanist.Text:='';
+    frmObjektiEdit.edtAdresaObjekta.Text:='';
+    frmObjektiEdit.edtViddilennyBanku.Text:='';
+    frmObjektiEdit.edtKod_DKPP.Text:='';
+    frmObjektiEdit.edtKod_MFO.Text:='';
+    frmObjektiEdit.edtRozrahunkovijRahunok.Text:='';
+  end;
 
   frmObjektiEdit.aTeritoryUpdateExecute(sender);
-  frmObjektiEdit.cbTeritory.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('TERITORY').Value);
-  if frmObjekti.qTeritory.Locate('KOD',StrToInt(frmObjektiEdit.cbTeritory.Text),[]) then frmObjektiEdit.cbTeritory.Text:=frmObjekti.qTeritory.FieldByName('TERITORY').Value else frmObjektiEdit.cbTeritory.Text:='';
+  if frmObjekti.qTeritory.Locate('KOD',Teritory,[]) then frmObjektiEdit.cbTeritory.Text:=frmObjekti.qTeritory.FieldByName('TERITORY').Value else frmObjektiEdit.cbTeritory.Text:='';
   frmObjektiEdit.cbTeritory.Enabled:=false;
   frmObjektiEdit.btnTeritory.Enabled:=false;
 
   frmObjektiEdit.aDistrictUpdateExecute(sender);
-  frmObjektiEdit.cbDistrict.Text:=IntToStr(frmObjekti.qObjekti.FieldByName('RAJON').Value);
-  if frmObjekti.qTeritory.Locate('KOD',StrToInt(frmObjektiEdit.cbDistrict.Text),[]) then frmObjektiEdit.cbDistrict.Text:=frmObjekti.qTeritory.FieldByName('RAJON').Value else frmObjektiEdit.cbDistrict.Text:='';
+  if frmObjekti.qTeritory.Locate('KOD',Rajon,[]) then frmObjektiEdit.cbDistrict.Text:=frmObjekti.qTeritory.FieldByName('RAJON').Value else frmObjektiEdit.cbDistrict.Text:='';
   frmObjektiEdit.cbDistrict.Enabled:=false;
   frmObjektiEdit.btnDistrict.Enabled:=false;
 
-  frmObjektiEdit.edtNazvaObjekta.Text:=frmObjekti.qObjekti.FieldByName('NAZVAOBJEKTA').Value;
   frmObjektiEdit.edtNazvaObjekta.Enabled:=false;
-  frmObjektiEdit.edtVidomchaPidporydkovanist.Text:=frmObjekti.qObjekti.FieldByName('VIDOMCHAPIPORYDKOVANIST').Value;
   frmObjektiEdit.edtVidomchaPidporydkovanist.Enabled:=false;
   frmObjektiEdit.btnVidomchaPidporydkovanist.Enabled:=false;
-  frmObjektiEdit.edtAdresaObjekta.Text:=frmObjekti.qObjekti.FieldByName('ADRESAOBJEKTA').Value;
   frmObjektiEdit.edtAdresaObjekta.Enabled:=false;
-  frmObjektiEdit.edtViddilennyBanku.Text:=frmObjekti.qObjekti.FieldByName('VIDDILENNY_BANKU').Value;
   frmObjektiEdit.edtViddilennyBanku.Enabled:=false;
-  frmObjektiEdit.edtKod_DKPP.Text:=frmObjekti.qObjekti.FieldByName('KOD_DKPP').Value;
   frmObjektiEdit.edtKod_DKPP.Enabled:=false;
-  frmObjektiEdit.edtKod_MFO.Text:=frmObjekti.qObjekti.FieldByName('KOD_MFO').Value;
   frmObjektiEdit.edtKod_MFO.Enabled:=false;
-  frmObjektiEdit.edtRozrahunkovijRahunok.Text:=frmObjekti.qObjekti.FieldByName('ROZRAHUNKOVIJ_RAHUNOK').Value;
   frmObjektiEdit.edtRozrahunkovijRahunok.Enabled:=false;
 
   frmObjektiEdit.DBGrid1.Align:=alClient;

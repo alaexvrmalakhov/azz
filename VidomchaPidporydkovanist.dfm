@@ -1,6 +1,6 @@
 object frmVidomchaPidporydkovanist: TfrmVidomchaPidporydkovanist
-  Left = 257
-  Top = 113
+  Left = 895
+  Top = 85
   Width = 426
   Height = 270
   Caption = 'frmVidomchaPidporydkovanist'

@@ -77,57 +77,76 @@ object frmMain: TfrmMain
     object mnZahodi: TMenuItem
       Caption = #1047#1072#1093#1086#1076#1080
       Hint = #1056#1077#1076#1072#1075#1091#1074#1072#1085#1085#1103' '#1078#1091#1088#1085#1072#1083#1110#1074' '#1079#1072#1093#1086#1076#1110#1074
+      object N15: TMenuItem
+        Action = aShtrafi
+      end
+      object N8: TMenuItem
+        Caption = '-'
+      end
       object old2: TMenuItem
         Caption = 'old'
         object mnZahodiShtrafi: TMenuItem
           Caption = #1064#1090#1088#1072#1092#1080
           object mnZahodiShtrafiShtrafi: TMenuItem
             Action = aShtrafi
+            Enabled = False
           end
           object mnShtrafiChoices: TMenuItem
             Caption = '-'
           end
           object mnZahodiShtrafiNeSplacheni: TMenuItem
             Action = frmShtrafi.aNeSplacheni
+            Enabled = False
           end
           object mnZahodiShtrafiNeVrucheni: TMenuItem
             Action = frmShtrafi.aNeVrucheni
+            Enabled = False
           end
           object mnZahodiShtrafiPeredaniDoVDVS: TMenuItem
             Caption = #1055#1077#1088#1077#1076#1072#1085#1110' '#1076#1086' '#1042#1044#1042#1057
             object mnZahodiShtrafiPeredaniDoVDVSPeredani: TMenuItem
               Action = frmShtrafi.aPeredaniDoVDVSPeredani
+              Enabled = False
             end
             object mnZahodiShtrafiPeredaniDoVDVSSplacheni: TMenuItem
               Action = frmShtrafi.aPeredaniDoVDVSSplacheni
+              Enabled = False
             end
           end
           object mnZahodiShtrafiNePeredaniDoVDVS: TMenuItem
             Action = frmShtrafi.aNePeredaniDoVDVS
+            Enabled = False
           end
           object mnZahodiShtrafiPrimusovoStygneni: TMenuItem
             Action = frmShtrafi.aPrimusovoStygneni
+            Enabled = False
           end
           object mnZahodiShtrafiSkasovani: TMenuItem
             Action = frmShtrafi.aSkasovani
+            Enabled = False
           end
           object mnZahodiShtrafiSpivrobitnik: TMenuItem
             Action = frmShtrafi.aSpivrobitnik
+            Enabled = False
           end
           object mnZahodiShtrafiTipShtrafu: TMenuItem
             Action = frmShtrafi.aTipShtrafu
+            Enabled = False
           end
           object mnZahodiShtrafiObjekt: TMenuItem
             Caption = #1054#1073#39#1108#1082#1090
             object mnZahodiShtrafiObjektAdresa: TMenuItem
               Action = frmShtrafi.aObjekt_Adresa
+              Enabled = False
             end
             object mnZahodiShtrafiObjektNazva: TMenuItem
               Action = frmShtrafi.aObjekt_Nazva
+              Enabled = False
             end
           end
           object mnZahodiShtrafiRozdilT23F18: TMenuItem
             Action = frmShtrafi.aRozdilT23F18
+            Enabled = False
           end
         end
         object mnZahodiAdmin_Zapobizh_Zahodi: TMenuItem
@@ -322,20 +341,20 @@ object frmMain: TfrmMain
           Action = aSpivrobitniki
         end
       end
+      object mnDovidnikiPidkontrolniObjekti: TMenuItem
+        Caption = #1055#1110#1076#1082#1086#1085#1090#1088#1086#1083#1100#1085#1110' '#1086#1073#39#1108#1082#1090#1080
+        object mnDovidnikiPidkontrolniObjektiVidomchaPidporydkovanist: TMenuItem
+          Action = aVidomchaPidporydkovanist
+        end
+        object mnDovidnikiPidkontrolniObjektiObjekti: TMenuItem
+          Action = aObjekti
+        end
+      end
       object N10: TMenuItem
         Caption = '-'
       end
       object old1: TMenuItem
         Caption = 'old'
-        object mnDovidnikiPidkontrolniObjekti: TMenuItem
-          Caption = #1055#1110#1076#1082#1086#1085#1090#1088#1086#1083#1100#1085#1110' '#1086#1073#39#1108#1082#1090#1080
-          object mnDovidnikiPidkontrolniObjektiVidomchaPidporydkovanist: TMenuItem
-            Action = aVidomchaPidporydkovanist
-          end
-          object mnDovidnikiPidkontrolniObjektiObjekti: TMenuItem
-            Action = aObjekti
-          end
-        end
         object mnDovidnikiNormativnaBaza: TMenuItem
           Caption = #1053#1086#1088#1084#1072#1090#1080#1074#1085#1072' '#1073#1072#1079#1072
           Hint = 
@@ -513,14 +532,14 @@ object frmMain: TfrmMain
           Caption = '-'
           Visible = False
         end
-        object mnNalashtuvannyKoristuvachiGrupi: TMenuItem
-          Action = aNalashtuvannyGroups
-          Visible = False
-        end
         object mnNalashtuvannyKoristuvachiKoristuvachi: TMenuItem
           Action = aNalashtuvannyKoristuvachi
           Enabled = False
           Hint = #1055#1077#1088#1077#1083#1110#1082' '#1082#1086#1088#1080#1089#1090#1091#1074#1072#1095#1110#1074' '#1089#1080#1089#1090#1077#1084#1080' '#1082#1077#1088#1091#1074#1072#1085#1085#1103' '#1087#1088#1072#1074#1072#1084#1080' '#1082#1086#1088#1080#1089#1090#1091#1074#1072#1095#1110#1074
+        end
+        object mnNalashtuvannyKoristuvachiGrupi: TMenuItem
+          Action = aNalashtuvannyGroups
+          Enabled = False
         end
         object mnNalashtuvannyKoristuvachiPravaKoristuvachiv: TMenuItem
           Action = aNalashtuvanny_PravaKoristuvachiv
@@ -528,12 +547,11 @@ object frmMain: TfrmMain
         end
         object N9: TMenuItem
           Caption = '-'
-          Visible = False
         end
         object mnAdministruvannyUsers: TMenuItem
           Action = aUsers
           Caption = #1055#1110#1076#1082#1083#1102#1095#1077#1085#1110' '#1082#1086#1088#1080#1089#1090#1091#1074#1072#1095#1110
-          Visible = False
+          Enabled = False
         end
       end
       object N14: TMenuItem

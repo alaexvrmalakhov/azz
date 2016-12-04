@@ -1,7 +1,7 @@
 object frmSotrudnikiObjektivEdit: TfrmSotrudnikiObjektivEdit
-  Left = 749
-  Top = 237
-  Width = 529
+  Left = 1076
+  Top = 77
+  Width = 535
   Height = 307
   Caption = 'frmSotrudnikiObjektivEdit'
   Color = clBtnFace
@@ -75,6 +75,7 @@ object frmSotrudnikiObjektivEdit: TfrmSotrudnikiObjektivEdit
     Top = 76
     Width = 393
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 100
     TabOrder = 3
     Text = 'edtPIBPorushnika'
@@ -84,6 +85,7 @@ object frmSotrudnikiObjektivEdit: TfrmSotrudnikiObjektivEdit
     Top = 108
     Width = 393
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 100
     TabOrder = 4
     Text = 'edtPosadaPorushnika'
@@ -93,6 +95,7 @@ object frmSotrudnikiObjektivEdit: TfrmSotrudnikiObjektivEdit
     Top = 172
     Width = 393
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 100
     TabOrder = 7
     Text = 'edtMisceNarodzhennyPorushnika'
@@ -102,6 +105,7 @@ object frmSotrudnikiObjektivEdit: TfrmSotrudnikiObjektivEdit
     Top = 140
     Width = 117
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 10
     TabOrder = 6
     Text = 'edtIdentifikacijnijNomerPorushnika'
@@ -111,13 +115,9 @@ object frmSotrudnikiObjektivEdit: TfrmSotrudnikiObjektivEdit
     Top = 140
     Width = 149
     Height = 21
-    CalAlignment = dtaLeft
-    Date = 39272.4844129745
-    Time = 39272.4844129745
-    DateFormat = dfShort
-    DateMode = dmComboBox
-    Kind = dtkDate
-    ParseInput = False
+    Date = 39272.484412974500000000
+    Time = 39272.484412974500000000
+    ImeName = 'Russian'
     TabOrder = 5
   end
   object edtMisceProzhivanny: TEdit
@@ -125,6 +125,7 @@ object frmSotrudnikiObjektivEdit: TfrmSotrudnikiObjektivEdit
     Top = 204
     Width = 393
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 8
     Text = 'edtMisceProzhivanny'
   end
@@ -134,6 +135,7 @@ object frmSotrudnikiObjektivEdit: TfrmSotrudnikiObjektivEdit
     Width = 185
     Height = 21
     Color = clInactiveBorder
+    ImeName = 'Russian'
     ReadOnly = True
     TabOrder = 0
     Text = 'edtKodObjekta'
@@ -161,6 +163,7 @@ object frmSotrudnikiObjektivEdit: TfrmSotrudnikiObjektivEdit
     Top = 44
     Width = 185
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 1
     Text = 'edtKod'
   end

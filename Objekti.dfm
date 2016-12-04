@@ -1,6 +1,6 @@
 object frmObjekti: TfrmObjekti
-  Left = 175
-  Top = 1
+  Left = 255
+  Top = 115
   Width = 314
   Height = 267
   Caption = 'frmObjekti'
@@ -23,6 +23,7 @@ object frmObjekti: TfrmObjekti
     Width = 117
     Height = 65
     DataSource = dsObjekti
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -30,75 +31,24 @@ object frmObjekti: TfrmObjekti
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'NAZVAOBJEKTA'
-        Title.Caption = #1053#1072#1079#1074#1072' '#1086#1073#39#1108#1082#1090#1072
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'ADRESAOBJEKTA'
-        Title.Caption = #1040#1076#1088#1077#1089#1072' '#1086#1073#39#1108#1082#1090#1072
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'VIDOMCHAPIPORYDKOVANIST'
-        Title.Caption = #1052#1110#1076#1086#1084#1095#1072' '#1087#1110#1076#1087#1086#1088#1103#1076#1082#1086#1074#1072#1085#1110#1089#1090#1100
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'VIDDILENNY_BANKU'
-        Title.Caption = #1042#1110#1076#1076#1110#1083#1077#1085#1085#1103' '#1073#1072#1085#1082#1091
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'KOD_DKPP'
-        Title.Caption = #1050#1086#1076' '#1044#1050#1055#1055
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'KOD_MFO'
-        Title.Caption = #1052#1060#1054
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'ROZRAHUNKOVIJ_RAHUNOK'
-        Title.Caption = #1056#1086#1079#1088#1072#1093'.'#1088#1072#1093#1091#1085#1086#1082
-        Visible = True
-      end>
   end
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 306
+    Width = 298
     Height = 23
     Align = alTop
     AutoSize = True
+    ParentBackground = True
     TabOrder = 1
-    object cbMinistry: TComboBox
-      Left = 4
-      Top = 1
-      Width = 77
-      Height = 21
-      ItemHeight = 13
-      TabOrder = 0
-      Text = 'cbMinistry'
-      OnChange = aMinistryChangeExecute
-    end
     object cbTeritory: TComboBox
       Left = 84
       Top = 1
       Width = 77
       Height = 21
+      ImeName = 'Russian'
       ItemHeight = 13
-      TabOrder = 1
+      TabOrder = 0
       Text = 'cbTeritory'
       OnChange = aTeritoryChangeExecute
     end
@@ -107,8 +57,9 @@ object frmObjekti: TfrmObjekti
       Top = 1
       Width = 81
       Height = 21
+      ImeName = 'Russian'
       ItemHeight = 13
-      TabOrder = 2
+      TabOrder = 1
       Text = 'cbDistrict'
       OnChange = aDistrictChangeExecute
     end
@@ -118,16 +69,17 @@ object frmObjekti: TfrmObjekti
       Width = 21
       Height = 21
       Action = aTeritoryUpdate
-      TabOrder = 3
+      TabOrder = 2
     end
   end
   object Panel2: TPanel
-    Left = 229
+    Left = 221
     Top = 23
     Width = 77
-    Height = 187
+    Height = 183
     Align = alRight
     AutoSize = True
+    ParentBackground = True
     TabOrder = 2
     object btnAdd: TButton
       Left = 1
@@ -180,17 +132,19 @@ object frmObjekti: TfrmObjekti
   end
   object Panel3: TPanel
     Left = 0
-    Top = 210
-    Width = 306
+    Top = 206
+    Width = 298
     Height = 23
     Align = alBottom
     AutoSize = True
+    ParentBackground = True
     TabOrder = 3
     object edtFind_NazvaObjekta: TEdit
       Left = 16
       Top = 1
       Width = 121
       Height = 21
+      ImeName = 'Russian'
       TabOrder = 0
       Text = 'edtFind_NazvaObjekta'
       OnChange = edtFind_NazvaObjektaChange
@@ -202,10 +156,6 @@ object frmObjekti: TfrmObjekti
     object aTeritoryUpdate: TAction
       Caption = '...'
       OnExecute = aTeritoryUpdateExecute
-    end
-    object aMinistryChange: TAction
-      Caption = 'aMinistryChange'
-      OnExecute = aMinistryChangeExecute
     end
     object aTeritoryChange: TAction
       Caption = 'aTeritoryChange'
@@ -269,8 +219,6 @@ object frmObjekti: TfrmObjekti
   object qTeritory: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 20
     Top = 36
   end
@@ -292,6 +240,9 @@ object frmObjekti: TfrmObjekti
     object mnUpdate: TMenuItem
       Action = aUpdate
     end
+    object N11: TMenuItem
+      Caption = '-'
+    end
     object N1: TMenuItem
       Caption = #1057#1086#1088#1090#1091#1074#1072#1085#1085#1103
       object N2: TMenuItem
@@ -307,6 +258,9 @@ object frmObjekti: TfrmObjekti
         Action = aSortByVidomchaPidporydkovanist
       end
     end
+    object N12: TMenuItem
+      Caption = '-'
+    end
     object N7: TMenuItem
       Action = aClose
     end
@@ -319,8 +273,6 @@ object frmObjekti: TfrmObjekti
   object qObjekti: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     OnFilterRecord = qObjektiFilterRecord
     Left = 52
     Top = 160

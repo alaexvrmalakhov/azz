@@ -69,22 +69,27 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmObjektiEdit') then
   begin
     frmVidomchaPidporydkovanist.Enabled:=true;
     frmMain.Enabled:=false;
-    if frmVidomchaPidporydkovanistEdit.Caption<>'Вибір відомства' then
+    if frmVidomchaPidporydkovanist.BorderStyle=bsDialog then
     begin
       frmVidomchaPidporydkovanist.Enabled:=true;
       frmObjektiEdit.Enabled:=false;
-    end
-    else
-      frmVidomchaPidporydkovanist.Close;
+    end;
+//    if frmVidomchaPidporydkovanistEdit.Caption<>'Вибір відомства' then
+//    begin
+//      frmVidomchaPidporydkovanist.Enabled:=true;
+//      frmObjektiEdit.Enabled:=false;
+//    end
+//    else
+//      frmVidomchaPidporydkovanist.Close;
     Action:=caFree;
     exit;
   end;
-
+{
   if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then
   begin
     frmVidomchaPidporydkovanist.Enabled:=true;
@@ -178,7 +183,7 @@ begin
       frmVidomchaPidporydkovanist.Close;
       exit;
     end;
-
+}
     if frmMain.IsFormOpen('frmObjektiEdit') then
     begin
       frmObjektiEdit.edtVidomchaPidporydkovanist.Text:=frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text;
@@ -186,7 +191,6 @@ begin
       frmVidomchaPidporydkovanist.Close;
       exit;
     end;
-}
   end;
 
   if frmVidomchaPidporydkovanistEdit.Caption='Видалення відомства' then

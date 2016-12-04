@@ -109,7 +109,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmObjektiEdit') then
   begin
     frmObjektiEdit.Enabled:=true;
@@ -117,7 +117,6 @@ begin
     Action:=caFree;
     exit;
   end;
-}
 
   frmMain.Enabled:=true;
   Action:=caFree;
@@ -139,7 +138,7 @@ begin
   frmVidomchaPidporydkovanistEdit.Position:=poMainFormCenter;
 //  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-//  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 
@@ -162,7 +161,7 @@ begin
   frmVidomchaPidporydkovanistEdit.Position:=poMainFormCenter;
 //  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-//  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 
@@ -185,7 +184,7 @@ begin
   frmVidomchaPidporydkovanistEdit.Position:=poMainFormCenter;
 //  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-//  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 
@@ -208,7 +207,7 @@ begin
   frmVidomchaPidporydkovanistEdit.Position:=poMainFormCenter;
 //  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-//  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+  if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 

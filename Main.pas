@@ -1044,7 +1044,6 @@ end;
 
 procedure TfrmMain.aObjektiExecute(Sender: TObject);
 begin
-{
   if not frmMain.IsFormOpen('frmObjekti') then frmObjekti:=TfrmObjekti.Create(self);
   frmObjekti.Show;
   frmObjekti.Caption:='Довідник об''єктів';
@@ -1055,6 +1054,7 @@ begin
   frmObjekti.aChoice.Enabled:=false;
   frmObjekti.edtFind_NazvaObjekta.Text:='';
   frmObjekti.edtFind_NazvaObjekta.Enabled:=true;
+{
   frmObjekti.qObjekti.Last;
   frmObjekti.qObjekti.First;
 }

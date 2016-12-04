@@ -63,11 +63,7 @@ type
     mnUpdate: TMenuItem;
     dsSpivrobitniki: TDataSource;
     qSpivrobitniki: TIBQuery;
-    Label10: TLabel;
-    cbMinistry: TComboBox;
-    btnMinistryUpdate: TButton;
-    aMinistryUpdate: TAction;
-    aMinistryChange: TAction;
+    qTemp: TIBQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure aCancelExecute(Sender: TObject);
     procedure aOKExecute(Sender: TObject);
@@ -80,8 +76,6 @@ type
     procedure aEditExecute(Sender: TObject);
     procedure aDeleteExecute(Sender: TObject);
     procedure aUpdateExecute(Sender: TObject);
-    procedure aMinistryUpdateExecute(Sender: TObject);
-    procedure aMinistryChangeExecute(Sender: TObject);
   end;
 
 var
@@ -99,6 +93,7 @@ uses
 procedure TfrmObjektiEdit.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+{
   if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
   begin
     frmObjekti.Enabled:=true;
@@ -191,6 +186,7 @@ begin
       Action:=caFree;
       exit;
   end;
+}
 
   frmMain.Enabled:=True;
   Action:=caFree;
@@ -205,6 +201,7 @@ procedure TfrmObjektiEdit.aOKExecute(Sender: TObject);
 begin
   if frmObjektiEdit.Caption='Вибрати відомості про об''єкт' then
   begin
+{
     if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
     begin
       frmFinansoviSankciiEdit.edtNajmenuvannyObjektu.Text:=frmObjektiEdit.edtNazvaObjekta.Text;
@@ -344,40 +341,33 @@ begin
       frmObjekti.Close;
       exit;
     end;
+}
   end;
 
   if frmObjektiEdit.Caption='Видалити відомості про об''єкт' then
   begin
     if MessageDlg('Увага!'+#13+'Видалення цього запису може відобразитись на відомостях бази даних!!!'+#13+'Чи бажаєте Ви видалити цей запис?',mtWarning,[mbYes,mbNo],0)=mrYes then
     begin
-      frmObjekti.qObjekti.SQL.Clear;
-      frmObjekti.qObjekti.SQL.Text:='delete from OBJEKTI where KODOBJEKTA=:KodObjekta';
-      frmObjekti.qObjekti.Params.Clear;
-      frmObjekti.qObjekti.Params.Add;
-      frmObjekti.qObjekti.Params[0].Name:='KodObjekta';
-      frmObjekti.qObjekti.Params[0].Value:=frmObjektiEdit.edtKodObjekta.Text;
-      frmObjekti.qObjekti.Open;
+      frmObjekti.qTeritory.SQL.Clear;
+      frmObjekti.qTeritory.SQL.Text:='delete from OBJEKTI where KODOBJEKTA=:KodObjekta';
+      frmObjekti.qTeritory.Params.Clear;
+      frmObjekti.qTeritory.Params.Add;
+      frmObjekti.qTeritory.Params[0].Name:='KodObjekta';
+      frmObjekti.qTeritory.Params[0].Value:=frmObjektiEdit.edtKodObjekta.Text;
+      frmObjekti.qTeritory.Open;
+
     //удаление записей о сотрудниках
-      frmObjektiEdit.qSpivrobitniki.SQL.Clear;
-      frmObjektiEdit.qSpivrobitniki.SQL.Text:='select * from SPIVROBITNIKI_OBJEKTIV where KOD_OBJEKTA=:KodObjekta';
-      frmObjektiEdit.qSpivrobitniki.Params.Clear;
-      frmObjektiEdit.qSpivrobitniki.Params.Add;
-      frmObjektiEdit.qSpivrobitniki.Params[0].Name:='KodObjekta';
-      frmObjektiEdit.qSpivrobitniki.Params[0].Value:=frmObjektiEdit.edtKodObjekta.Text;
-      frmObjektiEdit.qSpivrobitniki.Open;
-      if frmObjektiEdit.qSpivrobitniki.RecordCount>0 then
+      with frmObjektiEdit.qSpivrobitniki do
       begin
-        with frmObjektiEdit.qSpivrobitniki do
-        begin
-          SQL.Clear;
-          SQL.Text:='delete from SPIVROBITNIKI_OBJEKTIV where KOD_OBJEKTA=:KodObjekta';
-          Params.Clear;
-          Params.Add;
-          Params[0].Name:='KodObjekta';
-          Params[0].Value:=frmObjektiEdit.edtKodObjekta.Text;
-          Open;
-        end;
+        SQL.Clear;
+        SQL.Text:='delete from SPIVROBITNIKI_OBJEKTIV where KOD_OBJEKTA=:KodObjekta';
+        Params.Clear;
+        Params.Add;
+        Params[0].Name:='KodObjekta';
+        Params[0].Value:=frmObjektiEdit.edtKodObjekta.Text;
+        Open;
       end;
+
       frmMain.trAzz.CommitRetaining;
       frmObjektiEdit.Close;
       frmObjekti.aUpdateExecute(sender);
@@ -401,13 +391,6 @@ begin
       exit;
     end;
 
-    if frmObjektiEdit.cbMinistry.Text='' then
-    begin
-      frmObjektiEdit.aMinistryUpdateExecute(sender);
-      frmObjektiEdit.cbMinistry.SetFocus;
-      exit;
-    end;
-
     if frmObjektiEdit.cbTeritory.Text='' then
     begin
       frmObjektiEdit.aTeritoryUpdateExecute(sender);
@@ -452,84 +435,64 @@ begin
       frmObjektiEdit.edtRozrahunkovijRahunok.SetFocus;
       exit;
     end;
-    frmObjekti.qTeritory.SQL.Clear;
-    frmObjekti.qTeritory.SQL.Text:='select * from MINISTRY order by MINISTRY';
-    frmObjekti.qTeritory.Open;
-    if not frmObjekti.qTeritory.Locate('MINISTRY',frmObjektiEdit.cbMinistry.Text,[]) then
-    begin
-      frmObjektiEdit.aMinistryUpdateExecute(sender);
-      frmObjektiEdit.cbMinistry.SetFocus;
-      exit;
-    end;
 
-    frmObjekti.qTeritory.SQL.Clear;
-    frmObjekti.qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    frmObjekti.qTeritory.Params.Clear;
-    frmObjekti.qTeritory.Params.Add;
-    frmObjekti.qTeritory.Params[0].Name:='Ministry';
-    frmObjekti.qTeritory.Params[0].Value:=frmObjektiEdit.cbMinistry.Text;
-    frmObjekti.qTeritory.Open;
-    if not frmObjekti.qTeritory.Locate('TERITORY',cbTeritory.Text,[]) then
+    with frmObjekti.qTeritory do
     begin
-      frmObjektiEdit.aTeritoryUpdateExecute(sender);
-      frmObjektiEdit.cbTeritory.SetFocus;
-      exit;
-    end;
+      SQL.Clear;
+      SQL.Text:='';
+      SQL.Text:=SQL.Text+'update ';
+      SQL.Text:=SQL.Text+'  OBJEKTI ';
+      SQL.Text:=SQL.Text+'set ';
+      SQL.Text:=SQL.Text+'  NAZVAOBJEKTA=:NazvaObjekta, ';
+      SQL.Text:=SQL.Text+'  ADRESAOBJEKTA=:AdresaObjekta,';
+      SQL.Text:=SQL.Text+'  VIDOMCHAPIPORYDKOVANIST=:VidomchaPidporyadkovanist,';
+      SQL.Text:=SQL.Text+'  VIDDILENNY_BANKU=:ViddilennyBanku,';
+      SQL.Text:=SQL.Text+'  KOD_DKPP=:KodDKPP,';
+      SQL.Text:=SQL.Text+'  KOD_MFO=:KodMFO,';
+      SQL.Text:=SQL.Text+'  ROZRAHUNKOVIJ_RAHUNOK=:RozahunkovijRahunok,';
+      SQL.Text:=SQL.Text+'  TERITORY=:Teritory,';
+      SQL.Text:=SQL.Text+'  RAJON=:District';
+      SQL.Text:=SQL.Text+'where ';
+      SQL.Text:=SQL.Text+'  KODOBJEKTA=:KodObjekta';
+      SQL.Text:=SQL.Text+'';
+      SQL.Text:=SQL.Text+'';
+      SQL.Text:=SQL.Text+'';
+      SQL.Text:=SQL.Text+'';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='NazvaObjekta';
+      Params[0].Value:=frmObjektiEdit.edtNazvaObjekta.Text;
+      Params.Add;
+      Params[1].Name:='AdresaObjekta';
+      Params[1].Value:=frmObjektiEdit.edtAdresaObjekta.Text;
+      Params.Add;
+      Params[2].Name:='VidomchaPidporyadkovanist';
+      Params[2].Value:=frmObjektiEdit.edtVidomchaPidporydkovanist.Text;
+      Params.Add;
+      Params[3].Name:='ViddilennyBanku';
+      Params[3].Value:=frmObjektiEdit.edtViddilennyBanku.Text;
+      Params.Add;
+      Params[4].Name:='KodDKPP';
+      Params[4].Value:=frmObjektiEdit.edtKod_DKPP.Text;
+      Params.Add;
+      Params[5].Name:='KodMFO';
+      Params[5].Value:=frmObjektiEdit.edtKod_MFO.Text;
+      Params.Add;
+      Params[6].Name:='RozahunkovijRahunok';
+      Params[6].Value:=frmObjektiEdit.edtRozrahunkovijRahunok.Text;
+      Params.Add;
+      Params[7].Name:='Teritory';
+        frmObjektiEdit.qTemp.SQL.Clear;
+        frmObjektiEdit.qTemp.SQL.Text:='select * from TERITORY where TERITORY=:teritory order by TERITORY';
+        frmObjektiEdit.qTemp.Params.Clear;
+        frmObjektiEdit.qTemp.Params.Add;
+        frmObjektiEdit.qTemp.Params[0].Name:='teritory';
+        frmObjektiEdit.qTemp.Params[0].Value:=frmObjektiEdit.cbTeritory.Text;
+        frmObjektiEdit.qTemp.Open;
+      if frmObjektiEdit.qTemp.Locate('TERITORY',frmObjektiEdit.cbTeritory.Text,[]) then Params[7].Value:=frmObjektiEdit.qTemp.FieldByName('KOD').Value else Params[7].Value:=0;
 
-    frmObjekti.qTeritory.SQL.Clear;
-    frmObjekti.qTeritory.SQL.Text:='select * from RAJONI,TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.RAJON';
-    frmObjekti.qTeritory.Params.Clear;
-    frmObjekti.qTeritory.Params.Add;
-    frmObjekti.qTeritory.Params[0].Name:='Teritory';
-    frmObjekti.qTeritory.Params[0].Value:=frmObjektiEdit.cbTeritory.Text;
-    frmObjekti.qTeritory.Open;
-    if not frmObjekti.qTeritory.Locate('RAJON',cbDistrict.Text,[]) then
-    begin
-      frmObjektiEdit.aDistrictUpdateExecute(sender);
-      frmObjektiEdit.cbDistrict.SetFocus;
-      exit;
-    end;
-
-    with frmObjekti do
-    begin
-      qObjekti.SQL.Clear;
-      qObjekti.SQL.Text:='update  OBJEKTI set NAZVAOBJEKTA=:NazvaObjekta,ADRESAOBJEKTA=:AdresaObjekta,VIDOMCHAPIPORYDKOVANIST=:VidomchaPidporyadkovanist,';
-      qObjekti.SQL.Text:=qObjekti.SQL.Text+'VIDDILENNY_BANKU=:ViddilennyBanku,KOD_DKPP=:KodDKPP,KOD_MFO=:KodMFO,ROZRAHUNKOVIJ_RAHUNOK=:RozahunkovijRahunok,TERITORY=:Teritory,RAJON=:District,MINISTRY=:Ministry ';
-      qObjekti.SQL.Text:=qObjekti.SQL.Text+'where KODOBJEKTA=:KodObjekta';
-      qObjekti.Params.Clear;
-      qObjekti.Params.Add;
-      qObjekti.Params[0].Name:='NazvaObjekta';
-      qObjekti.Params[0].Value:=frmObjektiEdit.edtNazvaObjekta.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[1].Name:='AdresaObjekta';
-      qObjekti.Params[1].Value:=frmObjektiEdit.edtAdresaObjekta.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[2].Name:='VidomchaPidporyadkovanist';
-      qObjekti.Params[2].Value:=frmObjektiEdit.edtVidomchaPidporydkovanist.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[3].Name:='ViddilennyBanku';
-      qObjekti.Params[3].Value:=frmObjektiEdit.edtViddilennyBanku.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[4].Name:='KodDKPP';
-      qObjekti.Params[4].Value:=frmObjektiEdit.edtKod_DKPP.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[5].Name:='KodMFO';
-      qObjekti.Params[5].Value:=frmObjektiEdit.edtKod_MFO.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[6].Name:='RozahunkovijRahunok';
-      qObjekti.Params[6].Value:=frmObjektiEdit.edtRozrahunkovijRahunok.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[7].Name:='Teritory';
-        frmObjektiEdit.qSpivrobitniki.SQL.Clear;
-        frmObjektiEdit.qSpivrobitniki.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-        frmObjektiEdit.qSpivrobitniki.Params.Clear;
-        frmObjektiEdit.qSpivrobitniki.Params.Add;
-        frmObjektiEdit.qSpivrobitniki.Params[0].Name:='Ministry';
-        frmObjektiEdit.qSpivrobitniki.Params[0].Value:=frmObjektiEdit.cbMinistry.Text;
-        frmObjektiEdit.qSpivrobitniki.Open;
-      if frmObjektiEdit.qSpivrobitniki.Locate('TERITORY',frmObjektiEdit.cbTeritory.Text,[]) then qObjekti.Params[7].Value:=frmObjektiEdit.qSpivrobitniki.FieldByName('KOD').Value else qObjekti.Params[7].Value:=0;;
-      qObjekti.Params.Add;
-      qObjekti.Params[8].Name:='District';
+      Params.Add;
+      Params[8].Name:='District';
         frmObjektiEdit.qSpivrobitniki.SQL.Clear;
         frmObjektiEdit.qSpivrobitniki.SQL.Text:='select * from RAJONI,TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.RAJON';
         frmObjektiEdit.qSpivrobitniki.Params.Clear;
@@ -537,26 +500,17 @@ begin
         frmObjektiEdit.qSpivrobitniki.Params[0].Name:='Teritory';
         frmObjektiEdit.qSpivrobitniki.Params[0].Value:=frmObjektiEdit.cbTeritory.Text;
         frmObjektiEdit.qSpivrobitniki.Open;
-      if frmObjektiEdit.qSpivrobitniki.Locate('RAJON',frmObjektiEdit.cbDistrict.Text,[]) then qObjekti.Params[8].Value:=frmObjektiEdit.qSpivrobitniki.FieldByName('KOD').Value else qObjekti.Params[8].Value:=0;
-      qObjekti.Params.Add;
-      qObjekti.Params[9].Name:='Ministry';
-        frmObjektiEdit.qSpivrobitniki.SQL.Clear;
-        frmObjektiEdit.qSpivrobitniki.SQL.Text:='select * from MINISTRY where MINISTRY=:Ministry order by MINISTRY';
-        frmObjektiEdit.qSpivrobitniki.Params.Clear;
-        frmObjektiEdit.qSpivrobitniki.Params.Add;
-        frmObjektiEdit.qSpivrobitniki.Params[0].Name:='Ministry';
-        frmObjektiEdit.qSpivrobitniki.Params[0].Value:=frmObjektiEdit.cbMinistry.Text;
-        frmObjektiEdit.qSpivrobitniki.Open;
-      if frmObjektiEdit.qSpivrobitniki.Locate('MINISTRY',frmObjektiEdit.cbMinistry.Text,[]) then qObjekti.Params[9].Value:=frmObjektiEdit.qSpivrobitniki.FieldByName('KOD').Value else qObjekti.Params[9].Value:=0;
-      qObjekti.Params.Add;
-      qObjekti.Params[10].Name:='KodObjekta';
-      qObjekti.Params[10].Value:=frmObjektiEdit.edtKodObjekta.Text;
-      qObjekti.Open;
-      frmMain.trAzz.CommitRetaining;
-      frmObjektiEdit.Close;
-      frmObjekti.aUpdateExecute(sender);
-      exit;
+      if frmObjektiEdit.qSpivrobitniki.Locate('RAJON',frmObjektiEdit.cbDistrict.Text,[]) then Params[8].Value:=frmObjektiEdit.qSpivrobitniki.FieldByName('KOD').Value else Params[8].Value:=0;
+
+      Params.Add;
+      Params[9].Name:='KodObjekta';
+      Params[9].Value:=frmObjektiEdit.edtKodObjekta.Text;
+      Open;
     end;
+    frmMain.trAzz.CommitRetaining;
+    frmObjektiEdit.Close;
+    frmObjekti.aUpdateExecute(sender);
+    exit;
   end;
 
   if frmObjektiEdit.Caption='Додати об''єкт нагляду' then
@@ -575,13 +529,6 @@ begin
       exit;
     end;
 
-    if frmObjektiEdit.cbMinistry.Text='' then
-    begin
-      frmObjektiEdit.aMinistryUpdateExecute(sender);
-      frmObjektiEdit.cbMinistry.SetFocus;
-      exit;
-    end;
-
     if frmObjektiEdit.cbTeritory.Text='' then
     begin
       frmObjektiEdit.aTeritoryUpdateExecute(sender);
@@ -626,83 +573,64 @@ begin
       frmObjektiEdit.edtRozrahunkovijRahunok.SetFocus;
       exit;
     end;
-    frmObjekti.qTeritory.SQL.Clear;
-    frmObjekti.qTeritory.SQL.Text:='select * from MINISTRY order by MINISTRY';
-    frmObjekti.qTeritory.Open;
-    if not frmObjekti.qTeritory.Locate('MINISTRY',frmObjektiEdit.cbMinistry.Text,[]) then
-    begin
-      frmObjektiEdit.aMinistryUpdateExecute(sender);
-      frmObjektiEdit.cbMinistry.SetFocus;
-      exit;
-    end;
-    frmObjekti.qTeritory.SQL.Clear;
-    frmObjekti.qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    frmObjekti.qTeritory.Params.Clear;
-    frmObjekti.qTeritory.Params.Add;
-    frmObjekti.qTeritory.Params[0].Name:='Ministry';
-    frmObjekti.qTeritory.Params[0].Value:=frmObjektiEdit.cbMinistry.Text;
-    frmObjekti.qTeritory.Open;
-    if not frmObjekti.qTeritory.Locate('TERITORY',cbTeritory.Text,[]) then
-    begin
-      frmObjektiEdit.aTeritoryUpdateExecute(sender);
-      frmObjektiEdit.cbTeritory.SetFocus;
-      exit;
-    end;
 
-    frmObjekti.qTeritory.SQL.Clear;
-    frmObjekti.qTeritory.SQL.Text:='select * from RAJONI,TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.RAJON';
-    frmObjekti.qTeritory.Params.Clear;
-    frmObjekti.qTeritory.Params.Add;
-    frmObjekti.qTeritory.Params[0].Name:='Teritory';
-    frmObjekti.qTeritory.Params[0].Value:=frmObjektiEdit.cbTeritory.Text;
-    frmObjekti.qTeritory.Open;
-    if not frmObjekti.qTeritory.Locate('RAJON',cbDistrict.Text,[]) then
+    with frmObjekti.qTeritory do
     begin
-      frmObjektiEdit.aDistrictUpdateExecute(sender);
-      frmObjektiEdit.cbDistrict.SetFocus;
-      exit;
-    end;
+      SQL.Clear;
+      SQL.Text:='';
+      SQL.Text:=SQL.Text+'update ';
+      SQL.Text:=SQL.Text+'  OBJEKTI ';
+      SQL.Text:=SQL.Text+'set ';
+      SQL.Text:=SQL.Text+'  NAZVAOBJEKTA=:NazvaObjekta, ';
+      SQL.Text:=SQL.Text+'  ADRESAOBJEKTA=:AdresaObjekta,';
+      SQL.Text:=SQL.Text+'  VIDOMCHAPIPORYDKOVANIST=:VidomchaPidporyadkovanist,';
+      SQL.Text:=SQL.Text+'  VIDDILENNY_BANKU=:ViddilennyBanku,';
+      SQL.Text:=SQL.Text+'  KOD_DKPP=:KodDKPP,';
+      SQL.Text:=SQL.Text+'  KOD_MFO=:KodMFO,';
+      SQL.Text:=SQL.Text+'  ROZRAHUNKOVIJ_RAHUNOK=:RozahunkovijRahunok,';
+      SQL.Text:=SQL.Text+'  TERITORY=:Teritory,';
+      SQL.Text:=SQL.Text+'  RAJON=:District';
+      SQL.Text:=SQL.Text+'where ';
+      SQL.Text:=SQL.Text+'  KODOBJEKTA=:KodObjekta';
+      SQL.Text:=SQL.Text+'';
+      SQL.Text:=SQL.Text+'';
+      SQL.Text:=SQL.Text+'';
+      SQL.Text:=SQL.Text+'';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='NazvaObjekta';
+      Params[0].Value:=frmObjektiEdit.edtNazvaObjekta.Text;
+      Params.Add;
+      Params[1].Name:='AdresaObjekta';
+      Params[1].Value:=frmObjektiEdit.edtAdresaObjekta.Text;
+      Params.Add;
+      Params[2].Name:='VidomchaPidporyadkovanist';
+      Params[2].Value:=frmObjektiEdit.edtVidomchaPidporydkovanist.Text;
+      Params.Add;
+      Params[3].Name:='ViddilennyBanku';
+      Params[3].Value:=frmObjektiEdit.edtViddilennyBanku.Text;
+      Params.Add;
+      Params[4].Name:='KodDKPP';
+      Params[4].Value:=frmObjektiEdit.edtKod_DKPP.Text;
+      Params.Add;
+      Params[5].Name:='KodMFO';
+      Params[5].Value:=frmObjektiEdit.edtKod_MFO.Text;
+      Params.Add;
+      Params[6].Name:='RozahunkovijRahunok';
+      Params[6].Value:=frmObjektiEdit.edtRozrahunkovijRahunok.Text;
+      Params.Add;
+      Params[7].Name:='Teritory';
+        frmObjektiEdit.qTemp.SQL.Clear;
+        frmObjektiEdit.qTemp.SQL.Text:='select * from TERITORY where TERITORY=:teritory order by TERITORY';
+        frmObjektiEdit.qTemp.Params.Clear;
+        frmObjektiEdit.qTemp.Params.Add;
+        frmObjektiEdit.qTemp.Params[0].Name:='teritory';
+        frmObjektiEdit.qTemp.Params[0].Value:=frmObjektiEdit.cbTeritory.Text;
+        frmObjektiEdit.qTemp.Open;
+      if frmObjektiEdit.qTemp.Locate('TERITORY',frmObjektiEdit.cbTeritory.Text,[]) then Params[7].Value:=frmObjektiEdit.qTemp.FieldByName('KOD').Value else Params[7].Value:=0;
 
-    with frmObjekti do
-    begin
-      qObjekti.SQL.Clear;
-      qObjekti.SQL.Text:='update  OBJEKTI set NAZVAOBJEKTA=:NazvaObjekta,ADRESAOBJEKTA=:AdresaObjekta,VIDOMCHAPIPORYDKOVANIST=:VidomchaPidporyadkovanist,';
-      qObjekti.SQL.Text:=qObjekti.SQL.Text+'VIDDILENNY_BANKU=:ViddilennyBanku,KOD_DKPP=:KodDKPP,KOD_MFO=:KodMFO,ROZRAHUNKOVIJ_RAHUNOK=:RozahunkovijRahunok,TERITORY=:Teritory,RAJON=:District,MINISTRY=:Ministry ';
-      qObjekti.SQL.Text:=qObjekti.SQL.Text+'where KODOBJEKTA=:KodObjekta';
-      qObjekti.Params.Clear;
-      qObjekti.Params.Add;
-      qObjekti.Params[0].Name:='NazvaObjekta';
-      qObjekti.Params[0].Value:=frmObjektiEdit.edtNazvaObjekta.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[1].Name:='AdresaObjekta';
-      qObjekti.Params[1].Value:=frmObjektiEdit.edtAdresaObjekta.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[2].Name:='VidomchaPidporyadkovanist';
-      qObjekti.Params[2].Value:=frmObjektiEdit.edtVidomchaPidporydkovanist.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[3].Name:='ViddilennyBanku';
-      qObjekti.Params[3].Value:=frmObjektiEdit.edtViddilennyBanku.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[4].Name:='KodDKPP';
-      qObjekti.Params[4].Value:=frmObjektiEdit.edtKod_DKPP.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[5].Name:='KodMFO';
-      qObjekti.Params[5].Value:=frmObjektiEdit.edtKod_MFO.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[6].Name:='RozahunkovijRahunok';
-      qObjekti.Params[6].Value:=frmObjektiEdit.edtRozrahunkovijRahunok.Text;
-      qObjekti.Params.Add;
-      qObjekti.Params[7].Name:='Teritory';
-        frmObjektiEdit.qSpivrobitniki.SQL.Clear;
-        frmObjektiEdit.qSpivrobitniki.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-        frmObjektiEdit.qSpivrobitniki.Params.Clear;
-        frmObjektiEdit.qSpivrobitniki.Params.Add;
-        frmObjektiEdit.qSpivrobitniki.Params[0].Name:='Ministry';
-        frmObjektiEdit.qSpivrobitniki.Params[0].Value:=frmObjektiEdit.cbMinistry.Text;
-        frmObjektiEdit.qSpivrobitniki.Open;
-      if frmObjektiEdit.qSpivrobitniki.Locate('TERITORY',frmObjektiEdit.cbTeritory.Text,[]) then qObjekti.Params[7].Value:=frmObjektiEdit.qSpivrobitniki.FieldByName('KOD').Value else qObjekti.Params[7].Value:=0;;
-      qObjekti.Params.Add;
-      qObjekti.Params[8].Name:='District';
+      Params.Add;
+      Params[8].Name:='District';
         frmObjektiEdit.qSpivrobitniki.SQL.Clear;
         frmObjektiEdit.qSpivrobitniki.SQL.Text:='select * from RAJONI,TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.RAJON';
         frmObjektiEdit.qSpivrobitniki.Params.Clear;
@@ -710,26 +638,17 @@ begin
         frmObjektiEdit.qSpivrobitniki.Params[0].Name:='Teritory';
         frmObjektiEdit.qSpivrobitniki.Params[0].Value:=frmObjektiEdit.cbTeritory.Text;
         frmObjektiEdit.qSpivrobitniki.Open;
-      if frmObjektiEdit.qSpivrobitniki.Locate('RAJON',frmObjektiEdit.cbDistrict.Text,[]) then qObjekti.Params[8].Value:=frmObjektiEdit.qSpivrobitniki.FieldByName('KOD').Value else qObjekti.Params[8].Value:=0;
-      qObjekti.Params.Add;
-      qObjekti.Params[9].Name:='Ministry';
-        frmObjektiEdit.qSpivrobitniki.SQL.Clear;
-        frmObjektiEdit.qSpivrobitniki.SQL.Text:='select * from MINISTRY where MINISTRY=:Ministry order by MINISTRY';
-        frmObjektiEdit.qSpivrobitniki.Params.Clear;
-        frmObjektiEdit.qSpivrobitniki.Params.Add;
-        frmObjektiEdit.qSpivrobitniki.Params[0].Name:='Ministry';
-        frmObjektiEdit.qSpivrobitniki.Params[0].Value:=frmObjektiEdit.cbMinistry.Text;
-        frmObjektiEdit.qSpivrobitniki.Open;
-      if frmObjektiEdit.qSpivrobitniki.Locate('MINISTRY',frmObjektiEdit.cbMinistry.Text,[]) then qObjekti.Params[9].Value:=frmObjektiEdit.qSpivrobitniki.FieldByName('KOD').Value else qObjekti.Params[9].Value:=0;
-      qObjekti.Params.Add;
-      qObjekti.Params[10].Name:='KodObjekta';
-      qObjekti.Params[10].Value:=frmObjektiEdit.edtKodObjekta.Text;
-      qObjekti.Open;
-      frmMain.trAzz.CommitRetaining;
-      frmObjektiEdit.Close;
-      frmObjekti.aUpdateExecute(sender);
-      exit;
+      if frmObjektiEdit.qSpivrobitniki.Locate('RAJON',frmObjektiEdit.cbDistrict.Text,[]) then Params[8].Value:=frmObjektiEdit.qSpivrobitniki.FieldByName('KOD').Value else Params[8].Value:=0;
+
+      Params.Add;
+      Params[9].Name:='KodObjekta';
+      Params[9].Value:=frmObjektiEdit.edtKodObjekta.Text;
+      Open;
     end;
+    frmMain.trAzz.CommitRetaining;
+    frmObjektiEdit.Close;
+    frmObjekti.aUpdateExecute(sender);
+    exit;
   end;
 end;
 
@@ -738,25 +657,21 @@ begin
   with frmObjekti do
   begin
     edtFind_NazvaObjekta.Text:='';
-    qObjekti.SQL.Clear;
-    qObjekti.SQL.Text:='insert into OBJEKTI (KODOBJEKTA) values (GEN_ID(GET_DICTIONARIES_RECORD_ID,1))';
-    qObjekti.Open;
-    qObjekti.SQL.Clear;
-    qObjekti.SQL.Text:='select * from OBJEKTI order by KODOBJEKTA';
-    qObjekti.Open;
-    qObjekti.Last;
-    frmObjektiEdit.edtKodObjekta.Text:=IntToStr(qObjekti.FieldByName('KODOBJEKTA').Value);
+    qTeritory.SQL.Clear;
+    qTeritory.SQL.Text:='insert into OBJEKTI (KODOBJEKTA) values (GEN_ID(GET_DICTIONARIES_RECORD_ID,1))';
+    qTeritory.Open;
+    qTeritory.SQL.Clear;
+    qTeritory.SQL.Text:='select * from OBJEKTI order by KODOBJEKTA';
+    qTeritory.Open;
+    qTeritory.Last;
+    frmObjektiEdit.edtKodObjekta.Text:=IntToStr(qTeritory.FieldByName('KODOBJEKTA').Value);
   end;
 end;
 
 procedure TfrmObjektiEdit.aTeritoryUpdateExecute(Sender: TObject);
 begin
   frmObjekti.qTeritory.SQL.Clear;
-  frmObjekti.qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-  frmObjekti.qTeritory.Params.Clear;
-  frmObjekti.qTeritory.Params.Add;
-  frmObjekti.qTeritory.Params[0].Name:='Ministry';
-  frmObjekti.qTeritory.Params[0].Value:=frmObjektiEdit.cbMinistry.Text;
+  frmObjekti.qTeritory.SQL.Text:='select * from TERITORY where not TERITORY is null order by TERITORY';
   frmObjekti.qTeritory.Open;
 
   frmObjektiEdit.cbTeritory.Text:='';
@@ -839,12 +754,13 @@ begin
   frmSotrudnikiObjektivEdit.Position:=poMainFormCenter;
   frmSotrudnikiObjektivEdit.BorderStyle:=bsDialog;
   frmSotrudnikiObjektivEdit.Caption:='Додавання співробітника';
+
   frmSotrudnikiObjektivEdit.edtKodObjekta.Text:=frmObjektiEdit.edtKodObjekta.Text;
   frmObjektiEdit.edtKodObjekta.Enabled:=false;
+  frmSotrudnikiObjektivEdit.edtKodObjekta.Enabled:=false;
   frmSotrudnikiObjektivEdit.aKodUpdateExecute(sender);
   frmSotrudnikiObjektivEdit.edtKod.Enabled:=false;
   frmSotrudnikiObjektivEdit.btnKod.Enabled:=false;
-  frmSotrudnikiObjektivEdit.edtKodObjekta.Enabled:=false;
   frmSotrudnikiObjektivEdit.edtPIBPorushnika.Text:='';
   frmSotrudnikiObjektivEdit.edtPIBPorushnika.Enabled:=true;
   frmSotrudnikiObjektivEdit.edtPosadaPorushnika.Text:='';
@@ -857,6 +773,7 @@ begin
   frmSotrudnikiObjektivEdit.edtMisceNarodzhennyPorushnika.Enabled:=true;
   frmSotrudnikiObjektivEdit.edtMisceProzhivanny.Text:='';
   frmSotrudnikiObjektivEdit.edtMisceProzhivanny.Enabled:=true;
+
   frmSotrudnikiObjektivEdit.edtPIBPorushnika.SetFocus;
 end;
 
@@ -873,21 +790,21 @@ begin
   frmObjektiEdit.edtKodObjekta.Enabled:=false;
   frmSotrudnikiObjektivEdit.edtKodObjekta.Enabled:=false;
 
-  if not frmObjektiEdit.qSpivrobitniki.FieldByName('KOD').IsNull then
-    frmSotrudnikiObjektivEdit.edtKod.Text:=IntToStr(frmObjektiEdit.qSpivrobitniki.FieldByName('KOD').Value) else frmSotrudnikiObjektivEdit.aKodUpdateExecute(sender);
+  if not frmObjektiEdit.qSpivrobitniki.FieldByName('Код').IsNull then
+    frmSotrudnikiObjektivEdit.edtKod.Text:=IntToStr(frmObjektiEdit.qSpivrobitniki.FieldByName('Код').Value) else frmSotrudnikiObjektivEdit.aKodUpdateExecute(sender);
   frmSotrudnikiObjektivEdit.edtKod.Enabled:=false;
   frmSotrudnikiObjektivEdit.btnKod.Enabled:=false;
-  frmSotrudnikiObjektivEdit.edtPIBPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('PIB_PORUSHNIKA').Value;
+  frmSotrudnikiObjektivEdit.edtPIBPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('П.І.Б.').Value;
   frmSotrudnikiObjektivEdit.edtPIBPorushnika.Enabled:=true;
-  frmSotrudnikiObjektivEdit.edtPosadaPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('POSADA_PORUSHNIKA').Value;
+  frmSotrudnikiObjektivEdit.edtPosadaPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Посада').Value;
   frmSotrudnikiObjektivEdit.edtPosadaPorushnika.Enabled:=true;
-  frmSotrudnikiObjektivEdit.dtpDataNarodzhennyPorushnika.Date:=int(frmObjektiEdit.qSpivrobitniki.FieldByName('DATANARODZHENNYPORUSHNIKA').Value);
+  frmSotrudnikiObjektivEdit.dtpDataNarodzhennyPorushnika.Date:=int(frmObjektiEdit.qSpivrobitniki.FieldByName('Дата народження').Value);
   frmSotrudnikiObjektivEdit.dtpDataNarodzhennyPorushnika.Enabled:=true;
-  frmSotrudnikiObjektivEdit.edtIdentifikacijnijNomerPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('IDENTIFIKACIJNIJKODPORUSHNIKA').Value;
+  frmSotrudnikiObjektivEdit.edtIdentifikacijnijNomerPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Ідентифікаційний код').Value;
   frmSotrudnikiObjektivEdit.edtIdentifikacijnijNomerPorushnika.Enabled:=true;
-  frmSotrudnikiObjektivEdit.edtMisceNarodzhennyPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('MISCENARODZHENNYPORUSHNIKA').Value;
+  frmSotrudnikiObjektivEdit.edtMisceNarodzhennyPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Місце народження').Value;
   frmSotrudnikiObjektivEdit.edtMisceNarodzhennyPorushnika.Enabled:=true;
-  frmSotrudnikiObjektivEdit.edtMisceProzhivanny.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('MISCEPROZHIVANNYPORUSHNIKA').Value;
+  frmSotrudnikiObjektivEdit.edtMisceProzhivanny.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Місце проживання').Value;
   frmSotrudnikiObjektivEdit.edtMisceProzhivanny.Enabled:=true;
   frmSotrudnikiObjektivEdit.edtPIBPorushnika.SetFocus;
 end;
@@ -901,88 +818,55 @@ begin
   frmSotrudnikiObjektivEdit.Position:=poMainFormCenter;
   frmSotrudnikiObjektivEdit.BorderStyle:=bsDialog;
   frmSotrudnikiObjektivEdit.Caption:='Видалення співробітника';
+
   frmSotrudnikiObjektivEdit.edtKodObjekta.Text:=frmObjektiEdit.edtKodObjekta.Text;
   frmObjektiEdit.edtKodObjekta.Enabled:=false;
   frmSotrudnikiObjektivEdit.edtKodObjekta.Enabled:=false;
 
-  frmSotrudnikiObjektivEdit.edtKod.Text:=IntToStr(frmObjektiEdit.qSpivrobitniki.FieldByName('KOD').Value);
+  if not frmObjektiEdit.qSpivrobitniki.FieldByName('Код').IsNull then
+    frmSotrudnikiObjektivEdit.edtKod.Text:=IntToStr(frmObjektiEdit.qSpivrobitniki.FieldByName('Код').Value) else frmSotrudnikiObjektivEdit.aKodUpdateExecute(sender);
   frmSotrudnikiObjektivEdit.edtKod.Enabled:=false;
   frmSotrudnikiObjektivEdit.btnKod.Enabled:=false;
-  frmSotrudnikiObjektivEdit.edtPIBPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('PIB_PORUSHNIKA').Value;
+  frmSotrudnikiObjektivEdit.edtPIBPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('П.І.Б.').Value;
   frmSotrudnikiObjektivEdit.edtPIBPorushnika.Enabled:=false;
-  frmSotrudnikiObjektivEdit.edtPosadaPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('POSADA_PORUSHNIKA').Value;
+  frmSotrudnikiObjektivEdit.edtPosadaPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Посада').Value;
   frmSotrudnikiObjektivEdit.edtPosadaPorushnika.Enabled:=false;
-  frmSotrudnikiObjektivEdit.dtpDataNarodzhennyPorushnika.Date:=int(frmObjektiEdit.qSpivrobitniki.FieldByName('DATANARODZHENNYPORUSHNIKA').Value);
+  frmSotrudnikiObjektivEdit.dtpDataNarodzhennyPorushnika.Date:=int(frmObjektiEdit.qSpivrobitniki.FieldByName('Дата народження').Value);
   frmSotrudnikiObjektivEdit.dtpDataNarodzhennyPorushnika.Enabled:=false;
-  frmSotrudnikiObjektivEdit.edtIdentifikacijnijNomerPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('IDENTIFIKACIJNIJKODPORUSHNIKA').Value;
+  frmSotrudnikiObjektivEdit.edtIdentifikacijnijNomerPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Ідентифікаційний код').Value;
   frmSotrudnikiObjektivEdit.edtIdentifikacijnijNomerPorushnika.Enabled:=false;
-  frmSotrudnikiObjektivEdit.edtMisceNarodzhennyPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('MISCENARODZHENNYPORUSHNIKA').Value;
+  frmSotrudnikiObjektivEdit.edtMisceNarodzhennyPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Місце народження').Value;
   frmSotrudnikiObjektivEdit.edtMisceNarodzhennyPorushnika.Enabled:=false;
-  frmSotrudnikiObjektivEdit.edtMisceProzhivanny.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('MISCEPROZHIVANNYPORUSHNIKA').Value;
+  frmSotrudnikiObjektivEdit.edtMisceProzhivanny.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Місце проживання').Value;
   frmSotrudnikiObjektivEdit.edtMisceProzhivanny.Enabled:=false;
   frmSotrudnikiObjektivEdit.btnVidminiti.SetFocus;
 end;
 
 procedure TfrmObjektiEdit.aUpdateExecute(Sender: TObject);
 begin
-  with frmObjektiEdit do
+  with frmObjektiEdit.qSpivrobitniki do
   begin
-    qSpivrobitniki.SQL.Clear;
-    qSpivrobitniki.SQL.Text:='select * from SPIVROBITNIKI_OBJEKTIV where KOD_OBJEKTA=:KodObjekta order by PIB_PORUSHNIKA';
-    qSpivrobitniki.Params.Clear;
-    qSpivrobitniki.Params.Add;
-    qSpivrobitniki.Params[0].Name:='KodObjekta';
-    qSpivrobitniki.Params[0].Value:=frmObjektiEdit.edtKodObjekta.Text;
-    qSpivrobitniki.Open;
-  end;
-end;
-
-procedure TfrmObjektiEdit.aMinistryUpdateExecute(Sender: TObject);
-begin
-  INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
-  frmObjekti.qTeritory.SQL.Clear;
-  frmObjekti.qTeritory.SQL.Text:='select * from MINISTRY order by MINISTRY';
-  frmObjekti.qTeritory.Open;
-  with frmObjektiEdit do
-  begin
-    cbMinistry.Text:='';
-    cbMinistry.Items.Clear;
-    frmObjekti.qTeritory.First;
-  end;
-  while not frmObjekti.qTeritory.Eof do
-  begin
-    frmObjektiEdit.cbMinistry.Items.Add(frmObjekti.qTeritory.FieldByName('MINISTRY').Value);
-    frmObjekti.qTeritory.Next;
-  end;
-  frmObjektiEdit.cbTeritory.Text:='';
-  frmObjektiEdit.cbTeritory.Items.Clear;
-  frmObjektiEdit.cbDistrict.Text:='';
-  frmObjektiEdit.cbDistrict.Items.Clear;
-  INIAZZ.Free;
-end;
-
-procedure TfrmObjektiEdit.aMinistryChangeExecute(Sender: TObject);
-begin
-  with frmObjektiEdit do
-  begin
-    qSpivrobitniki.SQL.Clear;
-    qSpivrobitniki.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    qSpivrobitniki.Params.Clear;
-    qSpivrobitniki.Params.Add;
-    qSpivrobitniki.Params[0].Name:='Ministry';
-    qSpivrobitniki.Params[0].Value:=cbMinistry.Text;
-    qSpivrobitniki.Open;
-    cbTeritory.Text:='';
-    cbTeritory.Items.Clear;
-    qSpivrobitniki.First;
-    while not qSpivrobitniki.Eof do
-    begin
-      cbTeritory.Items.Add(qSpivrobitniki.FieldByName('TERITORY').Value);
-      qSpivrobitniki.Next;
-    end;
-    cbDistrict.Text:='';
-    cbDistrict.Items.Clear;
-    aUpdateExecute(sender);
+    SQL.Clear;
+    SQL.Text:='';
+    SQL.Text:=SQL.Text+'select ';
+    SQL.Text:=SQL.Text+'  KOD as "Код", ';
+    SQL.Text:=SQL.Text+'  PIB_PORUSHNIKA as "П.І.Б.", ';
+    SQL.Text:=SQL.Text+'  POSADA_PORUSHNIKA as "Посада", ';
+    SQL.Text:=SQL.Text+'  DATANARODZHENNYPORUSHNIKA as "Дата народження", ';
+    SQL.Text:=SQL.Text+'  IDENTIFIKACIJNIJKODPORUSHNIKA as "Ідентифікаційний код", ';
+    SQL.Text:=SQL.Text+'  MISCENARODZHENNYPORUSHNIKA as "Місце народження", ';
+    SQL.Text:=SQL.Text+'  MISCEPROZHIVANNYPORUSHNIKA as "Місце проживання"';
+    SQL.Text:=SQL.Text+'from ';
+    SQL.Text:=SQL.Text+'  SPIVROBITNIKI_OBJEKTIV ';
+    SQL.Text:=SQL.Text+'where ';
+    SQL.Text:=SQL.Text+'  KOD_OBJEKTA=:KodObjekta ';
+    SQL.Text:=SQL.Text+'order by ';
+    SQL.Text:=SQL.Text+'  PIB_PORUSHNIKA';
+    Params.Clear;
+    Params.Add;
+    Params[0].Name:='KodObjekta';
+    Params[0].Value:=frmObjektiEdit.edtKodObjekta.Text;
+    Open;
   end;
 end;
 
