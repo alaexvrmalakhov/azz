@@ -1,6 +1,6 @@
 object frmStattiEdit: TfrmStattiEdit
-  Left = 704
-  Top = 357
+  Left = 670
+  Top = 114
   Width = 576
   Height = 383
   Caption = 'frmStattiEdit'
@@ -55,6 +55,7 @@ object frmStattiEdit: TfrmStattiEdit
       Width = 541
       Height = 118
       Align = alTop
+      ImeName = 'Russian'
       Lines.Strings = (
         'reTekstStatti')
       MaxLength = -1
@@ -75,6 +76,7 @@ object frmStattiEdit: TfrmStattiEdit
     Top = 12
     Width = 121
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 5
     TabOrder = 0
     Text = 'edtKodStatti'
@@ -84,6 +86,7 @@ object frmStattiEdit: TfrmStattiEdit
     Top = 44
     Width = 121
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 25
     TabOrder = 1
     Text = 'edtNomerStatti'
@@ -93,6 +96,7 @@ object frmStattiEdit: TfrmStattiEdit
     Top = 76
     Width = 121
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 25
     TabOrder = 2
     Text = 'edtNomNormativDokumenta'
@@ -102,6 +106,7 @@ object frmStattiEdit: TfrmStattiEdit
     Top = 108
     Width = 365
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 250
     TabOrder = 3
     Text = 'edtNazvaNormativDokumenta'

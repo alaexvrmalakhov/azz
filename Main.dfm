@@ -350,23 +350,24 @@ object frmMain: TfrmMain
           Action = aObjekti
         end
       end
+      object mnDovidnikiNormativnaBaza: TMenuItem
+        Caption = #1053#1086#1088#1084#1072#1090#1080#1074#1085#1072' '#1073#1072#1079#1072
+        Hint = 
+          #1044#1086#1074#1110#1076#1085#1080#1082' '#1085#1086#1088#1084#1072#1090#1080#1074#1085#1086#1111' '#1073#1072#1079#1080', '#1097#1086' '#1088#1077#1075#1091#1083#1102#1108' '#1088#1086#1073#1086#1090#1091' '#1089#1072#1085#1110#1090#1072#1088#1085#1086'-'#1077#1087#1110#1076#1077#1084#1110#1086#1083 +
+          #1086#1075#1110#1095#1085#1086#1111' '#1089#1083#1091#1078#1073#1080
+        object mnDovidnikiNormativnaBazaStatti: TMenuItem
+          Action = aStatti
+        end
+        object mnDovidnikiNormativnaBazaNormativniAkti: TMenuItem
+          Action = aNormativniAkti
+          Enabled = False
+        end
+      end
       object N10: TMenuItem
         Caption = '-'
       end
       object old1: TMenuItem
         Caption = 'old'
-        object mnDovidnikiNormativnaBaza: TMenuItem
-          Caption = #1053#1086#1088#1084#1072#1090#1080#1074#1085#1072' '#1073#1072#1079#1072
-          Hint = 
-            #1044#1086#1074#1110#1076#1085#1080#1082' '#1085#1086#1088#1084#1072#1090#1080#1074#1085#1086#1111' '#1073#1072#1079#1080', '#1097#1086' '#1088#1077#1075#1091#1083#1102#1108' '#1088#1086#1073#1086#1090#1091' '#1089#1072#1085#1110#1090#1072#1088#1085#1086'-'#1077#1087#1110#1076#1077#1084#1110#1086#1083 +
-            #1086#1075#1110#1095#1085#1086#1111' '#1089#1083#1091#1078#1073#1080
-          object mnDovidnikiNormativnaBazaStatti: TMenuItem
-            Action = aStatti
-          end
-          object mnDovidnikiNormativnaBazaNormativniAkti: TMenuItem
-            Action = aNormativniAkti
-          end
-        end
         object mnDovidnikiDatas: TMenuItem
           Caption = #1044#1072#1085#1085#1110
           object mnDovidnikiDatasDataTables: TMenuItem

@@ -1,6 +1,6 @@
 object frmStatti: TfrmStatti
-  Left = 876
-  Top = 173
+  Left = 265
+  Top = 115
   Width = 404
   Height = 255
   Caption = 'frmStatti'
@@ -24,6 +24,7 @@ object frmStatti: TfrmStatti
     Width = 193
     Height = 89
     DataSource = dsStatti
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -31,42 +32,16 @@ object frmStatti: TfrmStatti
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'KODSTATTI'
-        Title.Caption = #1050#1086#1076' '#1089#1090#1072#1090#1090#1110
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NOMERSTATTI'
-        Title.Caption = #8470' '#1089#1090#1072#1090#1090#1110
-        Width = 76
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NOMNORMATIVDOK'
-        Title.Caption = #8470' '#1085#1086#1088#1084#1072#1090#1080#1074#1085#1086#1075#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
-        Width = 141
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NAZVANORMDOK'
-        Title.Caption = #1053#1072#1079#1074#1072' '#1085#1086#1088#1084#1072#1090#1080#1074#1085#1086#1075#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
-        Visible = True
-      end>
   end
   object Panel1: TPanel
-    Left = 321
+    Left = 313
     Top = 0
     Width = 75
-    Height = 221
+    Height = 217
     Align = alRight
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 1
     object btnDodati: TButton
       Left = 0
@@ -190,8 +165,6 @@ object frmStatti: TfrmStatti
   object qStatti: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 260
     Top = 88
   end
@@ -237,5 +210,11 @@ object frmStatti: TfrmStatti
     object N15: TMenuItem
       Action = aClose
     end
+  end
+  object qTemp: TIBQuery
+    Database = frmMain.dbAzz
+    Transaction = frmMain.trAzz
+    Left = 100
+    Top = 140
   end
 end

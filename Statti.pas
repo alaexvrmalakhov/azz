@@ -43,6 +43,7 @@ type
     N13: TMenuItem;
     N14: TMenuItem;
     N15: TMenuItem;
+    qTemp: TIBQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure aUpdateExecute(Sender: TObject);
     procedure aChoiceExecute(Sender: TObject);
@@ -70,6 +71,7 @@ uses
 
 procedure TfrmStatti.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+{
   if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
   begin
     frmFinansoviSankciiEdit.Enabled:=true;
@@ -101,6 +103,7 @@ begin
     Action:=caFree;
     exit;
   end;
+}
 
   frmMain.Enabled:=true;
   Action:=caFree;
@@ -110,6 +113,7 @@ procedure TfrmStatti.aUpdateExecute(Sender: TObject);
 begin
   with frmStatti do
   begin
+{
     if Caption='Довідник нормативних актів' then
     begin
       qStatti.SQL.Clear;
@@ -120,11 +124,22 @@ begin
       aSortByNomerStatti.Checked:=false;
       aSortByNomerDokumentu.Checked:=false;
     end;
-
+}
     if Caption='Довідник статей законодавства' then
     begin
       qStatti.SQL.Clear;
-      qStatti.SQL.Text:='select * from STATTI order by NAZVANORMDOK';
+//      qStatti.SQL.Text:='select * from STATTI order by NAZVANORMDOK';
+      qStatti.SQL.Text:='';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'select';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  KODSTATTI as "Код", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NOMERSTATTI as "№ статті", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NOMNORMATIVDOK as "№ документу", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NAZVANORMDOK as "Назва документу", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  TEKSTSTATTI as "Текст"';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'from ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  STATTI ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'order by ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NAZVANORMDOK';
       qStatti.Open;
       aSortByKod.Checked:=false;
       aSortByNazva.Checked:=true;
@@ -138,6 +153,7 @@ procedure TfrmStatti.aChoiceExecute(Sender: TObject);
 var
   BlobStream: TMemoryStream;
 begin
+{
   if frmStatti.Caption='Довідник нормативних актів' then
   begin
     if frmStatti.qStatti.RecordCount<=0 then exit;
@@ -177,7 +193,7 @@ begin
       btnVikonati.SetFocus;
     end;
   end;
-
+}
   if frmStatti.Caption='Довідник статей законодавства' then
   begin
     if frmStatti.qStatti.RecordCount<=0 then exit;
@@ -190,20 +206,20 @@ begin
       Position:=poMainFormCenter;
       Caption:='Вибрати статтю';
       if frmMain.IsFormOpen('frmShtrafiEdit') then frmStatti.Enabled:=false;
-      if not frmStatti.qStatti.FieldByName('KODSTATTI').IsNull then edtKodStatti.Text:=IntToStr(frmStatti.qStatti.FieldByName('KODSTATTI').Value) else frmStattiEdit.aKodUpdateExecute(sender);
+      if not frmStatti.qStatti.FieldByName('Код').IsNull then edtKodStatti.Text:=IntToStr(frmStatti.qStatti.FieldByName('Код').Value) else frmStattiEdit.aKodUpdateExecute(sender);
       edtKodStatti.Enabled:=false;
       btnKodStatti.Enabled:=false;
-      if not frmStatti.qStatti.FieldByName('NOMERSTATTI').IsNull then edtNomerStatti.Text:=frmStatti.qStatti.FieldByName('NOMERSTATTI').Value else edtNomerStatti.Text:='';
+      if not frmStatti.qStatti.FieldByName('№ статті').IsNull then edtNomerStatti.Text:=frmStatti.qStatti.FieldByName('№ статті').Value else edtNomerStatti.Text:='';
       edtNomerStatti.Enabled:=false;
-      if not frmStatti.qStatti.FieldByName('NOMNORMATIVDOK').IsNull then edtNomNormativDokumenta.Text:=frmStatti.qStatti.FieldByName('NOMNORMATIVDOK').Value else edtNomNormativDokumenta.Text:='';
+      if not frmStatti.qStatti.FieldByName('№ документу').IsNull then edtNomNormativDokumenta.Text:=frmStatti.qStatti.FieldByName('№ документу').Value else edtNomNormativDokumenta.Text:='';
       edtNomNormativDokumenta.Enabled:=false;
-      if not frmStatti.qStatti.FieldByName('NAZVANORMDOK').IsNull then edtNazvaNormativDokumenta.Text:=frmStatti.qStatti.FieldByName('NAZVANORMDOK').Value else edtNazvaNormativDokumenta.Text:='';
+      if not frmStatti.qStatti.FieldByName('Назва документу').IsNull then edtNazvaNormativDokumenta.Text:=frmStatti.qStatti.FieldByName('Назва документу').Value else edtNazvaNormativDokumenta.Text:='';
       edtNazvaNormativDokumenta.Enabled:=false;
       BlobStream:=TMemoryStream.Create;
       try
-        (frmStatti.qStatti.FieldByName('TEKSTSTATTI') as TBlobField).SaveToStream(BlobStream);
+        (frmStatti.qStatti.FieldByName('Текст') as TBlobField).SaveToStream(BlobStream);
         BlobStream.Position:=0;
-        if BlobStream<>nil then frmStattiEdit.reTekstStatti.Lines.Assign(frmStatti.qStatti.FieldByName('TEKSTSTATTI') as TBlobField) else frmStattiEdit.reTekstStatti.Lines.Clear;
+        if BlobStream<>nil then frmStattiEdit.reTekstStatti.Lines.Assign(frmStatti.qStatti.FieldByName('Текст') as TBlobField) else frmStattiEdit.reTekstStatti.Lines.Clear;
       finally
         BlobStream.Free;
       end;
@@ -218,6 +234,7 @@ procedure TfrmStatti.aDeleteExecute(Sender: TObject);
 var
   BlobStream: TMemoryStream;
 begin
+{
   if frmStatti.Caption='Довідник нормативних актів' then
   begin
     if frmStatti.qStatti.RecordCount<=0 then exit;
@@ -255,7 +272,7 @@ begin
       btnVidmina.SetFocus;
     end;
   end;
-
+}
   if frmStatti.Caption='Довідник статей законодавства' then
   begin
     if frmStatti.qStatti.RecordCount<=0 then exit;
@@ -267,20 +284,20 @@ begin
       BorderStyle:=bsDialog;
       Position:=poMainFormCenter;
       Caption:='Видалити статтю';
-      if not frmStatti.qStatti.FieldByName('KODSTATTI').IsNull then edtKodStatti.Text:=IntToStr(frmStatti.qStatti.FieldByName('KODSTATTI').Value) else frmStattiEdit.aKodUpdateExecute(sender);
+      if not frmStatti.qStatti.FieldByName('Код').IsNull then edtKodStatti.Text:=IntToStr(frmStatti.qStatti.FieldByName('Код').Value) else frmStattiEdit.aKodUpdateExecute(sender);
       edtKodStatti.Enabled:=false;
       btnKodStatti.Enabled:=false;
-      if not frmStatti.qStatti.FieldByName('NOMERSTATTI').IsNull then edtNomerStatti.Text:=frmStatti.qStatti.FieldByName('NOMERSTATTI').Value else edtNomerStatti.Text:='';
+      if not frmStatti.qStatti.FieldByName('№ статті').IsNull then edtNomerStatti.Text:=frmStatti.qStatti.FieldByName('№ статті').Value else edtNomerStatti.Text:='';
       edtNomerStatti.Enabled:=false;
-      if not frmStatti.qStatti.FieldByName('NOMNORMATIVDOK').IsNull then edtNomNormativDokumenta.Text:=frmStatti.qStatti.FieldByName('NOMNORMATIVDOK').Value else edtNomNormativDokumenta.Text:='';
+      if not frmStatti.qStatti.FieldByName('№ документу').IsNull then edtNomNormativDokumenta.Text:=frmStatti.qStatti.FieldByName('№ документу').Value else edtNomNormativDokumenta.Text:='';
       edtNomNormativDokumenta.Enabled:=false;
-      if not frmStatti.qStatti.FieldByName('NAZVANORMDOK').IsNull then edtNazvaNormativDokumenta.Text:=frmStatti.qStatti.FieldByName('NAZVANORMDOK').Value else edtNazvaNormativDokumenta.Text:='';
+      if not frmStatti.qStatti.FieldByName('Назва документу').IsNull then edtNazvaNormativDokumenta.Text:=frmStatti.qStatti.FieldByName('Назва документу').Value else edtNazvaNormativDokumenta.Text:='';
       edtNazvaNormativDokumenta.Enabled:=false;
       BlobStream:=TMemoryStream.Create;
       try
-        (frmStatti.qStatti.FieldByName('TEKSTSTATTI') as TBlobField).SaveToStream(BlobStream);
+        (frmStatti.qStatti.FieldByName('Текст') as TBlobField).SaveToStream(BlobStream);
         BlobStream.Position:=0;
-        if BlobStream<>nil then frmStattiEdit.reTekstStatti.Lines.Assign(frmStatti.qStatti.FieldByName('TEKSTSTATTI') as TBlobField) else frmStattiEdit.reTekstStatti.Lines.Clear;
+        if BlobStream<>nil then frmStattiEdit.reTekstStatti.Lines.Assign(frmStatti.qStatti.FieldByName('Текст') as TBlobField) else frmStattiEdit.reTekstStatti.Lines.Clear;
       finally
         BlobStream.Free;
       end;
@@ -295,6 +312,7 @@ procedure TfrmStatti.aEditExecute(Sender: TObject);
 var
   BlobStream: TMemoryStream;
 begin
+{
   if frmStatti.Caption='Довідник нормативних актів' then
   begin
     if frmStatti.qStatti.RecordCount<=0 then exit;
@@ -332,7 +350,7 @@ begin
       edtNomerStatti.SetFocus;
     end;
   end;
-
+}
   if frmStatti.Caption='Довідник статей законодавства' then
   begin
     if frmStatti.qStatti.RecordCount<=0 then exit;
@@ -344,20 +362,21 @@ begin
       BorderStyle:=bsDialog;
       Position:=poMainFormCenter;
       Caption:='Редагувати статтю';
-      if not frmStatti.qStatti.FieldByName('KODSTATTI').IsNull then edtKodStatti.Text:=IntToStr(frmStatti.qStatti.FieldByName('KODSTATTI').Value) else frmStattiEdit.aKodUpdateExecute(sender);
+
+      if not frmStatti.qStatti.FieldByName('Код').IsNull then edtKodStatti.Text:=IntToStr(frmStatti.qStatti.FieldByName('Код').Value) else frmStattiEdit.aKodUpdateExecute(sender);
       edtKodStatti.Enabled:=false;
       btnKodStatti.Enabled:=false;
-      if not frmStatti.qStatti.FieldByName('NOMERSTATTI').IsNull then edtNomerStatti.Text:=frmStatti.qStatti.FieldByName('NOMERSTATTI').Value else edtNomerStatti.Text:='';
+      if not frmStatti.qStatti.FieldByName('№ статті').IsNull then edtNomerStatti.Text:=frmStatti.qStatti.FieldByName('№ статті').Value else edtNomerStatti.Text:='';
       edtNomerStatti.Enabled:=true;
-      if not frmStatti.qStatti.FieldByName('NOMNORMATIVDOK').IsNull then edtNomNormativDokumenta.Text:=frmStatti.qStatti.FieldByName('NOMNORMATIVDOK').Value else edtNomNormativDokumenta.Text:='';
+      if not frmStatti.qStatti.FieldByName('№ документу').IsNull then edtNomNormativDokumenta.Text:=frmStatti.qStatti.FieldByName('№ документу').Value else edtNomNormativDokumenta.Text:='';
       edtNomNormativDokumenta.Enabled:=true;
-      if not frmStatti.qStatti.FieldByName('NAZVANORMDOK').IsNull then edtNazvaNormativDokumenta.Text:=frmStatti.qStatti.FieldByName('NAZVANORMDOK').Value else edtNazvaNormativDokumenta.Text:='';
+      if not frmStatti.qStatti.FieldByName('Назва документу').IsNull then edtNazvaNormativDokumenta.Text:=frmStatti.qStatti.FieldByName('Назва документу').Value else edtNazvaNormativDokumenta.Text:='';
       edtNazvaNormativDokumenta.Enabled:=true;
       BlobStream:=TMemoryStream.Create;
       try
-        (frmStatti.qStatti.FieldByName('TEKSTSTATTI') as TBlobField).SaveToStream(BlobStream);
+        (frmStatti.qStatti.FieldByName('Текст') as TBlobField).SaveToStream(BlobStream);
         BlobStream.Position:=0;
-        if BlobStream<>nil then frmStattiEdit.reTekstStatti.Lines.Assign(frmStatti.qStatti.FieldByName('TEKSTSTATTI') as TBlobField) else frmStattiEdit.reTekstStatti.Lines.Clear;
+        if BlobStream<>nil then frmStattiEdit.reTekstStatti.Lines.Assign(frmStatti.qStatti.FieldByName('Текст') as TBlobField) else frmStattiEdit.reTekstStatti.Lines.Clear;
       finally
         BlobStream.Free;
       end;
@@ -370,6 +389,7 @@ end;
 
 procedure TfrmStatti.aAddExecute(Sender: TObject);
 begin
+{
   if frmStatti.Caption='Довідник нормативних актів' then
   begin
     if not frmMain.IsFormOpen('frmStattiEdit') then frmStattiEdit:=TfrmStattiEdit.Create(self);
@@ -400,7 +420,7 @@ begin
       edtNomerStatti.SetFocus;
     end;
   end;
-
+}
   if frmStatti.Caption='Довідник статей законодавства' then
   begin
     if not frmMain.IsFormOpen('frmStattiEdit') then frmStattiEdit:=TfrmStattiEdit.Create(self);
@@ -433,6 +453,43 @@ procedure TfrmStatti.aSortByKodExecute(Sender: TObject);
 begin
   with frmStatti do
   begin
+{
+    if Caption='Довідник нормативних актів' then
+    begin
+      qStatti.SQL.Clear;
+      qStatti.SQL.Text:='select * from NORMATIVI order by NAZVANORMDOK';
+      qStatti.Open;
+      aSortByKod.Checked:=false;
+      aSortByNazva.Checked:=true;
+      aSortByNomerStatti.Checked:=false;
+      aSortByNomerDokumentu.Checked:=false;
+    end;
+}
+    if Caption='Довідник статей законодавства' then
+    begin
+      qStatti.SQL.Clear;
+//      qStatti.SQL.Text:='select * from STATTI order by NAZVANORMDOK';
+      qStatti.SQL.Text:='';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'select';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  KODSTATTI as "Код", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NOMERSTATTI as "№ статті", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NOMNORMATIVDOK as "№ документу", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NAZVANORMDOK as "Назва документу", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  TEKSTSTATTI as "Текст"';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'from ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  STATTI ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'order by ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  KODSTATTI';
+      qStatti.Open;
+      aSortByKod.Checked:=true;
+      aSortByNazva.Checked:=false;
+      aSortByNomerStatti.Checked:=false;
+      aSortByNomerDokumentu.Checked:=false;
+    end;
+  end;
+{
+  with frmStatti do
+  begin
     if Caption='Довідник нормативних актів' then
     begin
       qStatti.SQL.Clear;
@@ -443,22 +500,14 @@ begin
       aSortByNomerStatti.Checked:=false;
       aSortByNomerDokumentu.Checked:=false;
     end;
-
-//    if Caption='Довідник статей законодавства' then
-//    begin
-//      qStatti.SQL.Clear;
-//      qStatti.SQL.Text:='select * from STATTI order by KODSTATTI';
-//      qStatti.Open;
-//      aSortByKod.Checked:=true;
-//      aSortByNazva.Checked:=false;
-//      aSortByNomerStatti.Checked:=false;
-//      aSortByNomerDokumentu.Checked:=false;
-//    end;
   end;
+}
 end;
 
 procedure TfrmStatti.aSortByNazvaExecute(Sender: TObject);
 begin
+  frmStatti.aUpdateExecute(sender);
+{
   with frmStatti do
   begin
     if Caption='Довідник нормативних актів' then
@@ -483,10 +532,48 @@ begin
 //      aSortByNomerDokumentu.Checked:=false;
 //    end;
   end;
+}
 end;
 
 procedure TfrmStatti.aSortByNomerStattiExecute(Sender: TObject);
 begin
+  with frmStatti do
+  begin
+{
+    if Caption='Довідник нормативних актів' then
+    begin
+      qStatti.SQL.Clear;
+      qStatti.SQL.Text:='select * from NORMATIVI order by NAZVANORMDOK';
+      qStatti.Open;
+      aSortByKod.Checked:=false;
+      aSortByNazva.Checked:=true;
+      aSortByNomerStatti.Checked:=false;
+      aSortByNomerDokumentu.Checked:=false;
+    end;
+}
+    if Caption='Довідник статей законодавства' then
+    begin
+      qStatti.SQL.Clear;
+//      qStatti.SQL.Text:='select * from STATTI order by NAZVANORMDOK';
+      qStatti.SQL.Text:='';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'select';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  KODSTATTI as "Код", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NOMERSTATTI as "№ статті", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NOMNORMATIVDOK as "№ документу", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NAZVANORMDOK as "Назва документу", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  TEKSTSTATTI as "Текст"';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'from ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  STATTI ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'order by ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NOMERSTATTI';
+      qStatti.Open;
+      aSortByKod.Checked:=false;
+      aSortByNazva.Checked:=false;
+      aSortByNomerStatti.Checked:=true;
+      aSortByNomerDokumentu.Checked:=false;
+    end;
+  end;
+{
   with frmStatti do
   begin
     if Caption='Довідник нормативних актів' then
@@ -499,22 +586,49 @@ begin
       aSortByNomerStatti.Checked:=true;
       aSortByNomerDokumentu.Checked:=false;
     end;
-
-//    if Caption='Довідник статей законодавства' then
-//    begin
-//      qStatti.SQL.Clear;
-//      qStatti.SQL.Text:='select * from STATTI order by NOMERSTATTI';
-//      qStatti.Open;
-//      aSortByKod.Checked:=false;
-//      aSortByNazva.Checked:=false;
-//      aSortByNomerStatti.Checked:=true;
-//      aSortByNomerDokumentu.Checked:=false;
-//    end;
   end;
+}
 end;
 
 procedure TfrmStatti.aSortByNomerDokumentuExecute(Sender: TObject);
 begin
+  with frmStatti do
+  begin
+{
+    if Caption='Довідник нормативних актів' then
+    begin
+      qStatti.SQL.Clear;
+      qStatti.SQL.Text:='select * from NORMATIVI order by NAZVANORMDOK';
+      qStatti.Open;
+      aSortByKod.Checked:=false;
+      aSortByNazva.Checked:=true;
+      aSortByNomerStatti.Checked:=false;
+      aSortByNomerDokumentu.Checked:=false;
+    end;
+}
+    if Caption='Довідник статей законодавства' then
+    begin
+      qStatti.SQL.Clear;
+//      qStatti.SQL.Text:='select * from STATTI order by NAZVANORMDOK';
+      qStatti.SQL.Text:='';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'select';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  KODSTATTI as "Код", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NOMERSTATTI as "№ статті", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NOMNORMATIVDOK as "№ документу", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NAZVANORMDOK as "Назва документу", ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  TEKSTSTATTI as "Текст"';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'from ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  STATTI ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'order by ';
+      qStatti.SQL.Text:=qStatti.SQL.Text+'  NOMNORMATIVDOK';
+      qStatti.Open;
+      aSortByKod.Checked:=false;
+      aSortByNazva.Checked:=false;
+      aSortByNomerStatti.Checked:=false;
+      aSortByNomerDokumentu.Checked:=true;
+    end;
+  end;
+{
   with frmStatti do
   begin
     if Caption='Довідник нормативних актів' then
@@ -527,18 +641,8 @@ begin
       aSortByNomerStatti.Checked:=false;
       aSortByNomerDokumentu.Checked:=true;
     end;
-
-//    if Caption='Довідник статей законодавства' then
-//    begin
-//      qStatti.SQL.Clear;
-//      qStatti.SQL.Text:='select * from STATTI order by NOMNORMATIVDOK';
-//      qStatti.Open;
-//      aSortByKod.Checked:=false;
-//      aSortByNazva.Checked:=false;
-//      aSortByNomerStatti.Checked:=false;
-//      aSortByNomerDokumentu.Checked:=true;
-//    end;
   end;
+}
 end;
 
 procedure TfrmStatti.aCloseExecute(Sender: TObject);
