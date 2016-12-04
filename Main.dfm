@@ -1,6 +1,6 @@
 object frmMain: TfrmMain
-  Left = 1400
-  Top = 112
+  Left = 1399
+  Top = 110
   Width = 516
   Height = 167
   Caption = 'frmMain'
@@ -360,7 +360,6 @@ object frmMain: TfrmMain
         end
         object mnDovidnikiNormativnaBazaNormativniAkti: TMenuItem
           Action = aNormativniAkti
-          Enabled = False
         end
       end
       object N19: TMenuItem

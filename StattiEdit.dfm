@@ -1,6 +1,6 @@
 object frmStattiEdit: TfrmStattiEdit
-  Left = 670
-  Top = 114
+  Left = 697
+  Top = 97
   Width = 576
   Height = 383
   Caption = 'frmStattiEdit'

@@ -1,5 +1,5 @@
 object frmStatti: TfrmStatti
-  Left = 265
+  Left = 288
   Top = 115
   Width = 404
   Height = 255
