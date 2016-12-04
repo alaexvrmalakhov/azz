@@ -84,6 +84,7 @@ uses
 procedure TfrmSpivrobitniki.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+{
   if frmMain.IsFormOpen('frmKoristuvachiEdit') then
   begin
     frmKoristuvachiEdit.Enabled:=true;
@@ -139,7 +140,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
@@ -167,7 +168,7 @@ begin
   frmMain.Enabled:=false;
   frmSpivrobitnikiEdit.Show;
 //  if frmMain.IsFormOpen('frmKoristuvachiEdit') then frmSpivrobitniki.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmSpivrobitniki.Enabled:=false;
 //  if frmMain.IsFormOpen('frmOpechanuvanny') then frmSpivrobitniki.Enabled:=false;
 //  if frmMain.IsFormOpen('frmRaport') then frmSpivrobitniki.Enabled:=false;
@@ -233,7 +234,7 @@ begin
   frmMain.Enabled:=false;
   frmSpivrobitnikiEdit.Show;
 //  if frmMain.IsFormOpen('frmKoristuvachiEdit') then frmSpivrobitniki.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmSpivrobitniki.Enabled:=false;
 //  if frmMain.IsFormOpen('frmOpechanuvanny') then frmSpivrobitniki.Enabled:=false;
 //  if frmMain.IsFormOpen('frmRaport') then frmSpivrobitniki.Enabled:=false;
@@ -310,7 +311,7 @@ begin
   frmMain.Enabled:=false;
   frmSpivrobitnikiEdit.Show;
 //  if frmMain.IsFormOpen('frmKoristuvachiEdit') then frmSpivrobitniki.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmSpivrobitniki.Enabled:=false;
 //  if frmMain.IsFormOpen('frmOpechanuvanny') then frmSpivrobitniki.Enabled:=false;
 //  if frmMain.IsFormOpen('frmRaport') then frmSpivrobitniki.Enabled:=false;
@@ -386,7 +387,7 @@ begin
   if not frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmSpivrobitnikiEdit:=TfrmSpivrobitnikiEdit.Create(self);
   frmMain.Enabled:=false;
 //  if frmMain.IsFormOpen('frmKoristuvachiEdit') then frmSpivrobitniki.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSpivrobitniki.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmSpivrobitniki.Enabled:=false;
 //  if frmMain.IsFormOpen('frmOpechanuvanny') then frmSpivrobitniki.Enabled:=false;
 //  if frmMain.IsFormOpen('frmRaport') then frmSpivrobitniki.Enabled:=false;

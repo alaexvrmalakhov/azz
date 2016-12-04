@@ -58,7 +58,7 @@ procedure TfrmSumiShtrafu.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   frmSumiShtrafu.qSumaShtrafu.Close;
-{
+
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
@@ -66,7 +66,7 @@ begin
     Action:=caFree;
     exit;
   end;
-}
+
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -80,7 +80,7 @@ procedure TfrmSumiShtrafu.aChoiceExecute(Sender: TObject);
 begin
   if frmSumiShtrafu.qSumaShtrafu.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmSumiShtrafuEdit') then frmSumiShtrafuEdit:=TfrmSumiShtrafuEdit.Create(self);
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSumiShtrafu.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSumiShtrafu.Enabled:=false;
   frmMain.Enabled:=false;
   frmSumiShtrafuEdit.Show;
   frmSumiShtrafuEdit.Caption:='Вибір суми штрафу';
@@ -103,7 +103,7 @@ begin
   if not frmMain.IsFormOpen('frmSumiShtrafuEdit') then frmSumiShtrafuEdit:=TfrmSumiShtrafuEdit.Create(self);
   frmMain.Enabled:=false;
   frmSumiShtrafuEdit.Show;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSumiShtrafu.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSumiShtrafu.Enabled:=false;
   frmSumiShtrafuEdit.Caption:='Видалення суми штрафу';
   frmSumiShtrafuEdit.Position:=poMainFormCenter;
   frmSumiShtrafuEdit.BorderStyle:=bsDialog;
@@ -124,7 +124,7 @@ begin
   if not frmMain.IsFormOpen('frmSumiShtrafuEdit') then frmSumiShtrafuEdit:=TfrmSumiShtrafuEdit.Create(self);
   frmMain.Enabled:=false;
   frmSumiShtrafuEdit.Show;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSumiShtrafu.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSumiShtrafu.Enabled:=false;
   frmSumiShtrafuEdit.Caption:='Редагування суми штрафу';
   frmSumiShtrafuEdit.Position:=poMainFormCenter;
   frmSumiShtrafuEdit.BorderStyle:=bsDialog;
@@ -144,7 +144,7 @@ begin
   if not frmMain.IsFormOpen('frmSumiShtrafuEdit') then frmSumiShtrafuEdit:=TfrmSumiShtrafuEdit.Create(self);
   frmMain.Enabled:=false;
   frmSumiShtrafuEdit.Show;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSumiShtrafu.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmSumiShtrafu.Enabled:=false;
   frmSumiShtrafuEdit.Caption:='Додавання суми штрафу';
   frmSumiShtrafuEdit.Position:=poMainFormCenter;
   frmSumiShtrafuEdit.BorderStyle:=bsDialog;

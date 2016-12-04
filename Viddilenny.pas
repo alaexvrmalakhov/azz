@@ -83,7 +83,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
@@ -91,7 +91,7 @@ begin
     Action:=caFree;
     exit;
   end;
-}
+
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmSpivrobitnikiEdit.Enabled:=true;
@@ -111,7 +111,7 @@ begin
   frmViddilennyEdit.Show;
 //  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmViddilenny.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmViddilenny.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmViddilenny.Enabled:=false;
   frmViddilennyEdit.Caption:='Додавання нового відділення';
   frmViddilennyEdit.BorderStyle:=bsDialog;
@@ -138,7 +138,7 @@ begin
   frmViddilennyEdit.Show;
 //  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmViddilenny.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmViddilenny.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmViddilenny.Enabled:=false;
   frmViddilennyEdit.Caption:='Редагування відділення';
   frmViddilennyEdit.BorderStyle:=bsDialog;
@@ -180,7 +180,7 @@ begin
   frmViddilennyEdit.Show;
 //  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmViddilenny.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmViddilenny.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmViddilenny.Enabled:=false;
   frmViddilennyEdit.Caption:='Видалення відділення';
   frmViddilennyEdit.BorderStyle:=bsDialog;
@@ -221,7 +221,7 @@ begin
   frmMain.Enabled:=false;
 //  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmViddilenny.Enabled:=false;
 //  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmViddilenny.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmViddilenny.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmViddilenny.Enabled:=false;
   frmViddilennyEdit.Show;
   frmViddilennyEdit.Caption:='Вибір відділення';

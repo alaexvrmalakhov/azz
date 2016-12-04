@@ -100,7 +100,7 @@ begin
 //    Action:=caFree;
 //    exit;
 //  end;
-
+{
   if frmMain.IsFormOpen('frmKoristuvachiEdit') then
   begin
     frmSpivrobitniki.Enabled:=true;
@@ -211,18 +211,23 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
     frmMain.Enabled:=false;
-    if frmSpivrobitnikiEdit.Caption<>'Вибір відомостей про співробітника' then
+    if frmSpivrobitniki.BorderStyle=bsDialog then
     begin
       frmSpivrobitniki.Enabled:=true;
       frmShtrafiEdit.Enabled:=false;
-    end
-    else
-      frmSpivrobitniki.Close;
+    end;
+//    if frmSpivrobitnikiEdit.Caption<>'Вибір відомостей про співробітника' then
+//    begin
+//      frmSpivrobitniki.Enabled:=true;
+//      frmShtrafiEdit.Enabled:=false;
+//    end
+//    else
+//      frmSpivrobitniki.Close;
     Action:=caFree;
     exit;
   end;
@@ -432,7 +437,7 @@ begin
       frmSpivrobitniki.Close;
       exit;
     end;
-
+}
     if (frmMain.IsFormOpen('frmShtrafiEdit')) then
     begin
       frmShtrafiEdit.cbOsobaSchoViyvilaPorushnny.Text:=frmSpivrobitnikiEdit.edtPrizvische.Text;
@@ -442,7 +447,6 @@ begin
       frmSpivrobitniki.Close;
       exit;
     end;
-}
   end;
 
   if frmSpivrobitnikiEdit.Caption='Видалення відомостей про співробітника' then

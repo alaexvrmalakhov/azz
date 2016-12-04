@@ -263,6 +263,7 @@ type
     N15: TMenuItem;
     N16: TMenuItem;
     N19: TMenuItem;
+    N20: TMenuItem;
     procedure ReadInit;
     procedure SaveInit;
     function IsFormOpen(const FormName : string): Boolean;

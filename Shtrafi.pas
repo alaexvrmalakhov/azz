@@ -86,7 +86,6 @@ type
     btnRik: TButton;
     DBGrid1: TDBGrid;
     Panel2: TPanel;
-    cbMinistry: TComboBox;
     cbTeritory: TComboBox;
     cbRajon: TComboBox;
     btnTeritory: TButton;
@@ -102,7 +101,6 @@ type
     aTeritoryUpdate: TAction;
     btnUpdate: TButton;
     aUpdate: TAction;
-    aShtrafiMinistryChange: TAction;
     aShtrafiTeritoryChange: TAction;
     aShtrafiDistrictChange: TAction;
     aClose: TAction;
@@ -206,12 +204,12 @@ type
     btnPrintForm: TButton;
     aPrint: TAction;
     mnPrint: TMenuItem;
+    qTemp: TIBQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure aAddExecute(Sender: TObject);
     procedure aTeritoryUpdateExecute(Sender: TObject);
     procedure aUpdateExecute(Sender: TObject);
-    procedure aShtrafiMinistryChangeExecute(Sender: TObject);
     procedure aShtrafiTeritoryChangeExecute(Sender: TObject);
     procedure aCloseExecute(Sender: TObject);
     procedure aEditExecute(Sender: TObject);
@@ -262,6 +260,8 @@ type
     procedure aPidpisatiExecute(Sender: TObject);
     procedure qShtrafiAfterScroll(DataSet: TDataSet);
     procedure aPrintExecute(Sender: TObject);
+    procedure udRikChanging(Sender: TObject; var AllowChange: Boolean);
+    procedure edtRikChange(Sender: TObject);
   end;
 
 var
@@ -279,6 +279,7 @@ procedure TfrmShtrafi.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   frmShtrafi.qShtrafi.Close;
   frmShtrafi.qTeritory.Close;
+{
   with frmMain do
   begin
     mnShtrafiChoices.Visible:=false;
@@ -297,18 +298,17 @@ begin
     mnZahodiShtrafiObjektNazva.Visible:=false;
     mnZahodiShtrafiRozdilT23F18.Visible:=false;
   end;
+}
   Action:=caFree;
 end;
 
 procedure TfrmShtrafi.FormResize(Sender: TObject);
 begin
-  frmShtrafi.cbMinistry.Left:=4;
-  frmShtrafi.cbMinistry.Width:=trunc((frmShtrafi.Width-40)/3);
-  frmShtrafi.cbTeritory.Left:=frmShtrafi.cbMinistry.Left+frmShtrafi.cbMinistry.Width+4;
-  frmShtrafi.cbTeritory.Width:=trunc((frmShtrafi.Width-40)/3);
+  frmShtrafi.cbTeritory.Left:=4;
+  frmShtrafi.cbTeritory.Width:=frmShtrafi.cbTeritory.Left+trunc((frmShtrafi.Width-56)/2);
   frmShtrafi.cbRajon.Left:=frmShtrafi.cbTeritory.Left+frmShtrafi.cbTeritory.Width+4;
-  frmShtrafi.cbRajon.Width:=trunc((frmShtrafi.Width-40)/3);
-  frmShtrafi.btnTeritory.Left:=frmShtrafi.Width-30;
+  frmShtrafi.cbRajon.Width:=trunc((frmShtrafi.Width-56)/2);
+  frmShtrafi.btnTeritory.Left:=frmShtrafi.Width-40;
 end;
 
 procedure TfrmShtrafi.aAddExecute(Sender: TObject);
@@ -321,8 +321,6 @@ begin
     frmShtrafiEdit.Position:=poMainFormCenter;
     frmShtrafiEdit.BorderStyle:=bsDialog;
     frmShtrafiEdit.Show;
-    cbMinistry.Text:=frmShtrafi.cbMinistry.Text;
-    cbMinistry.Enabled:=false;
     cbTeritory.Text:=frmShtrafi.cbTeritory.Text;
     cbTeritory.Enabled:=false;
     cbRajon.Text:=frmShtrafi.cbRajon.Text;
@@ -435,11 +433,11 @@ begin
     frmShtrafiEdit.cbTipShtrafiv.Enabled:=true;
     frmShtrafiEdit.btnTipShtrafivUpdate.Enabled:=true;
     frmShtrafiEdit.btnTipShtrafiv_Select.Enabled:=true;
-
     frmShtrafiEdit.aRikUpdateExecute(sender);
     frmShtrafiEdit.edtRik.Enabled:=true;
     frmShtrafiEdit.btnRik.Enabled:=true;
 
+{
     frmShtrafiEdit.pcShtrafi.ActivePage:=frmShtrafiEdit.tsLaboratornijKontrol;
     frmShtrafiEdit.DBGrid1.Align:=alClient;
     frmShtrafiEdit.aLaboratoryUpdateExecute(sender);
@@ -454,6 +452,7 @@ begin
     frmShtrafiEdit.edtPosadaGDSL.Enabled:=true;
     frmShtrafiEdit.edtPrizvischeGDSL.Enabled:=true;
     frmShtrafiEdit.btnGDSL.Enabled:=true;
+}
     edtNomerPostanovi.SetFocus;
   end;
 end;
@@ -463,29 +462,12 @@ begin
   INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
   with frmShtrafi do
   begin
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from MINISTRY order by MINISTRY';
-    qTeritory.Open;
-    cbMinistry.Text:='';
-    cbMinistry.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      cbMinistry.Items.Add(qTeritory.FieldByName('MINISTRY').Value);
-      qTeritory.Next;
-    end;
-    cbMinistry.Text:=INIAZZ.ReadString('Teritory','Ministry',cbMinistry.Text);
-    if qTeritory.Locate('KOD',StrToInt(cbMinistry.Text),[]) then cbMinistry.Text:=qTeritory.FieldByName('MINISTRY').Value else cbMinistry.Text:='';
-
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Ministry';
-    qTeritory.Params[0].Value:=cbMinistry.Text;
-    qTeritory.Open;
     cbTeritory.Text:='';
     cbTeritory.Items.Clear;
+    qTeritory.SQL.Clear;
+//    qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
+    qTeritory.SQL.Text:='select * from TERITORY where not TERITORY is null order by TERITORY';
+    qTeritory.Open;
     qTeritory.First;
     while not qTeritory.Eof do
     begin
@@ -495,15 +477,16 @@ begin
     cbTeritory.Text:=INIAZZ.ReadString('Teritory','Teritory',cbTeritory.Text);
     if qTeritory.Locate('KOD',StrToInt(cbTeritory.Text),[]) then cbTeritory.Text:=qTeritory.FieldByName('TERITORY').Value else cbTeritory.Text:='';
 
+    cbRajon.Text:='';
+    cbRajon.Items.Clear;
     qTeritory.SQL.Clear;
+//    qTeritory.SQL.Text:='select * from RAJONI,TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.RAJON';
     qTeritory.SQL.Text:='select * from RAJONI,TERITORY where TERITORY.TERITORY=:Teritory and RAJONI.TERITORY=TERITORY.KOD order by RAJONI.RAJON';
     qTeritory.Params.Clear;
     qTeritory.Params.Add;
     qTeritory.Params[0].Name:='Teritory';
     qTeritory.Params[0].Value:=cbTeritory.Text;
     qTeritory.Open;
-    cbRajon.Text:='';
-    cbRajon.Items.Clear;
     qTeritory.First;
     while not qTeritory.Eof do
     begin
@@ -512,6 +495,7 @@ begin
     end;
     cbRajon.Text:=INIAZZ.ReadString('Teritory','District',cbRajon.Text);
     if qTeritory.Locate('KOD',StrToInt(cbRajon.Text),[]) then cbRajon.Text:=qTeritory.FieldByName('RAJON').Value else cbRajon.Text:='';
+
     aUpdateExecute(sender);
   end;
   INIAZZ.Free;
@@ -521,16 +505,54 @@ procedure TfrmShtrafi.aUpdateExecute(Sender: TObject);
 begin
   with frmShtrafi do
   begin
-    qShtrafi.SQL.Clear;
-    qShtrafi.SQL.Text:='select * from POSTANOVASHTRAF,RAJONI where RAJONI.RAJON=:Rajon and POSTANOVASHTRAF.RAJON=RAJONI.KOD and POSTANOVASHTRAF.YEAR_=:Rik order by POSTANOVASHTRAF.NOMERPOSTANOVI';
-    qShtrafi.Params.Clear;
-    qShtrafi.Params.Add;
-    qShtrafi.Params[0].Name:='Rajon';
-    qShtrafi.Params[0].Value:=cbRajon.Text;
-    qShtrafi.Params.Add;
-    qShtrafi.Params[1].Name:='Rik';
-    qShtrafi.Params[1].Value:=edtRik.Text;
-    qShtrafi.Open;
+    with qShtrafi do
+    begin
+//      SQL.Text:='select * from POSTANOVASHTRAF,RAJONI where RAJONI.RAJON=:Rajon and POSTANOVASHTRAF.RAJON=RAJONI.KOD and POSTANOVASHTRAF.YEAR_=:Rik order by POSTANOVASHTRAF.NOMERPOSTANOVI';
+      SQL.Clear;
+      SQL.Text:='';
+      SQL.Text:=SQL.Text+'select ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.NOMERPOSTANOVI as "№ постанови", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.DATAPOSTANOVI as "Дата постанови", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.PIBPORUSHNIKA as "П.І.Б. порушника", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.POSADAPORUSHNIKA as "Посада порушника", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.NAZVAOBJEKTU as "Назва об''єкту", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.ADRESAOBJEKTU as "Адреса об''єкту", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.VIDDILSES as "Відділ СЕС", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.POSADAOSOBISES as "Посада представника СЕС", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.PIBOSOBISES as "П.І.Б. представника СЕС", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.DATAPROTOKOLU as "Дата протоколу", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.ROZMIRSHTRAFU as "Розмір штрафу", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.DATAOSKARZHENNYPOSTANOVI as "Дата оскарження", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.DATAVRUCHENNYPOSTANOVI as "Дата вручення", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.DATAPLATIZHNOGODOKUMENTU as "Дата сплати", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.DATAPEREDACHIDOVDVS as "Дата передачі до ВДВС", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.DATASTYGNENNY as "Дата стягнення", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.PRIJNYTERISHENNYPOOSKARZH as "Результат оскарження", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.NOMERAKTUOBSTEZHENNY as "№ акту обстеження", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.NOMERPLATIZHNOGODOKUMENTU as "№ платіжки", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.PIB_GDSL as "П.І.Б особи, що винесла постанову", ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.POSADA_GDSL as "Посада особи, що винесла постанову"';
+      SQL.Text:=SQL.Text+'from ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF,';
+      SQL.Text:=SQL.Text+'  RAJONI ';
+      SQL.Text:=SQL.Text+'where ';
+      SQL.Text:=SQL.Text+'  RAJONI.RAJON=:Rajon ';
+      SQL.Text:=SQL.Text+'  and ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.RAJON=RAJONI.KOD ';
+      SQL.Text:=SQL.Text+'  and ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.YEAR_=:Rik ';
+      SQL.Text:=SQL.Text+'order by ';
+      SQL.Text:=SQL.Text+'  POSTANOVASHTRAF.NOMERPOSTANOVI';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='Rajon';
+      Params[0].Value:=cbRajon.Text;
+      Params.Add;
+      Params[1].Name:='Rik';
+      Params[1].Value:=edtRik.Text;
+
+      Open;
+{
     aZaNomeromPostanovi.Checked:=true;
     aZaDatojuPostanovi.Checked:=false;
     aZaPIBPorushnika.Checked:=false;
@@ -550,32 +572,10 @@ begin
     aZaRezultatomOskarzhenny.Checked:=false;
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
-    Caption:='Журнал постанов про накладення штрафу';
-  end;
-end;
-
-procedure TfrmShtrafi.aShtrafiMinistryChangeExecute(Sender: TObject);
-begin
-  with frmShtrafi do
-  begin
-    qTeritory.SQL.Clear;
-    qTeritory.SQL.Text:='select * from TERITORY,MINISTRY where MINISTRY.MINISTRY=:Ministry and TERITORY.MINISTRY=MINISTRY.KOD order by TERITORY.TERITORY';
-    qTeritory.Params.Clear;
-    qTeritory.Params.Add;
-    qTeritory.Params[0].Name:='Ministry';
-    qTeritory.Params[0].Value:=cbMinistry.Text;
-    qTeritory.Open;
-    cbTeritory.Text:='';
-    cbTeritory.Items.Clear;
-    qTeritory.First;
-    while not qTeritory.Eof do
-    begin
-      cbTeritory.Items.Add(qTeritory.FieldByName('TERITORY').Value);
-      qTeritory.Next;
+}
     end;
-    cbRajon.Text:='';
-    cbRajon.Items.Clear;
-    aUpdateExecute(sender);
+    Caption:='Журнал постанов про накладення штрафу';
+    DBGrid1.SetFocus;
   end;
 end;
 
@@ -614,6 +614,7 @@ var
   Nom: integer;
   dat: TDate;
 begin
+{
   if frmShtrafi.qShtrafi.RecordCount<=0 then exit;
   if (not frmShtrafi.qShtrafi.FieldByName('EDITING').IsNull)and(frmShtrafi.qShtrafi.FieldByName('EDITING').Value=1) then exit;
   if not frmMain.IsFormOpen('frmShtrafiEdit') then frmShtrafiEdit:=TfrmShtrafiEdit.Create(self);
@@ -886,6 +887,7 @@ begin
     frmShtrafiEdit.aLaboratoryUpdateExecute(sender);
     frmShtrafi.aUpdateExecute(sender);
   end;
+}
 end;
 
 procedure TfrmShtrafi.aDeleteExecute(Sender: TObject);
@@ -895,6 +897,7 @@ var
   Nom: integer;
   dat: TDate;
 begin
+{
   if frmShtrafi.qShtrafi.RecordCount<=0 then exit;
   if (not frmShtrafi.qShtrafi.FieldByName('EDITING').IsNull)and(frmShtrafi.qShtrafi.FieldByName('EDITING').Value=1) then exit;
   if not frmMain.IsFormOpen('frmShtrafiEdit') then frmShtrafiEdit:=TfrmShtrafiEdit.Create(self);
@@ -1167,10 +1170,12 @@ begin
     frmShtrafiEdit.aLaboratoryUpdateExecute(sender);
     frmShtrafi.aUpdateExecute(sender);
   end;
+}
 end;
 
 procedure TfrmShtrafi.aHandingExecute(Sender: TObject);
 begin
+{
   if frmShtrafi.qShtrafi.RecordCount<=0 then exit;
   if (not frmShtrafi.qShtrafi.FieldByName('EDITING').IsNull)and(frmShtrafi.qShtrafi.FieldByName('EDITING').Value=1) then exit;
   if not frmMain.IsFormOpen('frmVruchenny') then frmVruchenny:=TfrmVruchenny.Create(self);
@@ -1207,10 +1212,12 @@ begin
   end;
   frmMain.trAzz.Commit;
   frmShtrafi.aUpdateExecute(sender);
+}
 end;
 
 procedure TfrmShtrafi.aPaymentExecute(Sender: TObject);
 begin
+{
   if frmShtrafi.qShtrafi.RecordCount<=0 then exit;
   if (not frmShtrafi.qShtrafi.FieldByName('EDITING').IsNull)and(frmShtrafi.qShtrafi.FieldByName('EDITING').Value=1) then exit;
   if not frmMain.IsFormOpen('frmSplata') then frmSplata:=TfrmSplata.Create(self);
@@ -1254,10 +1261,12 @@ begin
   end;
   frmMain.trAzz.Commit;
   frmShtrafi.aUpdateExecute(sender);
+}
 end;
 
 procedure TfrmShtrafi.aPenaltyExecute(Sender: TObject);
 begin
+{
   if frmShtrafi.qShtrafi.RecordCount<=0 then exit;
   if (not frmShtrafi.qShtrafi.FieldByName('EDITING').IsNull)and(frmShtrafi.qShtrafi.FieldByName('EDITING').Value=1) then exit;
   if not frmMain.IsFormOpen('frmVruchenny') then frmVruchenny:=TfrmVruchenny.Create(self);
@@ -1299,10 +1308,12 @@ begin
   end;
   frmMain.trAzz.Commit;
   frmShtrafi.aUpdateExecute(sender);
+}
 end;
 
 procedure TfrmShtrafi.aZayavaVDVSExecute(Sender: TObject);
 begin
+{
   if frmShtrafi.qShtrafi.RecordCount<=0 then exit;
   if (not frmShtrafi.qShtrafi.FieldByName('EDITING').IsNull)and(frmShtrafi.qShtrafi.FieldByName('EDITING').Value=1) then exit;
   if not frmMain.IsFormOpen('frmZayvaDoVDVS') then frmZayvaDoVDVS:=TfrmZayvaDoVDVS.Create(self);
@@ -1342,6 +1353,7 @@ begin
   frmMain.trAzz.Commit;
   frmZayvaDoVDVS.aUpdateNapravlennyExecute(sender);
   frmShtrafi.aUpdateExecute(sender);
+}
 end;
 
 procedure TfrmShtrafi.aYearExecute(Sender: TObject);
@@ -1351,6 +1363,7 @@ end;
 
 procedure TfrmShtrafi.aAppealExecute(Sender: TObject);
 begin
+{
   if frmShtrafi.qShtrafi.RecordCount<=0 then exit;
   if (not frmShtrafi.qShtrafi.FieldByName('EDITING').IsNull)and(frmShtrafi.qShtrafi.FieldByName('EDITING').Value=1) then exit;
   if not frmMain.IsFormOpen('frmOskarzhenny') then frmOskarzhenny:=TfrmOskarzhenny.Create(self);
@@ -1393,6 +1406,7 @@ begin
   end;
   frmMain.trAzz.Commit;
   frmShtrafi.aUpdateExecute(sender);
+}
 end;
 
 procedure TfrmShtrafi.aPrintPostanovaExecute(Sender: TObject);
@@ -1406,6 +1420,7 @@ var
   Director: integer;
   Ministry,Teritory,District: integer;
 begin
+{
   Director:=0;
   if frmShtrafi.qShtrafi.RecordCount<=0 then exit;
   INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
@@ -1949,6 +1964,7 @@ begin
     frmMain.sWordApp.AutoConnect:=false;
     frmMain.sWordApp.AutoQuit:=false;
   INIAZZ.Free;
+}
 end;
 
 procedure TfrmShtrafi.aZayavaDoVDVSExecute(Sender: TObject);
@@ -1961,6 +1977,7 @@ var
   Valuta, PIBBorzhnika, Kod_GRSL: string;
   Ministry,Teritory,District: integer;
 begin
+{
   Director:=0;
   if (frmShtrafi.qShtrafi.FieldByName('VIHIDNIJNOMER').Value='')or(frmShtrafi.qShtrafi.FieldByName('VIHIDNIJNOMER').IsNull) then exit;
   if frmMain.IsFormOpen('frmZayvaDoVDVS') then
@@ -2340,10 +2357,12 @@ begin
     frmMain.sWordApp.AutoConnect:=false;
     frmMain.sWordApp.AutoQuit:=false;
   INIAZZ.Free;
+}
 end;
 
 procedure TfrmShtrafi.aNeSplacheniExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2361,10 +2380,12 @@ begin
     qShtrafi.Open;
   end;
   frmShtrafi.Caption:='Перелік не сплачених штрафів';
+}
 end;
 
 procedure TfrmShtrafi.aNeVrucheniExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2379,10 +2400,12 @@ begin
     qShtrafi.Open;
   end;
   frmShtrafi.Caption:='Перелік не вручених постанов';
+}
 end;
 
 procedure TfrmShtrafi.aPeredaniDoVDVSPeredaniExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2398,15 +2421,19 @@ begin
     qShtrafi.Open;
   end;
   frmShtrafi.Caption:='Перелік постанов переданих до ВДВС';
+}
 end;
 
 procedure TfrmShtrafi.aRobochaBazaExecute(Sender: TObject);
 begin
+{
   frmMain.aShtrafiExecute(sender);
+}
 end;
 
 procedure TfrmShtrafi.aPeredaniDoVDVSSplacheniExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2424,10 +2451,12 @@ begin
     qShtrafi.Open;
   end;
   frmShtrafi.Caption:='Перелік постанов переданих до ВДВС і після сплачених';
+}
 end;
 
 procedure TfrmShtrafi.aPrimusovoStygneniExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2442,10 +2471,12 @@ begin
     qShtrafi.Open;
   end;
   frmShtrafi.Caption:='Перелік примусово стягнених постанов';
+}
 end;
 
 procedure TfrmShtrafi.aNePeredaniDoVDVSExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2466,10 +2497,12 @@ begin
     qShtrafi.Open;
   end;
   frmShtrafi.Caption:='Перелік постанов не переданих до ВДВС';
+}
 end;
 
 procedure TfrmShtrafi.aSkasovaniExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2496,10 +2529,12 @@ begin
     qShtrafi.Open;
   end;
   frmShtrafi.Caption:='Перелік скасованих постанов';
+}
 end;
 
 procedure TfrmShtrafi.aSpivrobitnikExecute(Sender: TObject);
 begin
+{
   if not frmMain.IsFormOpen('frmFilter') then frmFilter:=TfrmFilter.Create(self);
   if (frmMain.IsFormOpen('frmShtrafi'))and(frmMain.ActiveMDIChild=frmShtrafi) then
   begin
@@ -2517,10 +2552,12 @@ begin
       cbFilter.SetFocus;
     end;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aTipShtrafuExecute(Sender: TObject);
 begin
+{
   if not frmMain.IsFormOpen('frmFilter') then frmFilter:=TfrmFilter.Create(self);
   if (frmMain.IsFormOpen('frmShtrafi'))and(frmMain.ActiveMDIChild=frmShtrafi) then
   begin
@@ -2538,10 +2575,12 @@ begin
       frmFilter.cbFilter.SetFocus;
     end;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aObjekt_AdresaExecute(Sender: TObject);
 begin
+{
   if not frmMain.IsFormOpen('frmFilter') then frmFilter:=TfrmFilter.Create(self);
   if (frmMain.IsFormOpen('frmShtrafi'))and(frmMain.ActiveMDIChild=frmShtrafi) then
   begin
@@ -2559,10 +2598,12 @@ begin
       frmFilter.cbFilter.SetFocus;
     end;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aObjekt_NazvaExecute(Sender: TObject);
 begin
+{
   if not frmMain.IsFormOpen('frmFilter') then frmFilter:=TfrmFilter.Create(self);
   if (frmMain.IsFormOpen('frmShtrafi'))and(frmMain.ActiveMDIChild=frmShtrafi) then
   begin
@@ -2580,10 +2621,12 @@ begin
       frmFilter.cbFilter.SetFocus;
     end;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaNomeromPostanoviExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2617,10 +2660,12 @@ begin
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
     Caption:='Журнал постанов про накладення штрафу';
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaDatojuPostanoviExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2653,10 +2698,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaPIBPorushnikaExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2689,10 +2736,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaPosadojuPorushnikaExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2725,10 +2774,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaNazvojuObjektuExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2761,10 +2812,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaAdresojuObjektuExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2797,10 +2850,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaViddilonSESExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2833,10 +2888,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaPosadojuPredstavnikaSESExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2869,10 +2926,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaPIBPredstavnikaSESExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2905,10 +2964,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaDatojuProtokoluExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2941,10 +3002,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaRozmiromShtrafuExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -2977,10 +3040,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaDatojuOskarzhennyExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -3013,10 +3078,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaDatojuVruchennyExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -3049,10 +3116,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaDatojuSplatiExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -3085,10 +3154,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaDatojuPeredachiDoVDVSExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -3121,10 +3192,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaDatojuStygnennyExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -3157,10 +3230,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaRezultatomOskarzhennyExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -3193,10 +3268,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaNomeromAktuObstezhennyExecute(Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -3229,11 +3306,13 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=true;
     aZaNomeromPlatizhnogoDokumentu.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aZaNomeromPlatizhnogoDokumentuExecute(
   Sender: TObject);
 begin
+{
   with frmShtrafi do
   begin
     qShtrafi.SQL.Clear;
@@ -3266,10 +3345,12 @@ begin
     aZaNomeromAktuObstezhenny.Checked:=false;
     aZaNomeromPlatizhnogoDokumentu.Checked:=true;
   end;
+}
 end;
 
 procedure TfrmShtrafi.FormCreate(Sender: TObject);
 begin
+{
   with frmMain do
   begin
     mnShtrafiChoices.Visible:=true;
@@ -3288,6 +3369,7 @@ begin
     mnZahodiShtrafiObjektNazva.Visible:=true;
     mnZahodiShtrafiRozdilT23F18.Visible:=true;
   end;
+}
 end;
 
 procedure TfrmShtrafi.cbRajonChange(Sender: TObject);
@@ -3297,6 +3379,7 @@ end;
 
 procedure TfrmShtrafi.aRozdilT23F18Execute(Sender: TObject);
 begin
+{
   if not frmMain.IsFormOpen('frmFilter') then frmFilter:=TfrmFilter.Create(self);
   if (frmMain.IsFormOpen('frmShtrafi'))and(frmMain.ActiveMDIChild=frmShtrafi) then
   begin
@@ -3311,6 +3394,7 @@ begin
       frmFilter.aUpdateExecute(sender);
       frmFilter.cbFilter.SetFocus;
   end;
+}
 end;
 
 procedure TfrmShtrafi.FormActivate(Sender: TObject);
@@ -3322,6 +3406,7 @@ procedure TfrmShtrafi.aPidpisatiExecute(Sender: TObject);
 var
   RecNo: integer;
 begin
+{
   if (not frmShtrafi.qShtrafi.FieldByName('EDITING').IsNull)and(frmShtrafi.qShtrafi.FieldByName('EDITING').Value=1) then exit;
   with frmShtrafi.qTeritory do
   begin
@@ -3337,10 +3422,12 @@ begin
   RecNo:=frmShtrafi.qShtrafi.FieldByName('KOD').Value;
   frmShtrafi.aUpdateExecute(sender);
   frmShtrafi.qShtrafi.Locate('KOD',RecNo,[]);
+}
 end;
 
 procedure TfrmShtrafi.qShtrafiAfterScroll(DataSet: TDataSet);
 begin
+{
   if frmShtrafi.qShtrafi.FieldByName('PIDPIS').IsNull then
   begin
     frmShtrafi.aPidpisati.Caption:='Підписати';
@@ -3368,10 +3455,12 @@ begin
         end;
     end;
   end;
+}
 end;
 
 procedure TfrmShtrafi.aPrintExecute(Sender: TObject);
 begin
+{
   if frmShtrafi.qShtrafi.RecordCount<=0 then exit;
   if (not frmShtrafi.qShtrafi.FieldByName('EDITING').IsNull)and(frmShtrafi.qShtrafi.FieldByName('EDITING').Value=1) then exit;
   if not frmMain.IsFormOpen('frmPrintForm') then frmPrintForm:=TfrmPrintForm.Create(self);
@@ -3382,6 +3471,26 @@ begin
     Position:=poMainFormCenter;
     Caption:='Друк звіту';
     Show;
+  end;
+}
+end;
+
+procedure TfrmShtrafi.udRikChanging(Sender: TObject;
+  var AllowChange: Boolean);
+begin
+  frmShtrafi.aUpdateExecute(sender);
+end;
+
+procedure TfrmShtrafi.edtRikChange(Sender: TObject);
+begin
+  try
+    frmShtrafi.aUpdateExecute(sender);
+  except
+    INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
+    frmShtrafi.udRik.Position:=INIAZZ.ReadInteger('System','Year',frmShtrafi.udRik.Position);
+    frmShtrafi.edtRik.Text:=IntToStr(frmShtrafi.udRik.Position);
+    frmShtrafi.aUpdateExecute(sender);
+    INIAZZ.Free;
   end;
 end;
 

@@ -1,6 +1,6 @@
 object frmVizmatiVinnim: TfrmVizmatiVinnim
-  Left = 279
-  Top = 114
+  Left = 1164
+  Top = 79
   Width = 458
   Height = 379
   Caption = 'frmVizmatiVinnim'

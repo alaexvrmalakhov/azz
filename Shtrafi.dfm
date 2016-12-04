@@ -1,7 +1,7 @@
 object frmShtrafi: TfrmShtrafi
-  Left = 181
+  Left = 248
   Top = 111
-  Width = 563
+  Width = 571
   Height = 225
   Caption = 'frmShtrafi'
   Color = clBtnFace
@@ -20,12 +20,13 @@ object frmShtrafi: TfrmShtrafi
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 114
+    Top = 110
     Width = 555
     Height = 77
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 0
     object Label1: TLabel
       Left = 4
@@ -63,6 +64,7 @@ object frmShtrafi: TfrmShtrafi
       Width = 75
       Height = 25
       Action = aEdit
+      Enabled = False
       TabOrder = 1
     end
     object btnVidaliti: TButton
@@ -71,6 +73,7 @@ object frmShtrafi: TfrmShtrafi
       Width = 75
       Height = 25
       Action = aDelete
+      Enabled = False
       TabOrder = 2
     end
     object btnVruchenny: TButton
@@ -79,6 +82,7 @@ object frmShtrafi: TfrmShtrafi
       Width = 75
       Height = 25
       Action = aHanding
+      Enabled = False
       TabOrder = 3
     end
     object btnSplata: TButton
@@ -87,6 +91,7 @@ object frmShtrafi: TfrmShtrafi
       Width = 75
       Height = 25
       Action = aPayment
+      Enabled = False
       TabOrder = 4
     end
     object btnStygnenny: TButton
@@ -95,6 +100,7 @@ object frmShtrafi: TfrmShtrafi
       Width = 75
       Height = 25
       Action = aPenalty
+      Enabled = False
       TabOrder = 5
     end
     object btnZayavaDo_VDVS: TButton
@@ -103,6 +109,7 @@ object frmShtrafi: TfrmShtrafi
       Width = 85
       Height = 25
       Action = aZayavaVDVS
+      Enabled = False
       TabOrder = 6
     end
     object btnOskarzgenny: TButton
@@ -111,6 +118,7 @@ object frmShtrafi: TfrmShtrafi
       Width = 75
       Height = 25
       Action = aAppeal
+      Enabled = False
       TabOrder = 7
     end
     object btnZakriti: TButton
@@ -127,6 +135,7 @@ object frmShtrafi: TfrmShtrafi
       Width = 75
       Height = 25
       Action = aPrintPostanova
+      Enabled = False
       TabOrder = 9
     end
     object btnZayavaDoVDVS: TButton
@@ -135,6 +144,7 @@ object frmShtrafi: TfrmShtrafi
       Width = 75
       Height = 25
       Action = aZayavaDoVDVS
+      Enabled = False
       TabOrder = 10
     end
     object edtRik: TEdit
@@ -142,8 +152,10 @@ object frmShtrafi: TfrmShtrafi
       Top = 56
       Width = 121
       Height = 21
+      ImeName = 'Russian'
       TabOrder = 11
       Text = '2000'
+      OnChange = edtRikChange
     end
     object udRik: TUpDown
       Left = 145
@@ -156,7 +168,7 @@ object frmShtrafi: TfrmShtrafi
       Position = 2000
       TabOrder = 12
       Thousands = False
-      Wrap = False
+      OnChanging = udRikChanging
     end
     object btnRik: TButton
       Left = 164
@@ -180,6 +192,7 @@ object frmShtrafi: TfrmShtrafi
       Width = 75
       Height = 21
       Action = aPidpisati
+      Enabled = False
       TabOrder = 15
     end
     object btnPrintForm: TButton
@@ -188,6 +201,7 @@ object frmShtrafi: TfrmShtrafi
       Width = 75
       Height = 25
       Action = aPrint
+      Enabled = False
       TabOrder = 16
       Visible = False
     end
@@ -198,6 +212,7 @@ object frmShtrafi: TfrmShtrafi
     Width = 257
     Height = 77
     DataSource = dsShtrafi
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
@@ -205,133 +220,6 @@ object frmShtrafi: TfrmShtrafi
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'NOMERPOSTANOVI'
-        Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1089#1090#1072#1085#1086#1074#1080
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'DATAPOSTANOVI'
-        Title.Caption = #1044#1072#1090#1072' '#1074#1080#1085#1077#1089#1077#1085#1085#1103' '#1087#1086#1089#1090#1072#1085#1086#1074#1080
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'PIBPORUSHNIKA'
-        Title.Caption = #1055'.'#1030'.'#1041'. '#1087#1086#1088#1091#1096#1085#1080#1082#1072
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'POSADAPORUSHNIKA'
-        Title.Caption = #1055#1086#1089#1072#1076#1072' '#1087#1086#1088#1091#1096#1085#1080#1082#1072
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NAZVAOBJEKTU'
-        Title.Caption = #1053#1072#1079#1074#1072' '#1086#1073'"'#1108#1082#1090#1091
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'ADRESAOBJEKTU'
-        Title.Caption = #1040#1076#1088#1077#1089#1072' '#1086#1073'"'#1108#1082#1090#1091
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'VIDDILSES'
-        Title.Caption = #1042#1110#1076#1076#1110#1083' '#1057#1045#1057
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'POSADAOSOBISES'
-        Title.Caption = #1055#1086#1089#1072#1076#1072' '#1087#1088#1077#1076#1089#1090#1072#1074#1085#1080#1082#1072' '#1057#1045#1057
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'PIBOSOBISES'
-        Title.Caption = #1055'.'#1030'.'#1041'. '#1087#1088#1077#1076#1089#1090#1072#1074#1085#1080#1082#1072' '#1057#1045#1057
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'DATAPROTOKOLU'
-        Title.Caption = #1044#1072#1090#1072' '#1087#1088#1086#1090#1086#1082#1086#1083#1091
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'ROZMIRSHTRAFU'
-        Title.Caption = #1056#1086#1079#1084#1110#1088' '#1096#1090#1088#1072#1092#1091
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'DATAOSKARZHENNYPOSTANOVI'
-        Title.Caption = #1044#1072#1090#1072' '#1086#1089#1082#1072#1088#1078#1077#1085#1085#1103
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'DATAVRUCHENNYPOSTANOVI'
-        Title.Caption = #1044#1072#1090#1072' '#1074#1088#1091#1095#1077#1085#1085#1103
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'DATAPLATIZHNOGODOKUMENTU'
-        Title.Caption = #1044#1072#1090#1072' '#1089#1087#1083#1072#1090#1080
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'DATAPEREDACHIDOVDVS'
-        Title.Caption = #1044#1072#1090#1072' '#1087#1077#1088#1077#1076#1072#1095#1110' '#1076#1086' '#1042#1044#1042#1057
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'DATASTYGNENNY'
-        Title.Caption = #1044#1072#1090#1072' '#1089#1090#1103#1075#1085#1077#1085#1085#1103
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'PRIJNYTERISHENNYPOOSKARZH'
-        Title.Caption = #1056#1077#1079#1091#1083#1100#1090#1072#1090' '#1086#1089#1082#1072#1088#1078#1077#1085#1085#1103
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NOMERAKTUOBSTEZHENNY'
-        Title.Caption = #8470' '#1072#1082#1090#1091' '#1086#1073#1089#1090#1077#1078#1077#1085#1085#1103
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NOMERPLATIZHNOGODOKUMENTU'
-        Title.Caption = #1053#1086#1084#1077#1088' '#1087#1083#1072#1090#1110#1078#1082#1080
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'PIB_GDSL'
-        Title.Caption = #1055'.'#1030'.'#1041'. '#1086#1089#1086#1073#1086#1080', '#1097#1086' '#1074#1080#1085#1077#1089#1083#1072' '#1087#1086#1089#1090#1072#1085#1086#1074#1091
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'POSADA_GDSL'
-        Title.Caption = #1055#1086#1089#1072#1076#1072' '#1086#1089#1086#1073#1080', '#1097#1086' '#1074#1080#1085#1077#1089#1083#1072' '#1087#1086#1089#1090#1072#1085#1086#1074#1091
-        Visible = True
-      end>
   end
   object Panel2: TPanel
     Left = 0
@@ -341,44 +229,37 @@ object frmShtrafi: TfrmShtrafi
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 2
-    object cbMinistry: TComboBox
-      Left = 4
+    object cbTeritory: TComboBox
+      Left = 12
       Top = 0
       Width = 145
       Height = 21
+      ImeName = 'Russian'
       ItemHeight = 13
       TabOrder = 0
-      Text = 'cbMinistry'
-      OnChange = aShtrafiMinistryChangeExecute
-    end
-    object cbTeritory: TComboBox
-      Left = 152
-      Top = 0
-      Width = 145
-      Height = 21
-      ItemHeight = 13
-      TabOrder = 1
       Text = 'cbTeritory'
       OnChange = aShtrafiTeritoryChangeExecute
     end
     object cbRajon: TComboBox
-      Left = 300
+      Left = 160
       Top = 0
       Width = 145
       Height = 21
+      ImeName = 'Russian'
       ItemHeight = 13
-      TabOrder = 2
+      TabOrder = 1
       Text = 'cbRajon'
       OnChange = cbRajonChange
     end
     object btnTeritory: TButton
-      Left = 444
+      Left = 304
       Top = 0
       Width = 21
       Height = 21
       Action = aTeritoryUpdate
-      TabOrder = 3
+      TabOrder = 2
     end
   end
   object memKomuNapravleno: TMemo
@@ -386,6 +267,7 @@ object frmShtrafi: TfrmShtrafi
     Top = 72
     Width = 45
     Height = 21
+    ImeName = 'Russian'
     Lines.Strings = (
       'memKo'
       'muNapr'
@@ -401,8 +283,6 @@ object frmShtrafi: TfrmShtrafi
   object qTeritory: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 456
     Top = 28
   end
@@ -410,8 +290,6 @@ object frmShtrafi: TfrmShtrafi
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
     AfterScroll = qShtrafiAfterScroll
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 372
     Top = 28
   end
@@ -427,11 +305,6 @@ object frmShtrafi: TfrmShtrafi
       Category = 'General'
       Caption = '...'
       OnExecute = aTeritoryUpdateExecute
-    end
-    object aShtrafiMinistryChange: TAction
-      Category = 'General'
-      Caption = 'aShtrafiMinistryChange'
-      OnExecute = aShtrafiMinistryChangeExecute
     end
     object aShtrafiTeritoryChange: TAction
       Category = 'General'
@@ -878,5 +751,11 @@ object frmShtrafi: TfrmShtrafi
     object mnClose: TMenuItem
       Action = aClose
     end
+  end
+  object qTemp: TIBQuery
+    Database = frmMain.dbAzz
+    Transaction = frmMain.trAzz
+    Left = 424
+    Top = 88
   end
 end

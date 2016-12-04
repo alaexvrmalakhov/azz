@@ -171,22 +171,26 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
       frmShtrafiEdit.Enabled:=true;
-      if frmObjektiEdit.Caption<>'Вибрати відомості про об''єкт' then 
+      if frmShtrafiEdit.BorderStyle=bsDialog then
       begin
         frmObjekti.Enabled:=true;
         frmShtrafiEdit.Enabled:=false;
-      end
-      else
-        frmObjekti.Close;
+      end;
+//      if frmObjektiEdit.Caption<>'Вибрати відомості про об''єкт' then
+//      begin
+//        frmObjekti.Enabled:=true;
+//        frmShtrafiEdit.Enabled:=false;
+//      end
+//      else
+//        frmObjekti.Close;
       frmMain.Enabled:=false;
       Action:=caFree;
       exit;
   end;
-}
 
   frmMain.Enabled:=True;
   Action:=caFree;
@@ -320,28 +324,27 @@ begin
         exit;
       end;
     end;
-
+}
     if frmMain.IsFormOpen('frmShtrafiEdit') then
     begin
       frmShtrafiEdit.pcShtrafi.ActivePage:=frmShtrafiEdit.tsVidomostiProObjekt;
       frmShtrafiEdit.edtNazvaObjectu.Text:=frmObjektiEdit.edtNazvaObjekta.Text;
       frmShtrafiEdit.edtVidomchaPidporydkovanist.Text:=frmObjektiEdit.edtVidomchaPidporydkovanist.Text;
       frmShtrafiEdit.edtAdresaObjectu.Text:=frmObjektiEdit.edtAdresaObjekta.Text;
-      frmShtrafiEdit.edtPIBPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('PIB_PORUSHNIKA').Value;
-      frmShtrafiEdit.edtPIBPorushnikaRV.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('PIB_PORUSHNIKA').Value;
-      frmShtrafiEdit.edtPIBPorushnikaTV.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('PIB_PORUSHNIKA').Value;
-      frmShtrafiEdit.edtPosadaPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('POSADA_PORUSHNIKA').Value;
-      frmShtrafiEdit.dtpDataNarodzhenny.Date:=int(frmObjektiEdit.qSpivrobitniki.FieldByName('DATANARODZHENNYPORUSHNIKA').Value);
-      frmShtrafiEdit.edtIdentifikacijnijNomer.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('IDENTIFIKACIJNIJKODPORUSHNIKA').Value;
-      frmShtrafiEdit.edtMisceNarodgenny.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('MISCENARODZHENNYPORUSHNIKA').Value;
-      frmShtrafiEdit.edtMisceProzhivanny.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('MISCEPROZHIVANNYPORUSHNIKA').Value;
-      frmShtrafiEdit.edtPosadaPorushnika_AdresaObjektu.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('POSADA_PORUSHNIKA').Value+' '+frmObjektiEdit.edtAdresaObjekta.Text;
-      frmShtrafiEdit.edtPIB_Posada_NazvaObjectu.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('PIB_PORUSHNIKA').Value+' '+frmObjektiEdit.qSpivrobitniki.FieldByName('POSADA_PORUSHNIKA').Value+' '+frmObjektiEdit.edtNazvaObjekta.Text;
+      frmShtrafiEdit.edtPIBPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('П.І.Б.').Value;
+      frmShtrafiEdit.edtPIBPorushnikaRV.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('П.І.Б.').Value;
+      frmShtrafiEdit.edtPIBPorushnikaTV.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('П.І.Б.').Value;
+      frmShtrafiEdit.edtPosadaPorushnika.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Посада').Value;
+      frmShtrafiEdit.dtpDataNarodzhenny.Date:=int(frmObjektiEdit.qSpivrobitniki.FieldByName('Дата народження').Value);
+      frmShtrafiEdit.edtIdentifikacijnijNomer.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Ідентифікаційний код').Value;
+      frmShtrafiEdit.edtMisceNarodgenny.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Місце народження').Value;
+      frmShtrafiEdit.edtMisceProzhivanny.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Місце проживання').Value;
+      frmShtrafiEdit.edtPosadaPorushnika_AdresaObjektu.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('Посада').Value+' '+frmObjektiEdit.edtAdresaObjekta.Text;
+      frmShtrafiEdit.edtPIB_Posada_NazvaObjectu.Text:=frmObjektiEdit.qSpivrobitniki.FieldByName('П.І.Б.').Value+' '+frmObjektiEdit.qSpivrobitniki.FieldByName('Посада').Value+' '+frmObjektiEdit.edtNazvaObjekta.Text;
       frmObjektiEdit.Close;
       frmObjekti.Close;
       exit;
     end;
-}
   end;
 
   if frmObjektiEdit.Caption='Видалити відомості про об''єкт' then

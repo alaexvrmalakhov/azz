@@ -118,13 +118,6 @@ begin
       frmStatti.Enabled:=true;
       frmShtrafiEdit.Enabled:=false;
     end;
-//    if frmStattiEdit.Caption<>'Вибрати статтю' then
-//    begin
-//      frmStatti.Enabled:=true;
-//      frmShtrafiEdit.Enabled:=false;
-//    end
-//    else
-//      frmStatti.Close;
     Action:=caFree;
     exit;
   end;
@@ -147,16 +140,6 @@ begin
       qTemp.Open;
       qTemp.Last;
       frmStattiEdit.edtKodStatti.Text:=IntToStr(qTemp.FieldByName('KODSTATTI').Value);
-{
-      qStatti.SQL.Clear;
-      qStatti.SQL.Text:='insert into NORMATIVI (KODSTATTI) values (gen_id(GET_DICTIONARIES_RECORD_ID,1))';
-      qStatti.Open;
-      qStatti.SQL.Clear;
-      qStatti.SQL.Text:='select * from NORMATIVI order by KODSTATTI';
-      qStatti.Open;
-      qStatti.Last;
-      frmStattiEdit.edtKodStatti.Text:=IntToStr(qStatti.FieldByName('KODSTATTI').Value);
-}
     end;
   end;
 
@@ -254,77 +237,6 @@ begin
 
     if frmStattiEdit.Caption='Редагувати статтю' then
     begin
-{
-      if frmStattiEdit.edtKodStatti.Text='' then
-      begin
-        frmStattiEdit.aKodUpdateExecute(sender);
-        frmStattiEdit.edtKodStatti.SetFocus;
-        exit;
-      end;
-      try
-        StrToInt(frmStattiEdit.edtKodStatti.Text);
-      except
-        frmStattiEdit.aKodUpdateExecute(sender);
-        frmStattiEdit.edtKodStatti.SetFocus;
-        exit;
-      end;
-
-      if frmStattiEdit.edtNomerStatti.Text='' then
-      begin
-        frmStattiEdit.edtNomerStatti.SetFocus;
-        exit;
-      end;
-
-      if frmStattiEdit.edtNomNormativDokumenta.Text='' then
-      begin
-        frmStattiEdit.edtNomNormativDokumenta.SetFocus;
-        exit;
-      end;
-
-      if frmStattiEdit.edtNazvaNormativDokumenta.Text='' then
-      begin
-        frmStattiEdit.edtNazvaNormativDokumenta.SetFocus;
-        exit;
-      end;
-      if (frmStattiEdit.reTekstStatti.Text='')or(frmStattiEdit.reTekstStatti.Lines.Count<=0) then
-      begin
-        frmStattiEdit.reTekstStatti.SetFocus;
-        exit;
-      end;
-
-      INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
-      temp:=INIAZZ.ReadString('System','Temp',temp);
-      INIAZZ.Free;
-
-      fs:=TFileStream.Create(temp+'\file.tmp',fmCreate);
-      frmStattiEdit.reTekstStatti.Lines.SaveToStream(fs);
-      fs.Free;
-
-      frmStatti.qStatti.SQL.Clear;
-      frmStatti.qStatti.SQL.Text:='update NORMATIVI set NAZVANORMDOK=:NazvaNormDoc,NOMERSTATTI=:NomerStatti,NOMNORMATIVDOK=:NomerNormativnogoDocumenta,TEKSTSTATTI=:tekststatti where KODSTATTI=:Kod';
-      frmStatti.qStatti.Params.Clear;
-      frmStatti.qStatti.Params.Add;
-      frmStatti.qStatti.Params[0].Name:='NazvaNormDoc';
-      frmStatti.qStatti.Params[0].Value:=frmStattiEdit.edtNazvaNormativDokumenta.Text;
-      frmStatti.qStatti.Params.Add;
-      frmStatti.qStatti.Params[1].Name:='NomerStatti';
-      frmStatti.qStatti.Params[1].Value:=frmStattiEdit.edtNomerStatti.Text;
-      frmStatti.qStatti.Params.Add;
-      frmStatti.qStatti.Params[2].Name:='NomerNormativnogoDocumenta';
-      frmStatti.qStatti.Params[2].Value:=frmStattiEdit.edtNomNormativDokumenta.Text;
-      frmStatti.qStatti.Params.Add;
-      frmStatti.qStatti.Params[3].LoadFromFile(temp+'\file.tmp',ftMemo);
-      frmStatti.qStatti.Params[3].Name:='tekststatti';
-      frmStatti.qStatti.Params.Add;
-      frmStatti.qStatti.Params[4].Name:='Kod';
-      frmStatti.qStatti.Params[4].Value:=frmStattiEdit.edtKodStatti.Text;
-      frmStatti.qStatti.Open;
-      frmMain.trAzz.CommitRetaining;
-      DeleteFile(temp+'\file.tmp');
-      frmStatti.aUpdateExecute(sender);
-      frmStattiEdit.Close;
-      exit;
-}
       if frmStattiEdit.edtKodStatti.Text='' then
       begin
         frmStattiEdit.aKodUpdateExecute(sender);
@@ -408,77 +320,6 @@ begin
 
     if frmStattiEdit.Caption='Додати статтю' then
     begin
-{
-      if frmStattiEdit.edtKodStatti.Text='' then
-      begin
-        frmStattiEdit.aKodUpdateExecute(sender);
-        frmStattiEdit.edtKodStatti.SetFocus;
-        exit;
-      end;
-      try
-        StrToInt(frmStattiEdit.edtKodStatti.Text);
-      except
-        frmStattiEdit.aKodUpdateExecute(sender);
-        frmStattiEdit.edtKodStatti.SetFocus;
-        exit;
-      end;
-
-      if frmStattiEdit.edtNomerStatti.Text='' then
-      begin
-        frmStattiEdit.edtNomerStatti.SetFocus;
-        exit;
-      end;
-
-      if frmStattiEdit.edtNomNormativDokumenta.Text='' then
-      begin
-        frmStattiEdit.edtNomNormativDokumenta.SetFocus;
-        exit;
-      end;
-
-      if frmStattiEdit.edtNazvaNormativDokumenta.Text='' then
-      begin
-        frmStattiEdit.edtNazvaNormativDokumenta.SetFocus;
-        exit;
-      end;
-      if (frmStattiEdit.reTekstStatti.Text='')or(frmStattiEdit.reTekstStatti.Lines.Count<=0) then
-      begin
-        frmStattiEdit.reTekstStatti.SetFocus;
-        exit;
-      end;
-
-      INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
-      temp:=INIAZZ.ReadString('System','Temp',temp);
-      INIAZZ.Free;
-
-      fs:=TFileStream.Create(temp+'\file.tmp',fmCreate);
-      frmStattiEdit.reTekstStatti.Lines.SaveToStream(fs);
-      fs.Free;
-
-      frmStatti.qStatti.SQL.Clear;
-      frmStatti.qStatti.SQL.Text:='update NORMATIVI set NAZVANORMDOK=:NazvaNormDoc,NOMERSTATTI=:NomerStatti,NOMNORMATIVDOK=:NomerNormativnogoDocumenta,TEKSTSTATTI=:tekststatti where KODSTATTI=:Kod';
-      frmStatti.qStatti.Params.Clear;
-      frmStatti.qStatti.Params.Add;
-      frmStatti.qStatti.Params[0].Name:='NazvaNormDoc';
-      frmStatti.qStatti.Params[0].Value:=frmStattiEdit.edtNazvaNormativDokumenta.Text;
-      frmStatti.qStatti.Params.Add;
-      frmStatti.qStatti.Params[1].Name:='NomerStatti';
-      frmStatti.qStatti.Params[1].Value:=frmStattiEdit.edtNomerStatti.Text;
-      frmStatti.qStatti.Params.Add;
-      frmStatti.qStatti.Params[2].Name:='NomerNormativnogoDocumenta';
-      frmStatti.qStatti.Params[2].Value:=frmStattiEdit.edtNomNormativDokumenta.Text;
-      frmStatti.qStatti.Params.Add;
-      frmStatti.qStatti.Params[3].LoadFromFile(temp+'\file.tmp',ftMemo);
-      frmStatti.qStatti.Params[3].Name:='tekststatti';
-      frmStatti.qStatti.Params.Add;
-      frmStatti.qStatti.Params[4].Name:='Kod';
-      frmStatti.qStatti.Params[4].Value:=frmStattiEdit.edtKodStatti.Text;
-      frmStatti.qStatti.Open;
-//      frmMain.trAzz.CommitRetaining;
-//      DeleteFile(temp+'\file.tmp');
-//      frmStatti.aUpdateExecute(sender);
-//      frmStattiEdit.Close;
-//      exit;
-}
       if frmStattiEdit.edtKodStatti.Text='' then
       begin
         frmStattiEdit.aKodUpdateExecute(sender);

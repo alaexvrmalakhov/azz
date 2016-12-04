@@ -1,6 +1,6 @@
 object frmSumiShtrafu: TfrmSumiShtrafu
-  Left = 263
-  Top = 115
+  Left = 1167
+  Top = 106
   Width = 404
   Height = 232
   Caption = 'frmSumiShtrafu'

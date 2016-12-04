@@ -86,7 +86,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
@@ -94,7 +94,7 @@ begin
     Action:=caFree;
     exit;
   end;
-}
+
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -116,7 +116,7 @@ begin
   if not frmMain.IsFormOpen('frmVizmatiVinnimEdit') then frmVizmatiVinnimEdit:=TfrmVizmatiVinnimEdit.Create(self);
   frmMain.Enabled:=false;
   frmVizmatiVinnimEdit.Show;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodi') then frmVizmatiVinnim.Enabled:=false;
   frmVizmatiVinnimEdit.Caption:='Додавання суті порушення';
   frmVizmatiVinnimEdit.Position:=poMainFormCenter;
@@ -144,7 +144,7 @@ begin
   if not frmMain.IsFormOpen('frmVizmatiVinnimEdit') then frmVizmatiVinnimEdit:=TfrmVizmatiVinnimEdit.Create(self);
   frmMain.Enabled:=false;
   frmVizmatiVinnimEdit.Show;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodi') then frmVizmatiVinnim.Enabled:=false;
   frmVizmatiVinnimEdit.Caption:='Редагування суті порушення';
   frmVizmatiVinnimEdit.Position:=poMainFormCenter;
@@ -187,7 +187,7 @@ begin
   if not frmMain.IsFormOpen('frmVizmatiVinnimEdit') then frmVizmatiVinnimEdit:=TfrmVizmatiVinnimEdit.Create(self);
   frmMain.Enabled:=false;
   frmVizmatiVinnimEdit.Show;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodi') then frmVizmatiVinnim.Enabled:=false;
   frmVizmatiVinnimEdit.Caption:='Видалення суті порушення';
   frmVizmatiVinnimEdit.Position:=poMainFormCenter;
@@ -229,7 +229,7 @@ begin
   if frmVizmatiVinnim.qViznatiVinnim.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmVizmatiVinnimEdit') then frmVizmatiVinnimEdit:=TfrmVizmatiVinnimEdit.Create(self);
   frmMain.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVizmatiVinnim.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodi') then frmVizmatiVinnim.Enabled:=false;
   frmVizmatiVinnimEdit.Show;
   frmVizmatiVinnimEdit.Caption:='Вибір суті порушення';

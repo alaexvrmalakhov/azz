@@ -131,7 +131,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
@@ -139,7 +139,7 @@ begin
     Action:=caFree;
     exit;
   end;
-}
+
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -363,7 +363,7 @@ begin
   frmObjektiEdit.Caption:='Вибрати відомості про об''єкт';
   frmObjektiEdit.Position:=poMainFormCenter;
   frmObjektiEdit.BorderStyle:=bsDialog;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
 //  if frmMain.IsFormOpen('frmFilter') then frmObjekti.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmObjekti.Enabled:=false;
 //  if frmMain.IsFormOpen('frmOpechanuvanny') then frmObjekti.Enabled:=false;
@@ -495,7 +495,7 @@ begin
   frmObjektiEdit.Caption:='Додати об''єкт нагляду';
   frmObjektiEdit.Position:=poMainFormCenter;
   frmObjektiEdit.BorderStyle:=bsDialog;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
 //  if frmMain.IsFormOpen('frmFilter') then frmObjekti.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmObjekti.Enabled:=false;
 //  if frmMain.IsFormOpen('frmOpechanuvanny') then frmObjekti.Enabled:=false;
@@ -560,7 +560,7 @@ begin
   frmObjektiEdit.Caption:='Редагувати відомості про об''єкт';
   frmObjektiEdit.Position:=poMainFormCenter;
   frmObjektiEdit.BorderStyle:=bsDialog;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
 //  if frmMain.IsFormOpen('frmFilter') then frmObjekti.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmObjekti.Enabled:=false;
 //  if frmMain.IsFormOpen('frmOpechanuvanny') then frmObjekti.Enabled:=false;
@@ -649,7 +649,7 @@ begin
   frmObjektiEdit.Caption:='Видалити відомості про об''єкт';
   frmObjektiEdit.Position:=poMainFormCenter;
   frmObjektiEdit.BorderStyle:=bsDialog;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmObjekti.Enabled:=false;
 //  if frmMain.IsFormOpen('frmFilter') then frmObjekti.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmObjekti.Enabled:=false;
 //  if frmMain.IsFormOpen('frmOpechanuvanny') then frmObjekti.Enabled:=false;

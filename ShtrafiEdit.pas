@@ -160,7 +160,6 @@ type
     cbPosadaOsobiSES: TComboBox;
     btnPosadaOsobiSESUpdate: TButton;
     aPosadaOsobiSesUpdate: TAction;
-    cbMinistry: TComboBox;
     cbRozmirShtrafu: TComboBox;
     btnRozmirShtrafuUpdate: TButton;
     aRozmirShtrafuUpdate: TAction;
@@ -219,6 +218,7 @@ uses
 procedure TfrmShtrafiEdit.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+{
   frmShtrafi.aUpdateExecute(sender);
   with frmShtrafi.qShtrafi do
   begin
@@ -233,6 +233,7 @@ begin
     frmShtrafi.aUpdateExecute(sender);
     frmShtrafi.qShtrafi.Last;
   end;
+}
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -248,6 +249,7 @@ var
   temp: string;
   fs: TFileStream;
 begin
+{
   if frmShtrafiEdit.Caption='Видалення постанови про накладення штрафу' then
   begin
     if MessageDlg('Видаллення цієї постанови може відобразитись на звітах!!!'+#13+'Відновлення даних буде неможливе!!!'+#13+'Ви дійсно бажаєте видалити цю постанову?',mtWarning,[mbYes,mbNo],0)=mrYes then
@@ -1270,6 +1272,7 @@ begin
     frmShtrafi.qShtrafi.Last;
     exit;
   end;
+}
 end;
 
 procedure TfrmShtrafiEdit.aNomerPostanoviUpdateExecute(Sender: TObject);
@@ -1282,23 +1285,28 @@ begin
   INIAZZ.Free;
   with frmShtrafi do
   begin
-    qShtrafi.SQL.Clear;
-    qShtrafi.SQL.Text:='select * from POSTANOVASHTRAF where YEAR_=:Rik';
-    qShtrafi.Params.Clear;
-    qShtrafi.Params.Add;
-    qShtrafi.Params[0].Name:='Rik';
-    qShtrafi.Params[0].Value:=y;
-    qShtrafi.Open;
-    qShtrafi.Last;
-    frmShtrafiEdit.edtNomerPostanovi.Text:=IntToStr(frmShtrafi.qShtrafi.RecordCount+1);
-    if qShtrafi.Locate('NOMERPOSTANOVI',StrToInt(frmShtrafiEdit.edtNomerPostanovi.Text),[]) then
-      while qShtrafi.Locate('NOMERPOSTANOVI',StrToInt(frmShtrafiEdit.edtNomerPostanovi.Text),[]) do frmShtrafiEdit.edtNomerPostanovi.Text:=IntToStr(StrToInt(edtNomerPostanovi.Text)+1);
+    with qTemp do
+    begin
+      SQL.Clear;
+      SQL.Text:='select * from POSTANOVASHTRAF where YEAR_=:Rik';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='Rik';
+      Params[0].Value:=y;
+      Open;
+      Last;
+      frmShtrafiEdit.edtNomerPostanovi.Text:=IntToStr(frmShtrafi.qTemp.RecordCount+1);
+      if qTemp.Locate('NOMERPOSTANOVI',StrToInt(frmShtrafiEdit.edtNomerPostanovi.Text),[]) then
+        while qTemp.Locate('NOMERPOSTANOVI',StrToInt(frmShtrafiEdit.edtNomerPostanovi.Text),[]) do frmShtrafiEdit.edtNomerPostanovi.Text:=IntToStr(StrToInt(edtNomerPostanovi.Text)+1);
+    end;
   end;
 end;
 
 procedure TfrmShtrafiEdit.aActRaspiskaChangeExecute(Sender: TObject);
 begin
-  case frmShtrafiEdit.rgAkt_Papiska.ItemIndex of
+  with frmShtrafiEdit do
+  begin
+    case frmShtrafiEdit.rgAkt_Papiska.ItemIndex of
     -1:
       begin
         frmShtrafiEdit.lblData.Visible:=false;
@@ -1329,7 +1337,7 @@ begin
           frmShtrafiEdit.edtNomer.Text:='';
           frmShtrafiEdit.edtNomer.Enabled:=true;
         end;
-
+{
         if frmShtrafiEdit.Caption='Редагування постанови про накладення штрафу' then
         begin
           if frmShtrafi.qShtrafi.FieldByName('DATAAKTUOBSTREZHENNY').IsNull then frmShtrafiEdit.dtpData.Date:=int(date) else frmShtrafiEdit.dtpData.Date:=int(frmShtrafi.qShtrafi.FieldByName('DATAAKTUOBSTREZHENNY').Value);
@@ -1345,6 +1353,7 @@ begin
           if frmShtrafi.qShtrafi.FieldByName('NOMERAKTUOBSTEZHENNY').IsNull then frmShtrafiEdit.edtNomer.Text:='' else frmShtrafiEdit.edtNomer.Text:=frmShtrafi.qShtrafi.FieldByName('NOMERAKTUOBSTEZHENNY').Value;
           frmShtrafiEdit.edtNomer.Enabled:=false;
         end;
+}
       end;
      1:
       begin
@@ -1364,7 +1373,7 @@ begin
           frmShtrafiEdit.edtNomer.Text:='';
           frmShtrafiEdit.edtNomer.Enabled:=true;
         end;
-
+{
         if frmShtrafiEdit.Caption='Редагування постанови про накладення штрафу' then
         begin
           if frmShtrafi.qShtrafi.FieldByName('DATAAKTUOBSTREZHENNY').IsNull then frmShtrafiEdit.dtpData.Date:=int(date) else frmShtrafiEdit.dtpData.Date:=int(frmShtrafi.qShtrafi.FieldByName('DATAAKTUOBSTREZHENNY').Value);
@@ -1380,6 +1389,7 @@ begin
           if frmShtrafi.qShtrafi.FieldByName('NOMERAKTUOBSTEZHENNY').IsNull then frmShtrafiEdit.edtNomer.Text:='' else frmShtrafiEdit.edtNomer.Text:=frmShtrafi.qShtrafi.FIeldByName('NOMERAKTUOBSTEZHENNY').Value;
           frmShtrafiEdit.edtNomer.Enabled:=false;
         end;
+}
       end;
      2:
       begin
@@ -1402,7 +1412,7 @@ begin
           frmShtrafiEdit.edtNomer.Text:='';
           frmShtrafiEdit.edtNomer.Enabled:=true;
         end;
-
+{
         if frmShtrafiEdit.Caption='Редагування постанови про накладення штрафу' then
         begin
           if frmShtrafi.qShtrafi.FieldByName('DATAAKTUOBSTREZHENNY').IsNull then frmShtrafiEdit.dtpData.Date:=int(date) else frmShtrafiEdit.dtpData.Date:=int(frmShtrafi.qShtrafi.FieldByName('DATAAKTUOBSTREZHENNY').Value);
@@ -1426,7 +1436,9 @@ begin
           if frmShtrafi.qShtrafi.FieldByName('NOMERAKTUOBSTEZHENNY').IsNull then frmShtrafiEdit.edtNomer.Text:='' else frmShtrafiEdit.edtNomer.Text:=frmShtrafi.qShtrafi.FieldByName('NOMERAKTUOBSTEZHENNY').Value;
           frmShtrafiEdit.edtNomer.Enabled:=false;
         end;
+}
       end;
+    end;
   end;
 end;
 
@@ -1461,58 +1473,40 @@ end;
 
 procedure TfrmShtrafiEdit.aOsobaSchoViyvilaPorushennyUpdateExecute(
   Sender: TObject);
-var
-  Ministry,Teritory,District: integer;
 begin
   with frmShtrafiEdit do
   begin
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from MINISTRY where MINISTRY=:Ministry order by MINISTRY';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=cbMinistry.Text;
-    qComboBoxes.Open;
-    if qComboBoxes.Locate('MINISTRY',cbMinistry.Text,[]) then Ministry:=qComboBoxes.FieldByName('KOD').Value else Ministry:=0;
-
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from TERITORY where MINISTRY=:Ministry and TERITORY=:Teritory order by TERITORY';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=Ministry;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[1].Name:='Teritory';
-    qComboBoxes.Params[1].Value:=cbTeritory.Text;
-    qComboBoxes.Open;
-    if qComboBoxes.Locate('TERITORY',cbTeritory.Text,[]) then Teritory:=qComboBoxes.FieldByName('KOD').Value else Teritory:=0;
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from RAJONI where MINISTRY=:Ministry and TERITORY=:Teritory and RAJON=:Rajon order by RAJON';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=Ministry;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[1].Name:='Teritory';
-    qComboBoxes.Params[1].Value:=Teritory;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[2].Name:='Rajon';
-    qComboBoxes.Params[2].Value:=cbRajon.Text;
-    qComboBoxes.Open;
-    if qComboBoxes.Locate('RAJON',cbRajon.Text,[]) then District:=qComboBoxes.FieldByName('KOD').Value else District:=0;
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from SPIVROBITNIKI where MINISTRY=:Ministry and TERITORY=:Teritory and RAJON=:Rajon order by PRIZVISXHE';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=Ministry;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[1].Name:='Teritory';
-    qComboBoxes.Params[1].Value:=Teritory;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[2].Name:='Rajon';
-    qComboBoxes.Params[2].Value:=District;
-    qComboBoxes.Open;
+    with qComboBoxes do
+    begin
+      SQL.Clear;
+//    qComboBoxes.SQL.Text:='select * from SPIVROBITNIKI where MINISTRY=:Ministry and TERITORY=:Teritory and RAJON=:Rajon order by PRIZVISXHE';
+//    qComboBoxes.SQL.Text:='select * from SPIVROBITNIKI where MINISTRY=:Ministry and TERITORY=:Teritory and RAJON=:Rajon order by PRIZVISXHE';
+      SQL.Text:='';
+      SQL.Text:=SQL.Text+'select ';
+      SQL.Text:=SQL.Text+'  * ';
+      SQL.Text:=SQL.Text+'from ';
+      SQL.Text:=SQL.Text+'  SPIVROBITNIKI, ';
+      SQL.Text:=SQL.Text+'  TERITORY, ';
+      SQL.Text:=SQL.Text+'  RAJONI ';
+      SQL.Text:=SQL.Text+'where ';
+      SQL.Text:=SQL.Text+'  TERITORY.TERITORY=:teritory';
+      SQL.Text:=SQL.Text+'  and ';
+      SQL.Text:=SQL.Text+'  SPIVROBITNIKI.TERITORY=TERITORY.KOD ';
+      SQL.Text:=SQL.Text+'  and ';
+      SQL.Text:=SQL.Text+'  RAJONI.RAJON=:rajon ';
+      SQL.Text:=SQL.Text+'  and ';
+      SQL.Text:=SQL.Text+'  SPIVROBITNIKI.RAJON=RAJONI.KOD';
+      SQL.Text:=SQL.Text+'order by ';
+      SQL.Text:=SQL.Text+'  SPIVROBITNIKI.PRIZVISXHE';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='Teritory';
+      Params[0].Value:=frmShtrafiEdit.cbTeritory.Text;
+      Params.Add;
+      Params[1].Name:='Rajon';
+      Params[1].Value:=frmShtrafiEdit.cbRajon.Text;
+      Open;
+    end;
     cbOsobaSchoViyvilaPorushnny.Text:='';
     cbOsobaSchoViyvilaPorushnny.Items.Clear;
     qComboBoxes.First;
@@ -1613,6 +1607,7 @@ end;
 
 procedure TfrmShtrafiEdit.aRozdilt23f18_UpdateExecute(Sender: TObject);
 begin
+{
   with frmShtrafiEdit do
   begin
     cbRozdil_F18.Items.Clear;
@@ -1627,10 +1622,12 @@ begin
       qComboBoxes.Next;
     end;
   end;
+}
 end;
 
 procedure TfrmShtrafiEdit.aTipShtrafiv_UpdateExecute(Sender: TObject);
 begin
+{
   with frmShtrafiEdit do
   begin
     cbTipShtrafiv.Items.Clear;
@@ -1645,6 +1642,7 @@ begin
       qComboBoxes.Next;
     end;
   end;
+}
 end;
 
 procedure TfrmShtrafiEdit.aRikUpdateExecute(Sender: TObject);
@@ -1656,6 +1654,7 @@ end;
 
 procedure TfrmShtrafiEdit.aLaboratoryAddExecute(Sender: TObject);
 begin
+{
   if not frmMain.IsFormOpen('frmLaboratornijKontrol') then frmLaboratornijKontrol:=TfrmLaboratornijKontrol.Create(self);
   frmShtrafiEdit.Enabled:=false;
   with frmLaboratornijKontrol do
@@ -1689,10 +1688,12 @@ begin
     dtpDataKontrolu.Enabled:=true;
     cbVidKontrolu.SetFocus;
   end;
+}
 end;
 
 procedure TfrmShtrafiEdit.aLaboratoryEditExecute(Sender: TObject);
 begin
+{
   if frmShtrafiEdit.qLaboratornijKontrol.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmLaboratornijKontrol') then frmLaboratornijKontrol:=TfrmLaboratornijKontrol.Create(self);
   frmShtrafiEdit.Enabled:=false;
@@ -1771,10 +1772,12 @@ begin
     dtpDataKontrolu.Enabled:=true;
     cbVidKontrolu.SetFocus;
   end;
+}
 end;
 
 procedure TfrmShtrafiEdit.aLaboratoryDeleteExecute(Sender: TObject);
 begin
+{
   if frmShtrafiEdit.qLaboratornijKontrol.RecordCount<=0 then exit;
   if not frmMain.IsFormOpen('frmLaboratornijKontrol') then frmLaboratornijKontrol:=TfrmLaboratornijKontrol.Create(self);
   frmShtrafiEdit.Enabled:=false;
@@ -1853,12 +1856,14 @@ begin
     dtpDataKontrolu.Enabled:=false;
     btnVidminiti.SetFocus;
   end;
+}
 end;
 
 procedure TfrmShtrafiEdit.aGDSL_UpdateExecute(Sender: TObject);
 var
   Director:integer;
 begin
+{
   Director:=0;
   INIAZZ:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'azz.ini');
   Director:=INIAZZ.ReadInteger('Firm','Director',Director);
@@ -1880,12 +1885,14 @@ begin
       end;
   end;
   INIAZZ.Free;
+}
 end;
 
 procedure TfrmShtrafiEdit.aLaboratoryUpdateExecute(Sender: TObject);
 var
   Ministry,Teritory,District: integer;
 begin
+{
   with frmShtrafiEdit do
   begin
     qLaboratornijKontrol.SQL.Clear;
@@ -1944,10 +1951,12 @@ begin
     qLaboratornijKontrol.Params[5].Value:='shtrafi';
     qLaboratornijKontrol.Open;
   end;
+}
 end;
 
 procedure TfrmShtrafiEdit.aRozdilt23f18_SelectExecute(Sender: TObject);
 begin
+{
   frmShtrafiEdit.Enabled:=false;
   frmMain.aRozdil_t23_f18Execute(sender);
   frmRozdil_T23_F18.aChoice.Enabled:=true;
@@ -1958,10 +1967,12 @@ begin
   frmRozdil_T23_F18.Position:=poMainFormCenter;
   frmRozdil_T23_F18.FormStyle:=fsNormal;
   frmRozdil_T23_F18.BorderStyle:=bsDialog;
+}
 end;
 
 procedure TfrmShtrafiEdit.aTipShtrafiv_SelectExecute(Sender: TObject);
 begin
+{
   frmShtrafiEdit.Enabled:=false;
   frmMain.aTipShtrafuExecute(sender);
   frmTipiShtrafiv.aChoice.Enabled:=true;
@@ -1972,6 +1983,7 @@ begin
   frmTipiShtrafiv.Position:=poMainFormCenter;
   frmTipiShtrafiv.FormStyle:=fsNormal;
   frmTipiShtrafiv.BorderStyle:=bsDialog;
+}
 end;
 
 procedure TfrmShtrafiEdit.cbxUchastClick(Sender: TObject);
@@ -2010,58 +2022,16 @@ begin
 end;
 
 procedure TfrmShtrafiEdit.aViddilUpdateExecute(Sender: TObject);
-var
-  Ministry,Teritory,District: integer;
 begin
   with frmShtrafiEdit do
   begin
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from MINISTRY where MINISTRY=:Ministry order by MINISTRY';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=cbMinistry.Text;
-    qComboBoxes.Open;
-    if qComboBoxes.Locate('MINISTRY',cbMinistry.Text,[]) then Ministry:=qComboBoxes.FieldByName('KOD').Value else Ministry:=0;
-
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from TERITORY where MINISTRY=:Ministry and TERITORY=:Teritory order by TERITORY';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=Ministry;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[1].Name:='Teritory';
-    qComboBoxes.Params[1].Value:=cbTeritory.Text;
-    qComboBoxes.Open;
-    if qComboBoxes.Locate('TERITORY',cbTeritory.Text,[]) then Teritory:=qComboBoxes.FieldByName('KOD').Value else Teritory:=0;
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from RAJONI where MINISTRY=:Ministry and TERITORY=:Teritory and RAJON=:Rajon order by RAJON';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=Ministry;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[1].Name:='Teritory';
-    qComboBoxes.Params[1].Value:=Teritory;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[2].Name:='Rajon';
-    qComboBoxes.Params[2].Value:=cbRajon.Text;
-    qComboBoxes.Open;
-    if qComboBoxes.Locate('RAJON',cbRajon.Text,[]) then District:=qComboBoxes.FieldByName('KOD').Value else District:=0;
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from VIDDILENNY where MINISTRY=:Ministry and TERITORY=:Teritory and RAJON=:Rajon order by NAZVAVIDDILENNY';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=Ministry;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[1].Name:='Teritory';
-    qComboBoxes.Params[1].Value:=Teritory;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[2].Name:='Rajon';
-    qComboBoxes.Params[2].Value:=District;
-    qComboBoxes.Open;
+    with qComboBoxes do
+    begin
+      SQL.Clear;
+//      SQL.Text:='select * from VIDDILENNY where MINISTRY=:Ministry and TERITORY=:Teritory and RAJON=:Rajon order by NAZVAVIDDILENNY';
+      SQL.Text:='select * from VIDDILENNY where not NAZVAVIDDILENNY is null order by NAZVAVIDDILENNY';
+      Open;
+    end;
     cbViddil.Text:='';
     cbViddil.Items.Clear;
     qComboBoxes.First;
@@ -2074,58 +2044,16 @@ begin
 end;
 
 procedure TfrmShtrafiEdit.aPosadaOsobiSesUpdateExecute(Sender: TObject);
-var
-  Ministry,Teritory,District: integer;
 begin
   with frmShtrafiEdit do
   begin
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from MINISTRY where MINISTRY=:Ministry order by MINISTRY';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=cbMinistry.Text;
-    qComboBoxes.Open;
-    if qComboBoxes.Locate('MINISTRY',cbMinistry.Text,[]) then Ministry:=qComboBoxes.FieldByName('KOD').Value else Ministry:=0;
-
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from TERITORY where MINISTRY=:Ministry and TERITORY=:Teritory order by TERITORY';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=Ministry;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[1].Name:='Teritory';
-    qComboBoxes.Params[1].Value:=cbTeritory.Text;
-    qComboBoxes.Open;
-    if qComboBoxes.Locate('TERITORY',cbTeritory.Text,[]) then Teritory:=qComboBoxes.FieldByName('KOD').Value else Teritory:=0;
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from RAJONI where MINISTRY=:Ministry and TERITORY=:Teritory and RAJON=:Rajon order by RAJON';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=Ministry;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[1].Name:='Teritory';
-    qComboBoxes.Params[1].Value:=Teritory;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[2].Name:='Rajon';
-    qComboBoxes.Params[2].Value:=cbRajon.Text;
-    qComboBoxes.Open;
-    if qComboBoxes.Locate('RAJON',cbRajon.Text,[]) then District:=qComboBoxes.FieldByName('KOD').Value else District:=0;
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from POSADI where MINISTRY=:Ministry and TERITORY=:Teritory and RAJON=:Rajon order by NAZVAPOSADI';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=Ministry;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[1].Name:='Teritory';
-    qComboBoxes.Params[1].Value:=Teritory;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[2].Name:='Rajon';
-    qComboBoxes.Params[2].Value:=District;
-    qComboBoxes.Open;
+    with qComboBoxes do
+    begin
+      SQL.Clear;
+//      SQL.Text:='select * from POSADI where MINISTRY=:Ministry and TERITORY=:Teritory and RAJON=:Rajon order by NAZVAPOSADI';
+      SQL.Text:='select * from POSADI where not NAZVAPOSADI is null order by NAZVAPOSADI';
+      Open;
+    end;
     cbPosadaOsobiSES.Text:='';
     cbPosadaOsobiSES.Items.Clear;
     qComboBoxes.First;
@@ -2172,89 +2100,105 @@ end;
 procedure TfrmShtrafiEdit.aOsobaSchoViyvilaPorushennyChangeExecute(
   Sender: TObject);
 var
-  Ministry,Teritory,District: integer;
+  Teritory,District: integer;
+  Viddil, Posada: integer;
 begin
+  Viddil:=-1;
+  Posada:=-1;
   with frmShtrafiEdit do
   begin
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from MINISTRY where MINISTRY=:Ministry order by MINISTRY';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=cbMinistry.Text;
-    qComboBoxes.Open;
-    if qComboBoxes.Locate('MINISTRY',cbMinistry.Text,[]) then Ministry:=qComboBoxes.FieldByName('KOD').Value else Ministry:=0;
-
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from TERITORY where MINISTRY=:Ministry and TERITORY=:Teritory order by TERITORY';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=Ministry;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[1].Name:='Teritory';
-    qComboBoxes.Params[1].Value:=cbTeritory.Text;
-    qComboBoxes.Open;
-    if qComboBoxes.Locate('TERITORY',cbTeritory.Text,[]) then Teritory:=qComboBoxes.FieldByName('KOD').Value else Teritory:=0;
-
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from RAJONI where MINISTRY=:Ministry and TERITORY=:Teritory and RAJON=:Rajon order by RAJON';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Ministry';
-    qComboBoxes.Params[0].Value:=Ministry;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[1].Name:='Teritory';
-    qComboBoxes.Params[1].Value:=Teritory;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[2].Name:='Rajon';
-    qComboBoxes.Params[2].Value:=cbRajon.Text;
-    qComboBoxes.Open;
-    if qComboBoxes.Locate('RAJON',cbRajon.Text,[]) then District:=qComboBoxes.FieldByName('KOD').Value else District:=0;
-
-    qComboBoxes.SQL.Clear;
-    qComboBoxes.SQL.Text:='select * from SPIVROBITNIKI where PRIZVISXHE=:Prizvische and MINISTRY=:Ministry and TERITORY=:Teritory and RAJON=:Rajon order by PRIZVISXHE';
-    qComboBoxes.Params.Clear;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[0].Name:='Prizvische';
-    qComboBoxes.Params[0].Value:=cbOsobaSchoViyvilaPorushnny.Text;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[1].Name:='Ministry';
-    qComboBoxes.Params[1].Value:=Ministry;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[2].Name:='Teritory';
-    qComboBoxes.Params[2].Value:=Teritory;
-    qComboBoxes.Params.Add;
-    qComboBoxes.Params[3].Name:='Rajon';
-    qComboBoxes.Params[3].Value:=District;
-    qComboBoxes.Open;
-
-    if qComboBoxes.Locate('PRIZVISXHE',cbOsobaSchoViyvilaPorushnny.Text,[]) then
+    with qComboBoxes do
     begin
-      cbViddil.Text:=IntToStr(qComboBoxes.FieldByName('KODVIDDILENNY').Value);
-      cbPosadaOsobiSES.Text:=IntToStr(qComboBoxes.FieldByName('KODPOSADI').Value);
-      if cbViddil.Text<>'' then
+      SQL.Clear;
+      SQL.Text:='';
+      SQL.Text:=SQL.Text+'select ';
+      SQL.Text:=SQL.Text+'  * ';
+      SQL.Text:=SQL.Text+'from ';
+      SQL.Text:=SQL.Text+'  SPIVROBITNIKI, ';
+      SQL.Text:=SQL.Text+'  TERITORY, ';
+      SQL.Text:=SQL.Text+'  RAJONI ';
+      SQL.Text:=SQL.Text+'where ';
+      SQL.Text:=SQL.Text+'  SPIVROBITNIKI.PRIZVISXHE=:prizvische ';
+      SQL.Text:=SQL.Text+'  and ';
+      SQL.Text:=SQL.Text+'  SPIVROBITNIKI.TERITORY=TERITORY.KOD ';
+      SQL.Text:=SQL.Text+'  and ';
+      SQL.Text:=SQL.Text+'  TERITORY.TERITORY=:teritory ';
+      SQL.Text:=SQL.Text+'  and ';
+      SQL.Text:=SQL.Text+'  SPIVROBITNIKI.RAJON=RAJONI.KOD ';
+      SQL.Text:=SQL.Text+'  and ';
+      SQL.Text:=SQL.Text+'  RAJONI.RAJON=:rajon';
+      SQL.Text:=SQL.Text+'';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='prizvische';
+      Params[0].Value:=frmShtrafiEdit.cbOsobaSchoViyvilaPorushnny.Text;
+      Params.Add;
+      Params[1].Name:='teritory';
+      Params[1].Value:=frmShtrafiEdit.cbTeritory.Text;
+      Params.Add;
+      Params[2].Name:='rajon';
+      Params[2].Value:=frmShtrafiEdit.cbRajon.Text;
+      Open;
+    end;
+    if qComboBoxes.RecordCount>0 then
+    begin
+      if qComboBoxes.Locate('PRIZVISXHE',cbOsobaSchoViyvilaPorushnny.Text,[]) then
       begin
-        qComboBoxes.SQL.Clear;
-        qComboBoxes.SQL.Text:='select * from VIDDILENNY where KODVIDDILENNY=:KodViddilenny order by KODVIDDILENNY';
-        qComboBoxes.Params.Clear;
-        qComboBoxes.Params.Add;
-        qComboBoxes.Params[0].Name:='KodViddilenny';
-        qComboBoxes.Params[0].Value:=cbViddil.Text;
-        qComboBoxes.Open;
-        if qComboBoxes.Locate('KODVIDDILENNY',StrToInt(cbViddil.Text),[]) then cbViddil.Text:=qComboBoxes.FieldByName('NAZVAVIDDILENNY').Value else cbViddil.Text:='';
-      end;
-      if cbPosadaOsobiSES.Text<>'' then
-      begin
-        qComboBoxes.SQL.Clear;
-        qComboBoxes.SQL.Text:='select * from POSADI where KODPOSADI=:KodPosadi order by KODPOSADI';
-        qComboBoxes.Params.Clear;
-        qComboBoxes.Params.Add;
-        qComboBoxes.Params[0].Name:='KodPosadi';
-        qComboBoxes.Params[0].Value:=cbPosadaOsobiSES.Text;
-        qComboBoxes.Open;
-        if qComboBoxes.Locate('KodPosadi',StrToInt(cbPosadaOsobiSES.Text),[]) then cbPosadaOsobiSES.Text:=qComboBoxes.FIeldByName('NAZVAPOSADI').Value else cbPosadaOsobiSES.Text:='';
-      end;
+        Posada:=qComboBoxes.FieldByName('KODPOSADI').Value;
+        Viddil:=qComboBoxes.FieldByName('KODVIDDILENNY').Value;
+      end
+    end;
+
+    with qComboBoxes do
+    begin
+      SQL.Clear;
+      SQL.Text:='';
+      SQL.Text:=SQL.Text+'select ';
+      SQL.Text:=SQL.Text+'  * ';
+      SQL.Text:=SQL.Text+'from ';
+      SQL.Text:=SQL.Text+'  VIDDILENNY ';
+      SQL.Text:=SQL.Text+'where ';
+      SQL.Text:=SQL.Text+'  KODVIDDILENNY=:viddil';
+      SQL.Text:=SQL.Text+'';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='viddil';
+      Params[0].Value:=Viddil;
+      Open;
+    end;
+    if qComboBoxes.RecordCount>0 then
+    begin
+      if qComboBoxes.Locate('KODVIDDILENNY',Viddil,[]) then cbViddil.Text:=qComboBoxes.FieldByName('NAZVAVIDDILENNY').Value else cbViddil.Text:='';
+    end
+    else
+    begin
+      cbViddil.Text:='';
+    end;
+
+    with qComboBoxes do
+    begin
+      SQL.Clear;
+      SQL.Text:='';
+      SQL.Text:=SQL.Text+'select ';
+      SQL.Text:=SQL.Text+'  *';
+      SQL.Text:=SQL.Text+'from ';
+      SQL.Text:=SQL.Text+'  POSADI ';
+      SQL.Text:=SQL.Text+'where ';
+      SQL.Text:=SQL.Text+'  KODPOSADI=:posada';
+      SQL.Text:=SQL.Text+'';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='posada';
+      Params[0].Value:=Posada;
+      Open;
+    end;
+    if qComboBoxes.RecordCount>0 then
+    begin
+      if qComboBoxes.Locate('KODPOSADI',Posada,[]) then cbPosadaOsobiSES.Text:=qComboBoxes.FieldByName('NAZVAPOSADI').Value else cbPosadaOsobiSES.Text:='';
+    end
+    else
+    begin
+      cbPosadaOsobiSES.Text:='';
     end;
   end;
 end;

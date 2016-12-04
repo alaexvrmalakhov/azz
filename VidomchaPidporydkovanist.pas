@@ -101,7 +101,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
@@ -109,7 +109,7 @@ begin
     Action:=caFree;
     exit;
   end;
-}
+
   if frmMain.IsFormOpen('frmObjektiEdit') then
   begin
     frmObjektiEdit.Enabled:=true;
@@ -140,7 +140,7 @@ begin
 //  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
   if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 
   frmVidomchaPidporydkovanistEdit.aKodUpdateExecute(sender);
   frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Enabled:=false;
@@ -163,7 +163,7 @@ begin
 //  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
   if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 
   frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text:=IntToStr(frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('Код').Value);
   frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Enabled:=false;
@@ -186,7 +186,7 @@ begin
 //  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
   if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 
   frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text:=IntToStr(frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('Код').Value);
   frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Enabled:=false;
@@ -209,7 +209,7 @@ begin
 //  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
   if frmMain.IsFormOpen('frmObjektiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmVidomchaPidporydkovanist.Enabled:=false;
 
   frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Text:=IntToStr(frmVidomchaPidporydkovanist.qVidomchaPidporydkovanist.FieldByName('Код').Value);
   frmVidomchaPidporydkovanistEdit.edtKodVidomstva.Enabled:=false;

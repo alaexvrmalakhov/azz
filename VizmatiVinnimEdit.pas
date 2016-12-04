@@ -69,22 +69,26 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
     frmMain.Enabled:=false;
-    if frmVizmatiVinnimEdit.Caption<>'Вибір суті порушення' then
+    if frmVizmatiVinnim.BorderStyle=bsDialog then
     begin
       frmVizmatiVinnim.Enabled:=true;
       frmShtrafiEdit.Enabled:=false;
-    end
-    else
-      frmVizmatiVinnim.Close;
+    end;
+//    if frmVizmatiVinnimEdit.Caption<>'Вибір суті порушення' then
+//    begin
+//      frmVizmatiVinnim.Enabled:=true;
+//      frmShtrafiEdit.Enabled:=false;
+//    end
+//    else
+//      frmVizmatiVinnim.Close;
     Action:=caFree;
     exit;
   end;
-}
 
   frmMain.Enabled:=true;
   Action:=caFree;
@@ -124,7 +128,7 @@ begin
       frmVizmatiVinnim.Close;
       exit;
     end;
-
+}
     if frmMain.IsFormOpen('frmShtrafiEdit') then
     begin
       frmShtrafiEdit.reViznatiVinnim.Text:=frmVizmatiVinnimEdit.reViznatiVinnim.Text;
@@ -132,7 +136,6 @@ begin
       frmVizmatiVinnim.Close;
       exit;
     end
-}
   end;
 
   if frmVizmatiVinnimEdit.Caption='Видалення суті порушення' then

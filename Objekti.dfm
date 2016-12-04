@@ -1,6 +1,6 @@
 object frmObjekti: TfrmObjekti
-  Left = 255
-  Top = 115
+  Left = 991
+  Top = 110
   Width = 314
   Height = 267
   Caption = 'frmObjekti'

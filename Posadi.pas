@@ -132,7 +132,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
@@ -140,7 +140,7 @@ begin
     Action:=caFree;
     exit;
   end;
-}
+
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmSpivrobitnikiEdit.Enabled:=true;
@@ -178,7 +178,7 @@ begin
 //  if frmMain.IsFormOpen('frmNapravlenoDoVidoma') then frmPosadi.Enabled:=false;
 //  if frmMain.IsFormOpen('frmNapravlennyEdit') then frmPosadi.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmPosadi.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmPosadi.Enabled:=false;
   frmPosadiEdit.Caption:='Додавання нової посади';
   frmPosadiEdit.BorderStyle:=bsDialog;
@@ -212,7 +212,7 @@ begin
 //  if frmMain.IsFormOpen('frmNapravlenoDoVidoma') then frmPosadi.Enabled:=false;
 //  if frmMain.IsFormOpen('frmNapravlennyEdit') then frmPosadi.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmPosadi.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmPosadi.Enabled:=false;
   frmPosadiEdit.Caption:='Редагування посади';
   frmPosadiEdit.BorderStyle:=bsDialog;
@@ -256,7 +256,7 @@ begin
 //  if frmMain.IsFormOpen('frmNapravlenoDoVidoma') then frmPosadi.Enabled:=false;
 //  if frmMain.IsFormOpen('frmNapravlennyEdit') then frmPosadi.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmPosadi.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmPosadi.Enabled:=false;
   frmPosadiEdit.Caption:='Видалення посади';
   frmPosadiEdit.BorderStyle:=bsDialog;
@@ -300,7 +300,7 @@ begin
 //  if frmMain.IsFormOpen('frmNapravlenoDoVidoma') then frmPosadi.Enabled:=false;
 //  if frmMain.IsFormOpen('frmNapravlennyEdit') then frmPosadi.Enabled:=false;
 //  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmPosadi.Enabled:=false;
-//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
+  if frmMain.IsFormOpen('frmShtrafiEdit') then frmPosadi.Enabled:=false;
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then frmPosadi.Enabled:=false;
   frmPosadiEdit.Caption:='Вибір посади';
   frmPosadiEdit.BorderStyle:=bsDialog;

@@ -1,6 +1,6 @@
 object frmStatti: TfrmStatti
-  Left = 288
-  Top = 115
+  Left = 1197
+  Top = 170
   Width = 404
   Height = 255
   Caption = 'frmStatti'

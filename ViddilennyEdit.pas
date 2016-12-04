@@ -75,22 +75,27 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
     frmMain.Enabled:=false;
-    if frmViddilennyEdit.Caption<>'Вибір відділення' then
+    if frmViddilenny.BorderStyle=bsDialog then
     begin
       frmViddilenny.Enabled:=true;
       frmShtrafiEdit.Enabled:=false;
-    end
-    else
-      frmViddilenny.Close;
+    end;
+//    if frmViddilennyEdit.Caption<>'Вибір відділення' then
+//    begin
+//      frmViddilenny.Enabled:=true;
+//      frmShtrafiEdit.Enabled:=false;
+//    end
+//    else
+//      frmViddilenny.Close;
     Action:=caFree;
     exit;
   end;
-}
+
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmViddilenny.Enabled:=true;
@@ -172,7 +177,7 @@ begin
       frmViddilenny.Close;
       exit;
     end;
-
+}
     if (frmMain.IsFormOpen('frmShtrafiEdit'))and(not frmShtrafiEdit.Enabled) then
     begin
       frmShtrafiEdit.cbViddil.Text:=frmViddilennyEdit.edtNazvaViddilenny.Text;
@@ -180,7 +185,7 @@ begin
       frmViddilenny.Close;
       exit;
     end;
-}
+
     if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
     begin
       frmSpivrobitnikiEdit.cbViddilenny.Text:=frmViddilennyEdit.edtNazvaViddilenny.Text;

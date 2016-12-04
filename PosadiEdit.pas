@@ -180,22 +180,27 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
     frmMain.Enabled:=false;
-    if frmPosadiEdit.Caption<>'Вибір посади' then
+    if frmPosadi.BorderStyle=bsDialog then
     begin
       frmPosadi.Enabled:=true;
       frmShtrafiEdit.Enabled:=false;
-    end
-    else
-      frmPosadi.Close;
+    end;
+//    if frmPosadiEdit.Caption<>'Вибір посади' then
+//    begin
+//      frmPosadi.Enabled:=true;
+//      frmShtrafiEdit.Enabled:=false;
+//    end
+//    else
+//      frmPosadi.Close;
     Action:=caFree;
     exit;
   end;
-}
+
   if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
   begin
     frmSpivrobitnikiEdit.Enabled:=true;
@@ -309,7 +314,7 @@ begin
       frmPosadi.Close;
       exit;
     end;
-
+}
     if frmMain.IsFormOpen('frmShtrafiEdit') then
     begin
       frmShtrafiEdit.cbPosadaOsobiSES.Text:=frmPosadiEdit.edtNazvaposadi.Text;
@@ -317,7 +322,7 @@ begin
       frmPosadi.Close;
       exit;
     end;
-}
+
     if frmMain.IsFormOpen('frmSpivrobitnikiEdit') then
     begin
       frmSpivrobitnikiEdit.cbPosada.Text:=frmPosadiEdit.edtNazvaposadi.Text;

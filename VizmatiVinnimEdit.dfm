@@ -1,6 +1,6 @@
 object frmVizmatiVinnimEdit: TfrmVizmatiVinnimEdit
-  Left = 737
-  Top = 101
+  Left = 1369
+  Top = 173
   Width = 562
   Height = 312
   Caption = 'frmVizmatiVinnimEdit'

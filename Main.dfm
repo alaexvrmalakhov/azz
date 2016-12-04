@@ -371,6 +371,17 @@ object frmMain: TfrmMain
       object N16: TMenuItem
         Caption = '-'
       end
+      object mnDovidnikiRozdil_T23_F18: TMenuItem
+        Action = aRozdil_t23_f18
+        Enabled = False
+      end
+      object mnDovidnikiTipShtrafu: TMenuItem
+        Action = aTipShtrafu
+        Enabled = False
+      end
+      object N20: TMenuItem
+        Caption = '-'
+      end
       object old1: TMenuItem
         Caption = 'old'
         object mnDovidnikiDatas: TMenuItem
@@ -381,12 +392,6 @@ object frmMain: TfrmMain
           object mnDovidnikiDatasDataTypes: TMenuItem
             Action = aDataTypes
           end
-        end
-        object mnDovidnikiRozdil_T23_F18: TMenuItem
-          Action = aRozdil_t23_f18
-        end
-        object mnDovidnikiTipShtrafu: TMenuItem
-          Action = aTipShtrafu
         end
         object mnDovidnikiLaboratorniDoslidzhenny: TMenuItem
           Action = aLaboratorniDoslidzhenny

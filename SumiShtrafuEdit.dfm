@@ -1,6 +1,6 @@
 object frmSumiShtrafuEdit: TfrmSumiShtrafuEdit
-  Left = 669
-  Top = 126
+  Left = 1276
+  Top = 205
   Width = 645
   Height = 186
   Caption = 'frmSumiShtrafuEdit'
@@ -23,7 +23,7 @@ object frmSumiShtrafuEdit: TfrmSumiShtrafuEdit
   end
   object Label2: TLabel
     Left = 12
-    Top = 84
+    Top = 80
     Width = 79
     Height = 13
     Caption = #1057#1091#1084#1072' '#1087#1088#1086#1087#1080#1089#1086#1084

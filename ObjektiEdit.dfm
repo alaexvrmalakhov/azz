@@ -1,6 +1,6 @@
 object frmObjektiEdit: TfrmObjektiEdit
-  Left = 550
-  Top = 0
+  Left = 1306
+  Top = 44
   Width = 529
   Height = 547
   Caption = 'frmObjektiEdit'

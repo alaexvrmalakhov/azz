@@ -228,22 +228,27 @@ begin
 //    Action:=caFree;
 //    exit;
 //  end;
-{
+
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
     frmMain.Enabled:=false;
-    if frmSumiShtrafuEdit.Caption<>'Вибір суми штрафу' then
+    if frmSumiShtrafu.BorderStyle=bsDialog then
     begin
       frmSumiShtrafu.Enabled:=true;
       frmShtrafiEdit.Enabled:=false;
-    end
-    else
-      frmSumiShtrafu.Close;
+    end;
+//    if frmSumiShtrafuEdit.Caption<>'Вибір суми штрафу' then
+//    begin
+//      frmSumiShtrafu.Enabled:=true;
+//      frmShtrafiEdit.Enabled:=false;
+//    end
+//    else
+//      frmSumiShtrafu.Close;
     Action:=caFree;
     exit;
   end;
-}
+
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -280,7 +285,6 @@ procedure TfrmSumiShtrafuEdit.aOKExecute(Sender: TObject);
 begin
   if frmSumiShtrafuEdit.Caption='Вибір суми штрафу' then
   begin
-{
     if frmMain.IsFormOpen('frmShtrafiEdit') then
     begin
       frmShtrafiEdit.cbRozmirShtrafu.Text:=frmSumiShtrafuEdit.edtCumaShtrafu.Text;
@@ -288,7 +292,6 @@ begin
       frmSumiShtrafu.Close;
       exit;
     end;
-}
   end;
 
   if frmSumiShtrafuEdit.Caption='Видалення суми штрафу' then

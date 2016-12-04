@@ -104,22 +104,26 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmVidomchaPidporydkovanist.Enabled:=true;
-    if frmVidomchaPidporydkovanistEdit.Caption<>'¬иб≥р в≥домства' then
+    if frmVidomchaPidporydkovanist.BorderStyle=bsDialog then
     begin
       frmVidomchaPidporydkovanist.Enabled:=true;
       frmShtrafiEdit.Enabled:=false;
-    end
-    else
-      frmVidomchaPidporydkovanist.Close;
+    end;
+//    if frmVidomchaPidporydkovanistEdit.Caption<>'¬иб≥р в≥домства' then
+//    begin
+//      frmVidomchaPidporydkovanist.Enabled:=true;
+//      frmShtrafiEdit.Enabled:=false;
+//    end
+//    else
+//      frmVidomchaPidporydkovanist.Close;
     frmMain.Enabled:=false;
     Action:=caFree;
     exit;
   end;
-}
 
   frmMain.Enabled:=true;
   Action:=caFree;
@@ -175,7 +179,7 @@ begin
       frmVidomchaPidporydkovanist.Close;
       exit;
     end;
-
+}
     if frmMain.IsFormOpen('frmShtrafiEdit') then
     begin
       frmShtrafiEdit.edtVidomchaPidporydkovanist.Text:=frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text;
@@ -183,7 +187,7 @@ begin
       frmVidomchaPidporydkovanist.Close;
       exit;
     end;
-}
+
     if frmMain.IsFormOpen('frmObjektiEdit') then
     begin
       frmObjektiEdit.edtVidomchaPidporydkovanist.Text:=frmVidomchaPidporydkovanistEdit.edtVidomstvo.Text;

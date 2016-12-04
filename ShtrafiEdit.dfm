@@ -1,7 +1,7 @@
 object frmShtrafiEdit: TfrmShtrafiEdit
-  Left = 464
+  Left = 817
   Top = 0
-  Width = 645
+  Width = 654
   Height = 603
   Caption = 'frmShtrafiEdit'
   Color = clBtnFace
@@ -48,6 +48,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
     Top = 40
     Width = 117
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 10
     TabOrder = 2
     Text = 'edtNomerPostanovi'
@@ -59,7 +60,6 @@ object frmShtrafiEdit: TfrmShtrafiEdit
     Width = 621
     Height = 282
     ActivePage = tsDodatkovo
-    TabIndex = 3
     TabOrder = 7
     object tsVidomostiProObjekt: TTabSheet
       Caption = #1042#1110#1076#1086#1084#1086#1089#1090#1110' '#1087#1088#1086' '#1086#1073#39#1108#1082#1090
@@ -131,6 +131,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 8
         Width = 469
         Height = 21
+        ImeName = 'Russian'
         MaxLength = 100
         TabOrder = 0
         Text = 'edtNazvaObjectu'
@@ -140,6 +141,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 64
         Width = 469
         Height = 21
+        ImeName = 'Russian'
         MaxLength = 100
         TabOrder = 3
         Text = 'edtAdresaObjectu'
@@ -149,6 +151,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 92
         Width = 469
         Height = 21
+        ImeName = 'Russian'
         MaxLength = 100
         TabOrder = 4
         Text = 'edtPIBPorushnika'
@@ -158,6 +161,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 120
         Width = 469
         Height = 21
+        ImeName = 'Russian'
         MaxLength = 100
         TabOrder = 5
         Text = 'edtPosadaPorushnika'
@@ -167,6 +171,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 148
         Width = 121
         Height = 21
+        ImeName = 'Russian'
         MaxLength = 10
         TabOrder = 7
         Text = 'edtIdentifikacijnijNomer'
@@ -176,6 +181,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 176
         Width = 469
         Height = 21
+        ImeName = 'Russian'
         MaxLength = 100
         TabOrder = 8
         Text = 'edtMisceNarodgenny'
@@ -193,6 +199,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 204
         Width = 469
         Height = 21
+        ImeName = 'Russian'
         MaxLength = 100
         TabOrder = 9
         Text = 'edtMisceProzhivanny'
@@ -202,13 +209,9 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 148
         Width = 186
         Height = 21
-        CalAlignment = dtaLeft
-        Date = 39271.870646875
-        Time = 39271.870646875
-        DateFormat = dfShort
-        DateMode = dmComboBox
-        Kind = dtkDate
-        ParseInput = False
+        Date = 39271.870646875000000000
+        Time = 39271.870646875000000000
+        ImeName = 'Russian'
         TabOrder = 6
       end
       object edtVidomchaPidporydkovanist: TEdit
@@ -216,6 +219,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 36
         Width = 445
         Height = 21
+        ImeName = 'Russian'
         TabOrder = 1
         Text = 'edtVidomchaPidporydkovanist'
       end
@@ -225,6 +229,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Width = 21
         Height = 21
         Action = aVidomchaPidporadkovanistChange
+        Enabled = False
         TabOrder = 2
       end
     end
@@ -330,6 +335,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Font.Height = -11
         Font.Name = 'Courier New'
         Font.Style = []
+        ImeName = 'Russian'
         Lines.Strings = (
           'rePorushennyStatej')
         ParentFont = False
@@ -349,6 +355,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 8
         Width = 385
         Height = 21
+        ImeName = 'Russian'
         ItemHeight = 13
         TabOrder = 7
         Text = 'cbOsobaSchoViyvilaPorushnny'
@@ -359,6 +366,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 36
         Width = 385
         Height = 21
+        ImeName = 'Russian'
         ItemHeight = 13
         TabOrder = 8
         Text = 'cbViddil'
@@ -376,6 +384,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 64
         Width = 385
         Height = 21
+        ImeName = 'Russian'
         ItemHeight = 13
         TabOrder = 10
         Text = 'cbPosadaOsobiSES'
@@ -393,6 +402,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 228
         Width = 473
         Height = 21
+        ImeName = 'Russian'
         ItemHeight = 13
         TabOrder = 12
         Text = 'cbRozmirShtrafu'
@@ -435,6 +445,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 8
         Width = 433
         Height = 21
+        ImeName = 'Russian'
         MaxLength = 100
         TabOrder = 0
         Text = 'edtPIBPorushnikaRV'
@@ -473,6 +484,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Font.Height = -11
         Font.Name = 'Courier New'
         Font.Style = []
+        ImeName = 'Russian'
         Lines.Strings = (
           'reViznatiVinnim')
         ParentFont = False
@@ -489,6 +501,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Font.Height = -11
         Font.Name = 'Courier New'
         Font.Style = []
+        ImeName = 'Russian'
         Lines.Strings = (
           'rePerelikPorushnihAktiv')
         ParentFont = False
@@ -553,6 +566,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 20
         Width = 585
         Height = 21
+        ImeName = 'Russian'
         MaxLength = 100
         TabOrder = 0
         Text = 'edtPIBPorushnikaTV'
@@ -562,6 +576,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 84
         Width = 481
         Height = 21
+        ImeName = 'Russian'
         MaxLength = 250
         TabOrder = 3
         Text = 'edtPIB_Posada_NazvaObjectu'
@@ -579,6 +594,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 40
         Width = 585
         Height = 21
+        ImeName = 'Russian'
         MaxLength = 400
         TabOrder = 1
         Text = 'edtPosadaPorushnika_AdresaObjektu'
@@ -596,6 +612,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 104
         Width = 481
         Height = 21
+        ImeName = 'Russian'
         MaxLength = 100
         TabOrder = 4
         Text = 'edtPIB_Posada_OsobiSES'
@@ -621,6 +638,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 232
         Width = 121
         Height = 21
+        ImeName = 'Russian'
         TabOrder = 15
         Text = 'edtRik'
       end
@@ -637,6 +655,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 176
         Width = 457
         Height = 21
+        ImeName = 'Russian'
         ItemHeight = 13
         TabOrder = 9
         Text = 'cbRozdil_F18'
@@ -646,6 +665,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 204
         Width = 457
         Height = 21
+        ImeName = 'Russian'
         ItemHeight = 13
         TabOrder = 12
         Text = 'cbTipShtrafiv'
@@ -689,13 +709,9 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Top = 148
         Width = 89
         Height = 21
-        CalAlignment = dtaLeft
-        Date = 40659.4262015278
-        Time = 40659.4262015278
-        DateFormat = dfShort
-        DateMode = dmComboBox
-        Kind = dtkDate
-        ParseInput = False
+        Date = 40659.426201527800000000
+        Time = 40659.426201527800000000
+        ImeName = 'Russian'
         TabOrder = 8
       end
     end
@@ -711,6 +727,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Align = alRight
         AutoSize = True
         BevelOuter = bvNone
+        ParentBackground = True
         TabOrder = 0
         object btnLabKontrolDodati: TButton
           Left = 0
@@ -756,6 +773,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
+        ImeName = 'Russian'
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
         ParentFont = False
         PopupMenu = PopupMenu1
@@ -810,13 +828,9 @@ object frmShtrafiEdit: TfrmShtrafiEdit
     Top = 40
     Width = 146
     Height = 21
-    CalAlignment = dtaLeft
-    Date = 39271.8688118403
-    Time = 39271.8688118403
-    DateFormat = dfShort
-    DateMode = dmComboBox
-    Kind = dtkDate
-    ParseInput = False
+    Date = 39271.868811840300000000
+    Time = 39271.868811840300000000
+    ImeName = 'Russian'
     TabOrder = 4
     OnExit = aLaboratoryUpdateExecute
   end
@@ -825,13 +839,9 @@ object frmShtrafiEdit: TfrmShtrafiEdit
     Top = 72
     Width = 141
     Height = 21
-    CalAlignment = dtaLeft
-    Date = 39271.8693279745
-    Time = 39271.8693279745
-    DateFormat = dfShort
-    DateMode = dmComboBox
-    Kind = dtkDate
-    ParseInput = False
+    Date = 39271.869327974500000000
+    Time = 39271.869327974500000000
+    ImeName = 'Russian'
     TabOrder = 5
   end
   object Panel2: TPanel
@@ -841,6 +851,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
     Height = 65
     BevelInner = bvRaised
     BevelOuter = bvLowered
+    ParentBackground = True
     TabOrder = 6
     object lblData: TLabel
       Left = 8
@@ -883,13 +894,9 @@ object frmShtrafiEdit: TfrmShtrafiEdit
       Top = 38
       Width = 85
       Height = 21
-      CalAlignment = dtaLeft
-      Date = 39540.0370822454
-      Time = 39540.0370822454
-      DateFormat = dfShort
-      DateMode = dmComboBox
-      Kind = dtkDate
-      ParseInput = False
+      Date = 39540.037082245400000000
+      Time = 39540.037082245400000000
+      ImeName = 'Russian'
       TabOrder = 1
     end
     object edtNomer: TEdit
@@ -897,6 +904,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
       Top = 38
       Width = 121
       Height = 21
+      ImeName = 'Russian'
       TabOrder = 3
       Text = 'edtNomer'
     end
@@ -905,13 +913,9 @@ object frmShtrafiEdit: TfrmShtrafiEdit
       Top = 38
       Width = 85
       Height = 21
-      CalAlignment = dtaLeft
-      Date = 40328.9494570949
-      Time = 40328.9494570949
-      DateFormat = dfShort
-      DateMode = dmComboBox
-      Kind = dtkDate
-      ParseInput = False
+      Date = 40328.949457094900000000
+      Time = 40328.949457094900000000
+      ImeName = 'Russian'
       TabOrder = 2
     end
   end
@@ -924,19 +928,21 @@ object frmShtrafiEdit: TfrmShtrafiEdit
     TabOrder = 3
   end
   object cbTeritory: TComboBox
-    Left = 216
+    Left = 12
     Top = 8
-    Width = 201
+    Width = 301
     Height = 21
+    ImeName = 'Russian'
     ItemHeight = 13
     TabOrder = 0
     Text = 'cbTeritory'
   end
   object cbRajon: TComboBox
-    Left = 424
+    Left = 324
     Top = 8
-    Width = 201
+    Width = 301
     Height = 21
+    ImeName = 'Russian'
     ItemHeight = 13
     TabOrder = 1
     Text = 'cbRajon'
@@ -967,6 +973,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
       Top = 16
       Width = 537
       Height = 21
+      ImeName = 'Russian'
       TabOrder = 0
       Text = 'edtPosadaGDSL'
     end
@@ -975,6 +982,7 @@ object frmShtrafiEdit: TfrmShtrafiEdit
       Top = 44
       Width = 445
       Height = 21
+      ImeName = 'Russian'
       TabOrder = 1
       Text = 'edtPrizvischeGDSL'
     end
@@ -993,17 +1001,9 @@ object frmShtrafiEdit: TfrmShtrafiEdit
     Width = 277
     Height = 21
     Enabled = False
+    ImeName = 'Russian'
     TabOrder = 11
     Text = 'edtKod'
-  end
-  object cbMinistry: TComboBox
-    Left = 8
-    Top = 8
-    Width = 201
-    Height = 21
-    ItemHeight = 13
-    TabOrder = 12
-    Text = 'cbMinistry'
   end
   object PopupMenu1: TPopupMenu
     OwnerDraw = True
@@ -1047,14 +1047,16 @@ object frmShtrafiEdit: TfrmShtrafiEdit
   object qComboBoxes: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
-    Left = 416
-    Top = 36
+    Left = 160
+    Top = 524
   end
   object alShtrafiEdit: TActionList
-    Left = 448
-    Top = 36
+    Left = 192
+    Top = 524
+    object aKodUpdate: TAction
+      Caption = 'aKodUpdate'
+      OnExecute = aKodUpdateExecute
+    end
     object aNomerPostanoviUpdate: TAction
       Caption = '...'
       OnExecute = aNomerPostanoviUpdateExecute
@@ -1179,22 +1181,16 @@ object frmShtrafiEdit: TfrmShtrafiEdit
       Caption = '...'
       OnExecute = aGDSL_UpdateExecute
     end
-    object aKodUpdate: TAction
-      Caption = 'aKodUpdate'
-      OnExecute = aKodUpdateExecute
-    end
   end
   object dsLaboratornijKontrol: TDataSource
     DataSet = qLaboratornijKontrol
-    Left = 92
-    Top = 36
+    Left = 56
+    Top = 524
   end
   object qLaboratornijKontrol: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
-    Left = 124
-    Top = 36
+    Left = 88
+    Top = 524
   end
 end
