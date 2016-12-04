@@ -363,7 +363,7 @@ object frmMain: TfrmMain
           Enabled = False
         end
       end
-      object N10: TMenuItem
+      object N16: TMenuItem
         Caption = '-'
       end
       object old1: TMenuItem
@@ -376,9 +376,6 @@ object frmMain: TfrmMain
           object mnDovidnikiDatasDataTypes: TMenuItem
             Action = aDataTypes
           end
-        end
-        object mnDovidnikiSumiShtrafu: TMenuItem
-          Action = aSumiShtrafu
         end
         object mnDovidnikiViznatiVinnim: TMenuItem
           Action = aViznatiVinnim
@@ -434,6 +431,12 @@ object frmMain: TfrmMain
         object N2: TMenuItem
           Action = aAdminZahodi
         end
+      end
+      object N10: TMenuItem
+        Caption = '-'
+      end
+      object mnDovidnikiSumiShtrafu: TMenuItem
+        Action = aSumiShtrafu
       end
     end
     object mnZvit: TMenuItem

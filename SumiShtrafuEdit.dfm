@@ -1,6 +1,6 @@
 object frmSumiShtrafuEdit: TfrmSumiShtrafuEdit
-  Left = 635
-  Top = 552
+  Left = 669
+  Top = 126
   Width = 645
   Height = 186
   Caption = 'frmSumiShtrafuEdit'
@@ -40,6 +40,7 @@ object frmSumiShtrafuEdit: TfrmSumiShtrafuEdit
     Top = 44
     Width = 121
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 8
     TabOrder = 0
     Text = 'edtCumaShtrafu'
@@ -49,6 +50,7 @@ object frmSumiShtrafuEdit: TfrmSumiShtrafuEdit
     Top = 76
     Width = 449
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 100
     TabOrder = 1
     Text = 'edtSumaPropisom'
@@ -84,6 +86,7 @@ object frmSumiShtrafuEdit: TfrmSumiShtrafuEdit
     Top = 12
     Width = 121
     Height = 21
+    ImeName = 'Russian'
     TabOrder = 5
     Text = 'edtKod'
   end

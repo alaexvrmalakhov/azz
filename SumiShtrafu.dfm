@@ -1,6 +1,6 @@
 object frmSumiShtrafu: TfrmSumiShtrafu
-  Left = 876
-  Top = 323
+  Left = 263
+  Top = 115
   Width = 404
   Height = 232
   Caption = 'frmSumiShtrafu'
@@ -24,6 +24,7 @@ object frmSumiShtrafu: TfrmSumiShtrafu
     Width = 245
     Height = 101
     DataSource = dsSumaShtrafu
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -31,28 +32,16 @@ object frmSumiShtrafu: TfrmSumiShtrafu
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'SUMASHTAFU'
-        Title.Caption = #1057#1091#1084#1072' '#1096#1090#1088#1072#1092#1091
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'SUMAPROPISOM'
-        Title.Caption = #1057#1091#1084#1072' '#1096#1090#1088#1072#1092#1091' '#1087#1088#1086#1087#1080#1089#1086#1084
-        Visible = True
-      end>
   end
   object Panel1: TPanel
-    Left = 321
+    Left = 313
     Top = 0
     Width = 75
-    Height = 198
+    Height = 194
     Align = alRight
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 1
     object btnDodati: TButton
       Left = 0
@@ -137,16 +126,6 @@ object frmSumiShtrafu: TfrmSumiShtrafu
       ShortCut = 16499
       OnExecute = aCloseExecute
     end
-    object aSortBySuma: TAction
-      Caption = #1047#1072' '#1089#1091#1084#1086#1102
-      ShortCut = 16433
-      OnExecute = aSortBySumaExecute
-    end
-    object aSortByPropis: TAction
-      Caption = #1047#1072' '#1089#1091#1084#1086#1102' '#1087#1088#1086#1087#1080#1089#1086#1084
-      ShortCut = 16434
-      OnExecute = aSortByPropisExecute
-    end
   end
   object PopupMenu: TPopupMenu
     Left = 140
@@ -169,18 +148,6 @@ object frmSumiShtrafu: TfrmSumiShtrafu
     object N10: TMenuItem
       Caption = '-'
     end
-    object N6: TMenuItem
-      Caption = #1057#1086#1088#1090#1091#1074#1072#1085#1085#1103
-      object mnSortBySuma: TMenuItem
-        Action = aSortBySuma
-      end
-      object mnSortByPropis: TMenuItem
-        Action = aSortByPropis
-      end
-    end
-    object N11: TMenuItem
-      Caption = '-'
-    end
     object mnClose: TMenuItem
       Action = aClose
     end
@@ -193,9 +160,13 @@ object frmSumiShtrafu: TfrmSumiShtrafu
   object qSumaShtrafu: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 272
     Top = 112
+  end
+  object qTemp: TIBQuery
+    Database = frmMain.dbAzz
+    Transaction = frmMain.trAzz
+    Left = 28
+    Top = 124
   end
 end

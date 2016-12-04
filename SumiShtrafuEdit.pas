@@ -214,22 +214,21 @@ end;
 procedure TfrmSumiShtrafuEdit.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
+//  begin
+//    frmFinansoviSankciiEdit.Enabled:=true;
+//    frmMain.Enabled:=false;
+//    if frmViddilennyEdit.Caption<>'Вибір суми штрафу' then
+//    begin
+//      frmViddilenny.Enabled:=true;
+//      frmFinansoviSankciiEdit.Enabled:=false;
+//    end
+//    else
+//      frmViddilenny.Close;
+//    Action:=caFree;
+//    exit;
+//  end;
 {
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
-  begin
-    frmFinansoviSankciiEdit.Enabled:=true;
-    frmMain.Enabled:=false;
-    if frmViddilennyEdit.Caption<>'Вибір суми штрафу' then
-    begin
-      frmViddilenny.Enabled:=true;
-      frmFinansoviSankciiEdit.Enabled:=false;
-    end
-    else
-      frmViddilenny.Close;
-    Action:=caFree;
-    exit;
-  end;
-}
   if frmMain.IsFormOpen('frmShtrafiEdit') then
   begin
     frmShtrafiEdit.Enabled:=true;
@@ -244,7 +243,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -281,6 +280,7 @@ procedure TfrmSumiShtrafuEdit.aOKExecute(Sender: TObject);
 begin
   if frmSumiShtrafuEdit.Caption='Вибір суми штрафу' then
   begin
+{
     if frmMain.IsFormOpen('frmShtrafiEdit') then
     begin
       frmShtrafiEdit.cbRozmirShtrafu.Text:=frmSumiShtrafuEdit.edtCumaShtrafu.Text;
@@ -288,24 +288,25 @@ begin
       frmSumiShtrafu.Close;
       exit;
     end;
+}
   end;
 
   if frmSumiShtrafuEdit.Caption='Видалення суми штрафу' then
   begin
-    if MessageDlg('Видалення цього апису може відобразитись на інших даних!!!'+#13+'Ви дійсно бажаєте видалити цей запис?',mtWarning,[mbYes,mbNo],0)=mrYes then
+    if MessageDlg('Видалення цього запису може відобразитись на інших даних!!!'+#13+'Ви дійсно бажаєте видалити цей запис?',mtWarning,[mbYes,mbNo],0)=mrYes then
     begin
-      frmSumiShtrafu.qSumaShtrafu.SQL.Clear;
-      frmSumiShtrafu.qSumaShtrafu.SQL.Text:='delete from SHTRAFI where KOD=:Kod';
-      frmSumiShtrafu.qSumaShtrafu.Params.Clear;
-      frmSumiShtrafu.qSumaShtrafu.Params.Add;
-      frmSumiShtrafu.qSumaShtrafu.Params[0].Name:='Kod';
-      frmSumiShtrafu.qSumaShtrafu.Params[0].Value:=frmSumiShtrafuEdit.edtKod.Text;
-      frmSumiShtrafu.qSumaShtrafu.Open;
-      frmMain.trAzz.CommitRetaining;
+      frmSumiShtrafu.qTemp.SQL.Clear;
+      frmSumiShtrafu.qTemp.SQL.Text:='delete from SHTRAFI where KOD=:Kod';
+      frmSumiShtrafu.qTemp.Params.Clear;
+      frmSumiShtrafu.qTemp.Params.Add;
+      frmSumiShtrafu.qTemp.Params[0].Name:='Kod';
+      frmSumiShtrafu.qTemp.Params[0].Value:=frmSumiShtrafuEdit.edtKod.Text;
+      frmSumiShtrafu.qTemp.Open;
     end;
-      frmSumiShtrafuEdit.Close;
-      frmSumiShtrafu.aUpdateExecute(sender);
-      exit;
+    frmMain.trAzz.CommitRetaining;
+    frmSumiShtrafuEdit.Close;
+    frmSumiShtrafu.aUpdateExecute(sender);
+    exit;
   end;
 
   if frmSumiShtrafuEdit.Caption='Редагування суми штрафу' then
@@ -341,19 +342,19 @@ begin
       frmSumiShtrafuEdit.edtSumaPropisom.SetFocus;
       exit;
     end;
-    frmSumiShtrafu.qSumaShtrafu.SQL.Clear;
-    frmSumiShtrafu.qSumaShtrafu.SQL.Text:='update SHTRAFI set SUMASHTAFU=:SumaShtrafu,SUMAPROPISOM=:SumaPropisom where KOD=:Kod';
-    frmSumiShtrafu.qSumaShtrafu.Params.Clear;
-    frmSumiShtrafu.qSumaShtrafu.Params.Add;
-    frmSumiShtrafu.qSumaShtrafu.Params[0].Name:='SumaShtrafu';
-    frmSumiShtrafu.qSumaShtrafu.Params[0].Value:=frmSumiShtrafuEdit.edtCumaShtrafu.Text;
-    frmSumiShtrafu.qSumaShtrafu.Params.Add;
-    frmSumiShtrafu.qSumaShtrafu.Params[1].Name:='SumaPropisom';
-    frmSumiShtrafu.qSumaShtrafu.Params[1].Value:=frmSumiShtrafuEdit.edtSumaPropisom.Text;
-    frmSumiShtrafu.qSumaShtrafu.Params.Add;
-    frmSumiShtrafu.qSumaShtrafu.Params[2].Name:='Kod';
-    frmSumiShtrafu.qSumaShtrafu.Params[2].Value:=frmSumiShtrafuEdit.edtKod.Text;
-    frmSumiShtrafu.qSumaShtrafu.Open;
+    frmSumiShtrafu.qTemp.SQL.Clear;
+    frmSumiShtrafu.qTemp.SQL.Text:='update SHTRAFI set SUMASHTAFU=:SumaShtrafu,SUMAPROPISOM=:SumaPropisom where KOD=:Kod';
+    frmSumiShtrafu.qTemp.Params.Clear;
+    frmSumiShtrafu.qTemp.Params.Add;
+    frmSumiShtrafu.qTemp.Params[0].Name:='SumaShtrafu';
+    frmSumiShtrafu.qTemp.Params[0].Value:=frmSumiShtrafuEdit.edtCumaShtrafu.Text;
+    frmSumiShtrafu.qTemp.Params.Add;
+    frmSumiShtrafu.qTemp.Params[1].Name:='SumaPropisom';
+    frmSumiShtrafu.qTemp.Params[1].Value:=frmSumiShtrafuEdit.edtSumaPropisom.Text;
+    frmSumiShtrafu.qTemp.Params.Add;
+    frmSumiShtrafu.qTemp.Params[2].Name:='Kod';
+    frmSumiShtrafu.qTemp.Params[2].Value:=frmSumiShtrafuEdit.edtKod.Text;
+    frmSumiShtrafu.qTemp.Open;
     frmMain.trAzz.CommitRetaining;
     frmSumiShtrafuEdit.Close;
     frmSumiShtrafu.aUpdateExecute(sender);
@@ -393,19 +394,19 @@ begin
       frmSumiShtrafuEdit.edtSumaPropisom.SetFocus;
       exit;
     end;
-    frmSumiShtrafu.qSumaShtrafu.SQL.Clear;
-    frmSumiShtrafu.qSumaShtrafu.SQL.Text:='update SHTRAFI set SUMASHTAFU=:SumaShtrafu,SUMAPROPISOM=:SumaPropisom where KOD=:Kod';
-    frmSumiShtrafu.qSumaShtrafu.Params.Clear;
-    frmSumiShtrafu.qSumaShtrafu.Params.Add;
-    frmSumiShtrafu.qSumaShtrafu.Params[0].Name:='SumaShtrafu';
-    frmSumiShtrafu.qSumaShtrafu.Params[0].Value:=frmSumiShtrafuEdit.edtCumaShtrafu.Text;
-    frmSumiShtrafu.qSumaShtrafu.Params.Add;
-    frmSumiShtrafu.qSumaShtrafu.Params[1].Name:='SumaPropisom';
-    frmSumiShtrafu.qSumaShtrafu.Params[1].Value:=frmSumiShtrafuEdit.edtSumaPropisom.Text;
-    frmSumiShtrafu.qSumaShtrafu.Params.Add;
-    frmSumiShtrafu.qSumaShtrafu.Params[2].Name:='Kod';
-    frmSumiShtrafu.qSumaShtrafu.Params[2].Value:=frmSumiShtrafuEdit.edtKod.Text;
-    frmSumiShtrafu.qSumaShtrafu.Open;
+    frmSumiShtrafu.qTemp.SQL.Clear;
+    frmSumiShtrafu.qTemp.SQL.Text:='update SHTRAFI set SUMASHTAFU=:SumaShtrafu,SUMAPROPISOM=:SumaPropisom where KOD=:Kod';
+    frmSumiShtrafu.qTemp.Params.Clear;
+    frmSumiShtrafu.qTemp.Params.Add;
+    frmSumiShtrafu.qTemp.Params[0].Name:='SumaShtrafu';
+    frmSumiShtrafu.qTemp.Params[0].Value:=frmSumiShtrafuEdit.edtCumaShtrafu.Text;
+    frmSumiShtrafu.qTemp.Params.Add;
+    frmSumiShtrafu.qTemp.Params[1].Name:='SumaPropisom';
+    frmSumiShtrafu.qTemp.Params[1].Value:=frmSumiShtrafuEdit.edtSumaPropisom.Text;
+    frmSumiShtrafu.qTemp.Params.Add;
+    frmSumiShtrafu.qTemp.Params[2].Name:='Kod';
+    frmSumiShtrafu.qTemp.Params[2].Value:=frmSumiShtrafuEdit.edtKod.Text;
+    frmSumiShtrafu.qTemp.Open;
     frmMain.trAzz.CommitRetaining;
     frmSumiShtrafuEdit.Close;
     frmSumiShtrafu.aUpdateExecute(sender);
@@ -417,14 +418,14 @@ procedure TfrmSumiShtrafuEdit.aKodUpdateExecute(Sender: TObject);
 begin
   with frmSumiShtrafu do
   begin
-    qSumaShtrafu.SQL.Clear;
-    qSumaShtrafu.SQL.Text:='insert into SHTRAFI (KOD) values (gen_id(GET_DICTIONARIES_RECORD_ID,1))';
-    qSumaShtrafu.Open;
-    qSumaShtrafu.SQL.Clear;
-    qSumaShtrafu.SQL.Text:='select * from SHTRAFI order by KOD';
-    qSumaShtrafu.Open;
-    qSumaShtrafu.Last;
-    frmSumiShtrafuEdit.edtKod.Text:=IntToStr(qSumaShtrafu.FieldByName('KOD').Value);
+    qTemp.SQL.Clear;
+    qTemp.SQL.Text:='insert into SHTRAFI (KOD) values (gen_id(GET_DICTIONARIES_RECORD_ID,1))';
+    qTemp.Open;
+    qTemp.SQL.Clear;
+    qTemp.SQL.Text:='select * from SHTRAFI order by KOD';
+    qTemp.Open;
+    qTemp.Last;
+    frmSumiShtrafuEdit.edtKod.Text:=IntToStr(qTemp.FieldByName('KOD').Value);
   end;
 end;
 
