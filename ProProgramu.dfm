@@ -1,6 +1,6 @@
 object frmProProgramu: TfrmProProgramu
-  Left = 1084
-  Top = 95
+  Left = 672
+  Top = 92
   Width = 428
   Height = 340
   Caption = 'frmHelpAbout'
@@ -2198,7 +2198,7 @@ object frmProProgramu: TfrmProProgramu
     Top = 116
     Width = 88
     Height = 13
-    Caption = #1042#1077#1088#1089#1110#1103' '#1041#1044' 2.0.3.3'
+    Caption = #1042#1077#1088#1089#1110#1103' '#1041#1044' 2.0.3.4'
   end
   object Label6: TLabel
     Left = 184

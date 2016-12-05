@@ -1,6 +1,6 @@
 object frmLogOn: TfrmLogOn
-  Left = 341
-  Top = 109
+  Left = 253
+  Top = 113
   Width = 411
   Height = 196
   Caption = 'frmLogOn'

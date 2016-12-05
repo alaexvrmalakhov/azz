@@ -111,7 +111,36 @@ begin
   frmMain.trAzz.Active:=true;
   with frmLogOn do
   begin
-    with qUser do
+        //ѕроверка базы данных в.2.0.3.4:
+    //добавлено поле ID_POSTANOVI в таблицу LABORATORNIJKONTROL
+    try
+      with frmLogOn.qUser do
+      begin
+        SQL.Clear;
+        SQL.Text:='insert into LABORATORNIJKONTROL (KOD, ID_POSTANOVI) values (gen_id(GET_DICTIONARIES_RECORD_ID,1), (gen_id(GET_DICTIONARIES_RECORD_ID,1)))';
+        {qTemp.SQL.Text:='insert into TIPISHTRAFIV (KODTIPUSHTRAFIV) values (gen_id(GET_DICTIONARIES_RECORD_ID,1))';}
+        SQL.Text:=SQL.Text+'';
+        Open;
+      end;
+      frmMain.trAzz.RollbackRetaining;
+    except
+{
+     ALTER TABLE LABORATORNIJKONTROL
+     ADD ID_POSTANOVI INTEGER
+}
+      frmMain.trAzz.RollbackRetaining;
+      with frmLogOn.qUser do
+      begin
+        SQL.Clear;
+        SQL.Text:='ALTER TABLE LABORATORNIJKONTROL';
+        SQL.Text:=SQL.Text+'ADD ID_POSTANOVI INTEGER';
+        Open;
+      end;
+      frmMain.trAzz.CommitRetaining;
+    end;
+  end;
+
+  with qUser do
     begin
       SQL.Clear;
       SQL.Text:='select * from USERS where LOGIN=:login and PASSWD=:pass';
@@ -155,7 +184,6 @@ begin
       ShowMessage(' ористувача не знайдено!');
       Exit;
     end;
-  end;
 end;
 
 procedure TfrmLogOn.aCancelExecute(Sender: TObject);
