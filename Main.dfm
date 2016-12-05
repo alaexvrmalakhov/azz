@@ -1,6 +1,6 @@
 object frmMain: TfrmMain
-  Left = 1399
-  Top = 110
+  Left = 1400
+  Top = 115
   Width = 516
   Height = 167
   Caption = 'frmMain'
@@ -373,7 +373,6 @@ object frmMain: TfrmMain
       end
       object mnDovidnikiRozdil_T23_F18: TMenuItem
         Action = aRozdil_t23_f18
-        Enabled = False
       end
       object mnDovidnikiTipShtrafu: TMenuItem
         Action = aTipShtrafu

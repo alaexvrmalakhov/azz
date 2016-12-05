@@ -1,6 +1,6 @@
 object frmRozdil_T23_F18: TfrmRozdil_T23_F18
-  Left = 876
-  Top = 352
+  Left = 270
+  Top = 124
   Width = 404
   Height = 232
   Caption = 'frmRozdil_T23_F18'
@@ -24,6 +24,7 @@ object frmRozdil_T23_F18: TfrmRozdil_T23_F18
     Width = 185
     Height = 93
     DataSource = dsRozdilt23F18
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -31,28 +32,16 @@ object frmRozdil_T23_F18: TfrmRozdil_T23_F18
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'KODSTROKI'
-        Title.Caption = #1050#1086#1076' '#1089#1090#1088#1086#1082#1080
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'OBJEKTNAGLYDU'
-        Title.Caption = #1054#1073#39#1108#1082#1090#1080' '#1085#1072#1075#1083#1103#1076#1091
-        Visible = True
-      end>
   end
   object Panel1: TPanel
-    Left = 321
+    Left = 313
     Top = 0
     Width = 75
-    Height = 198
+    Height = 194
     Align = alRight
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 1
     object btnDodati: TButton
       Left = 0
@@ -156,8 +145,6 @@ object frmRozdil_T23_F18: TfrmRozdil_T23_F18
   object qRozdilt23F18: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     Left = 244
     Top = 64
   end
@@ -179,6 +166,9 @@ object frmRozdil_T23_F18: TfrmRozdil_T23_F18
     object N7: TMenuItem
       Action = aUpdate
     end
+    object N1: TMenuItem
+      Caption = '-'
+    end
     object N8: TMenuItem
       Caption = #1057#1086#1088#1090#1091#1074#1072#1085#1085#1103
       object N9: TMenuItem
@@ -188,8 +178,17 @@ object frmRozdil_T23_F18: TfrmRozdil_T23_F18
         Action = aSortByNazva
       end
     end
+    object N6: TMenuItem
+      Caption = '-'
+    end
     object N11: TMenuItem
       Action = aClose
     end
+  end
+  object qTemp: TIBQuery
+    Database = frmMain.dbAzz
+    Transaction = frmMain.trAzz
+    Left = 72
+    Top = 132
   end
 end

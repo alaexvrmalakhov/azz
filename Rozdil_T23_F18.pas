@@ -37,6 +37,9 @@ type
     N9: TMenuItem;
     N10: TMenuItem;
     N11: TMenuItem;
+    N1: TMenuItem;
+    N6: TMenuItem;
+    qTemp: TIBQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure aAddExecute(Sender: TObject);
     procedure aEditExecute(Sender: TObject);
@@ -63,6 +66,7 @@ uses
 procedure TfrmRozdil_T23_F18.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+{
   frmRozdil_T23_F18.qRozdilt23F18.Close;
 //  if frmMain.IsFormOpen('frmZvyzok') then
 //  begin
@@ -111,7 +115,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -122,11 +126,11 @@ begin
   frmMain.Enabled:=false;
   if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmRozdil_T23_F18.Enabled:=false;
   frmRozdil_T23_F18Edit.Show;
-  if frmMain.IsFormOpen('frmFilter') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmRozdil_T23_F18.Enabled:=false;
   frmRozdil_T23_F18Edit.Caption:='Додавання об''єкту нагляду';
   frmRozdil_T23_F18Edit.Position:=poMainFormCenter;
   frmRozdil_T23_F18Edit.BorderStyle:=bsDialog;
@@ -145,19 +149,19 @@ begin
   if not frmMain.IsFormOpen('frmRozdil_T23_F18Edit') then frmRozdil_T23_F18Edit:=TfrmRozdil_T23_F18Edit.Create(self);
   frmMain.Enabled:=false;
   frmRozdil_T23_F18Edit.Show;
-  if frmMain.IsFormOpen('frmFilter') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmRozdil_T23_F18.Enabled:=false;
   frmRozdil_T23_F18Edit.Caption:='Редагування об''єкту нагляду';
   frmRozdil_T23_F18Edit.Position:=poMainFormCenter;
   frmRozdil_T23_F18Edit.BorderStyle:=bsDialog;
 
-  frmRozdil_T23_F18Edit.edtKodStroki.Text:=IntToStr(frmRozdil_T23_F18.qRozdilt23F18.FieldByName('KODSTROKI').Value);
+  frmRozdil_T23_F18Edit.edtKodStroki.Text:=IntToStr(frmRozdil_T23_F18.qRozdilt23F18.FieldByName('Код').Value);
   frmRozdil_T23_F18Edit.edtKodStroki.Enabled:=false;
   frmRozdil_T23_F18Edit.btnKodStroki.Enabled:=false;
-  frmRozdil_T23_F18Edit.edtNazvaObjektu.Text:=frmRozdil_T23_F18.qRozdilt23F18.FieldByName('OBJEKTNAGLYDU').Value;
+  frmRozdil_T23_F18Edit.edtNazvaObjektu.Text:=frmRozdil_T23_F18.qRozdilt23F18.FieldByName('Об''єкт нагляду').Value;
   frmRozdil_T23_F18Edit.edtNazvaObjektu.Enabled:=true;
   frmRozdil_T23_F18Edit.edtNazvaObjektu.SetFocus;
 end;
@@ -168,19 +172,19 @@ begin
   if not frmMain.IsFormOpen('frmRozdil_T23_F18Edit') then frmRozdil_T23_F18Edit:=TfrmRozdil_T23_F18Edit.Create(self);
   frmMain.Enabled:=false;
   frmRozdil_T23_F18Edit.Show;
-  if frmMain.IsFormOpen('frmFilter') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmRozdil_T23_F18.Enabled:=false;
   frmRozdil_T23_F18Edit.Caption:='Видалення об''єкту нагляду';
   frmRozdil_T23_F18Edit.Position:=poMainFormCenter;
   frmRozdil_T23_F18Edit.BorderStyle:=bsDialog;
 
-  frmRozdil_T23_F18Edit.edtKodStroki.Text:=IntToStr(frmRozdil_T23_F18.qRozdilt23F18.FieldByName('KODSTROKI').Value);
+  frmRozdil_T23_F18Edit.edtKodStroki.Text:=IntToStr(frmRozdil_T23_F18.qRozdilt23F18.FieldByName('Код').Value);
   frmRozdil_T23_F18Edit.edtKodStroki.Enabled:=false;
   frmRozdil_T23_F18Edit.btnKodStroki.Enabled:=false;
-  frmRozdil_T23_F18Edit.edtNazvaObjektu.Text:=frmRozdil_T23_F18.qRozdilt23F18.FieldByName('OBJEKTNAGLYDU').Value;
+  frmRozdil_T23_F18Edit.edtNazvaObjektu.Text:=frmRozdil_T23_F18.qRozdilt23F18.FieldByName('Об''єкт нагляду').Value;
   frmRozdil_T23_F18Edit.edtNazvaObjektu.Enabled:=false;
   frmRozdil_T23_F18Edit.btnVidmina.SetFocus;
 end;
@@ -191,19 +195,19 @@ begin
   if not frmMain.IsFormOpen('frmRozdil_T23_F18Edit') then frmRozdil_T23_F18Edit:=TfrmRozdil_T23_F18Edit.Create(self);
   frmRozdil_T23_F18.Enabled:=false;
   frmRozdil_T23_F18Edit.Show;
-  if frmMain.IsFormOpen('frmFilter') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmRozdil_T23_F18.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmRozdil_T23_F18.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmRozdil_T23_F18.Enabled:=false;
   frmRozdil_T23_F18Edit.Caption:='Вибір об''єкту нагляду';
   frmRozdil_T23_F18Edit.Position:=poMainFormCenter;
   frmRozdil_T23_F18Edit.BorderStyle:=bsDialog;
 
-  frmRozdil_T23_F18Edit.edtKodStroki.Text:=IntToStr(frmRozdil_T23_F18.qRozdilt23F18.FieldByName('KODSTROKI').Value);
+  frmRozdil_T23_F18Edit.edtKodStroki.Text:=IntToStr(frmRozdil_T23_F18.qRozdilt23F18.FieldByName('Код').Value);
   frmRozdil_T23_F18Edit.edtKodStroki.Enabled:=false;
   frmRozdil_T23_F18Edit.btnKodStroki.Enabled:=false;
-  frmRozdil_T23_F18Edit.edtNazvaObjektu.Text:=frmRozdil_T23_F18.qRozdilt23F18.FieldByName('OBJEKTNAGLYDU').Value;
+  frmRozdil_T23_F18Edit.edtNazvaObjektu.Text:=frmRozdil_T23_F18.qRozdilt23F18.FieldByName('Об''єкт нагляду').Value;
   frmRozdil_T23_F18Edit.edtNazvaObjektu.Enabled:=false;
   frmRozdil_T23_F18Edit.btnVikonati.SetFocus;
 end;
@@ -218,7 +222,8 @@ begin
   with frmRozdil_T23_F18 do
   begin
     qRozdilt23F18.SQL.Clear;
-    qRozdilt23F18.SQL.Text:='select * from ROZDILT23F18 order by OBJEKTNAGLYDU';
+//    qRozdilt23F18.SQL.Text:='select * from ROZDILT23F18 order by OBJEKTNAGLYDU';
+    qRozdilt23F18.SQL.Text:='select KODSTROKI as "Код", OBJEKTNAGLYDU as "Об''єкт нагляду" from ROZDILT23F18 where not OBJEKTNAGLYDU is null order by OBJEKTNAGLYDU';
     qRozdilt23F18.Open;
     aSortByKod.Checked:=false;
     aSortByNazva.Checked:=true;
@@ -230,15 +235,28 @@ begin
   with frmRozdil_T23_F18 do
   begin
     qRozdilt23F18.SQL.Clear;
+//    qRozdilt23F18.SQL.Text:='select * from ROZDILT23F18 order by OBJEKTNAGLYDU';
+    qRozdilt23F18.SQL.Text:='select KODSTROKI as "Код", OBJEKTNAGLYDU as "Об''єкт нагляду" from ROZDILT23F18 where not OBJEKTNAGLYDU is null order by KODSTROKI';
+    qRozdilt23F18.Open;
+    aSortByKod.Checked:=true;
+    aSortByNazva.Checked:=false;
+  end;
+{
+  with frmRozdil_T23_F18 do
+  begin
+    qRozdilt23F18.SQL.Clear;
     qRozdilt23F18.SQL.Text:='select * from ROZDILT23F18 order by KODSTROKI';
     qRozdilt23F18.Open;
     aSortByKod.Checked:=true;
     aSortByNazva.Checked:=false;
   end;
+}
 end;
 
 procedure TfrmRozdil_T23_F18.aSortByNazvaExecute(Sender: TObject);
 begin
+  frmRozdil_T23_F18.aUpdateExecute(sender);
+{
   with frmRozdil_T23_F18 do
   begin
     qRozdilt23F18.SQL.Clear;
@@ -247,14 +265,12 @@ begin
     aSortByKod.Checked:=false;
     aSortByNazva.Checked:=true;
   end;
+}
 end;
 
 procedure TfrmRozdil_T23_F18.FormActivate(Sender: TObject);
 begin
   frmMain.DBNavigator1.DataSource:=frmRozdil_T23_F18.dsRozdilt23F18;
-{
-  frmRozdil_T23_F18.aUpdateExecute(sender);
-}
 end;
 
 end.

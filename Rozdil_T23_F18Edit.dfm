@@ -1,6 +1,6 @@
 object frmRozdil_T23_F18Edit: TfrmRozdil_T23_F18Edit
-  Left = 712
-  Top = 586
+  Left = 685
+  Top = 123
   Width = 568
   Height = 154
   Caption = 'frmRozdil_T23_F18Edit'
@@ -33,6 +33,7 @@ object frmRozdil_T23_F18Edit: TfrmRozdil_T23_F18Edit
     Top = 8
     Width = 121
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 5
     TabOrder = 0
     Text = 'edtKodStroki'
@@ -42,6 +43,7 @@ object frmRozdil_T23_F18Edit: TfrmRozdil_T23_F18Edit
     Top = 44
     Width = 405
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 100
     TabOrder = 2
     Text = 'edtNazvaObjektu'

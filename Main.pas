@@ -1154,6 +1154,7 @@ end;
 
 procedure TfrmMain.aTipShtrafuExecute(Sender: TObject);
 begin
+{
   if not frmMain.IsFormOpen('frmTipiShtrafiv') then frmTipiShtrafiv:=TfrmTipiShtrafiv.Create(self);
   frmTipiShtrafiv.Show;
   frmTipiShtrafiv.Caption:='Типи штрафів';
@@ -1162,6 +1163,7 @@ begin
   frmTipiShtrafiv.aChoice.Enabled:=false;
   frmTipiShtrafiv.aUpdateExecute(sender);
   frmTipiShtrafiv.edtFind.Text:='';
+}
 end;
 
 procedure TfrmMain.aSumiShtrafuExecute(Sender: TObject);

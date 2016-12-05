@@ -39,21 +39,21 @@ procedure TfrmRozdil_T23_F18Edit.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
 {
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
-  begin
-    frmFinansoviSankciiEdit.Enabled:=true;
-    frmMain.Enabled:=false;
-    if frmViddilennyEdit.Caption<>'Вибір об''єкту нагляду' then
-    begin
-      frmViddilenny.Enabled:=true;
-      frmFinansoviSankciiEdit.Enabled:=false;
-    end
-    else
-      frmViddilenny.Close;
-    Action:=caFree;
-    exit;
-  end;
-}
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
+//  begin
+//    frmFinansoviSankciiEdit.Enabled:=true;
+//    frmMain.Enabled:=false;
+//    if frmViddilennyEdit.Caption<>'Вибір об''єкту нагляду' then
+//    begin
+//      frmViddilenny.Enabled:=true;
+//      frmFinansoviSankciiEdit.Enabled:=false;
+//    end
+//    else
+//      frmViddilenny.Close;
+//    Action:=caFree;
+//    exit;
+//  end;
+
   if frmMain.IsFormOpen('frmFilter') then
   begin
     frmFilter.Enabled:=true;
@@ -128,7 +128,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -137,14 +137,14 @@ procedure TfrmRozdil_T23_F18Edit.aKodUpdateExecute(Sender: TObject);
 begin
   with frmRozdil_T23_F18 do
   begin
-    qRozdilt23F18.SQL.Clear;
-    qRozdilt23F18.SQL.Text:='insert into ROZDILT23F18 (KODSTROKI) values (GEN_ID(GET_DICTIONARIES_RECORD_ID,1))';
-    qRozdilt23F18.Open;
-    qRozdilt23F18.SQL.Clear;
-    qRozdilt23F18.SQL.Text:='select * from ROZDILT23F18 order by KODSTROKI';
-    qRozdilt23F18.Open;
-    qRozdilt23F18.Last;
-    frmRozdil_T23_F18Edit.edtKodStroki.Text:=IntToStr(qRozdilt23F18.FieldByName('KODSTROKI').Value);
+    qTemp.SQL.Clear;
+    qTemp.SQL.Text:='insert into ROZDILT23F18 (KODSTROKI) values (GEN_ID(GET_DICTIONARIES_RECORD_ID,1))';
+    qTemp.Open;
+    qTemp.SQL.Clear;
+    qTemp.SQL.Text:='select * from ROZDILT23F18 order by KODSTROKI';
+    qTemp.Open;
+    qTemp.Last;
+    frmRozdil_T23_F18Edit.edtKodStroki.Text:=IntToStr(qTemp.FieldByName('KODSTROKI').Value);
   end;
 end;
 
@@ -152,6 +152,7 @@ procedure TfrmRozdil_T23_F18Edit.aOKExecute(Sender: TObject);
 begin
   if frmRozdil_T23_F18Edit.Caption='Вибір об''єкту нагляду' then
   begin
+{
 //    if frmMain.IsFormOpen('frmZvyzok') then
 //    begin
 //      if frmZvyzok.ActiveControl=frmZvyzok.btnZaVodopostachannym_Choice then frmZvyzok.cbZaVodopostachannym.Text:=frmRozdil_T23_F18Edit.edtNazvaObjektu.Text;
@@ -212,19 +213,23 @@ begin
       frmRozdil_T23_F18.Close;
       exit;
     end;
+}
   end;
 
   if frmRozdil_T23_F18Edit.Caption='Видалення об''єкту нагляду' then
   begin
     if MessageDlg('Видалення цієї строки може відобразитись на звітах!!!'+#13+'Ви дійсно бажаєте видалити цей запис?',mtWarning,[mbYes,mbNo],0)=mrYes then
     begin
-      frmRozdil_T23_F18.qRozdilt23F18.SQL.Clear;
-      frmRozdil_T23_F18.qRozdilt23F18.SQL.Text:='delete from ROZDILT23F18 where KODSTROKI=:Kod';
-      frmRozdil_T23_F18.qRozdilt23F18.Params.Clear;
-      frmRozdil_T23_F18.qRozdilt23F18.Params.Add;
-      frmRozdil_T23_F18.qRozdilt23F18.Params[0].Name:='Kod';
-      frmRozdil_T23_F18.qRozdilt23F18.Params[0].Value:=frmRozdil_T23_F18Edit.edtKodStroki.Text;
-      frmRozdil_T23_F18.qRozdilt23F18.Open;
+      with frmRozdil_T23_F18.qRozdilt23F18 do
+      begin
+        SQL.Clear;
+        SQL.Text:='delete from ROZDILT23F18 where KODSTROKI=:Kod';
+        Params.Clear;
+        Params.Add;
+        Params[0].Name:='Kod';
+        Params[0].Value:=frmRozdil_T23_F18Edit.edtKodStroki.Text;
+        Open;
+      end;
       frmMain.trAzz.CommitRetaining;
       frmRozdil_T23_F18.aUpdateExecute(sender);
       frmRozdil_T23_F18Edit.Close;
@@ -254,16 +259,19 @@ begin
       exit;
     end;
 
-    frmRozdil_T23_F18.qRozdilt23F18.SQL.Clear;
-    frmRozdil_T23_F18.qRozdilt23F18.SQL.Text:='update ROZDILT23F18 set OBJEKTNAGLYDU=:Objekt where KODSTROKI=:KOD';
-    frmRozdil_T23_F18.qRozdilt23F18.Params.Clear;
-    frmRozdil_T23_F18.qRozdilt23F18.Params.Add;
-    frmRozdil_T23_F18.qRozdilt23F18.Params[0].Name:='Objekt';
-    frmRozdil_T23_F18.qRozdilt23F18.Params[0].Value:=frmRozdil_T23_F18Edit.edtNazvaObjektu.Text;
-    frmRozdil_T23_F18.qRozdilt23F18.Params.Add;
-    frmRozdil_T23_F18.qRozdilt23F18.Params[1].Name:='KOD';
-    frmRozdil_T23_F18.qRozdilt23F18.Params[1].Value:=frmRozdil_T23_F18Edit.edtKodStroki.Text;
-    frmRozdil_T23_F18.qRozdilt23F18.Open;
+    with frmRozdil_T23_F18.qTemp do
+    begin
+      SQL.Clear;
+      SQL.Text:='update ROZDILT23F18 set OBJEKTNAGLYDU=:Objekt where KODSTROKI=:KOD';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='Objekt';
+      Params[0].Value:=frmRozdil_T23_F18Edit.edtNazvaObjektu.Text;
+      Params.Add;
+      Params[1].Name:='KOD';
+      Params[1].Value:=frmRozdil_T23_F18Edit.edtKodStroki.Text;
+      Open;
+    end;
     frmMain.trAzz.CommitRetaining;
     frmRozdil_T23_F18.aUpdateExecute(sender);
     frmRozdil_T23_F18Edit.Close;
@@ -292,16 +300,19 @@ begin
       exit;
     end;
 
-    frmRozdil_T23_F18.qRozdilt23F18.SQL.Clear;
-    frmRozdil_T23_F18.qRozdilt23F18.SQL.Text:='update ROZDILT23F18 set OBJEKTNAGLYDU=:Objekt where KODSTROKI=:KOD';
-    frmRozdil_T23_F18.qRozdilt23F18.Params.Clear;
-    frmRozdil_T23_F18.qRozdilt23F18.Params.Add;
-    frmRozdil_T23_F18.qRozdilt23F18.Params[0].Name:='Objekt';
-    frmRozdil_T23_F18.qRozdilt23F18.Params[0].Value:=frmRozdil_T23_F18Edit.edtNazvaObjektu.Text;
-    frmRozdil_T23_F18.qRozdilt23F18.Params.Add;
-    frmRozdil_T23_F18.qRozdilt23F18.Params[1].Name:='KOD';
-    frmRozdil_T23_F18.qRozdilt23F18.Params[1].Value:=frmRozdil_T23_F18Edit.edtKodStroki.Text;
-    frmRozdil_T23_F18.qRozdilt23F18.Open;
+    with frmRozdil_T23_F18.qTemp do
+    begin
+      SQL.Clear;
+      SQL.Text:='update ROZDILT23F18 set OBJEKTNAGLYDU=:Objekt where KODSTROKI=:KOD';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='Objekt';
+      Params[0].Value:=frmRozdil_T23_F18Edit.edtNazvaObjektu.Text;
+      Params.Add;
+      Params[1].Name:='KOD';
+      Params[1].Value:=frmRozdil_T23_F18Edit.edtKodStroki.Text;
+      Open;
+    end;
     frmMain.trAzz.CommitRetaining;
     frmRozdil_T23_F18.aUpdateExecute(sender);
     frmRozdil_T23_F18Edit.Close;
