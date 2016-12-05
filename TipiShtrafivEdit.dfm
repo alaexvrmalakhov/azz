@@ -1,6 +1,6 @@
 object frmTipiShtrafivEdit: TfrmTipiShtrafivEdit
-  Left = 804
-  Top = 582
+  Left = 908
+  Top = 114
   Width = 476
   Height = 154
   Caption = 'frmTipiShtrafivEdit'
@@ -33,6 +33,7 @@ object frmTipiShtrafivEdit: TfrmTipiShtrafivEdit
     Top = 12
     Width = 121
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 5
     TabOrder = 0
     Text = 'edtKodTipuShtrafiv'
@@ -42,6 +43,7 @@ object frmTipiShtrafivEdit: TfrmTipiShtrafivEdit
     Top = 44
     Width = 345
     Height = 21
+    ImeName = 'Russian'
     MaxLength = 75
     TabOrder = 1
     Text = 'edtTipShtrafu'

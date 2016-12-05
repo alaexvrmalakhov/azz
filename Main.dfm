@@ -1,5 +1,5 @@
 object frmMain: TfrmMain
-  Left = 1400
+  Left = 1394
   Top = 115
   Width = 516
   Height = 167
@@ -376,7 +376,6 @@ object frmMain: TfrmMain
       end
       object mnDovidnikiTipShtrafu: TMenuItem
         Action = aTipShtrafu
-        Enabled = False
       end
       object N20: TMenuItem
         Caption = '-'

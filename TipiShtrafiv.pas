@@ -42,6 +42,7 @@ type
     dsTipiShtrafiv: TDataSource;
     qTipiShtrafiv: TIBQuery;
     aFindChange: TAction;
+    qTemp: TIBQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure aAddExecute(Sender: TObject);
@@ -72,6 +73,7 @@ uses
 procedure TfrmTipiShtrafiv.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+{
   if frmMain.IsFormOpen('frmFilter') then
   begin
     frmFilter.Enabled:=true;
@@ -114,7 +116,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -122,7 +124,7 @@ end;
 procedure TfrmTipiShtrafiv.FormResize(Sender: TObject);
 begin
   frmTipiShtrafiv.edtFind.Left:=4;
-  frmTipiShtrafiv.edtFind.Width:=frmTipiShtrafiv.Width-16;
+  frmTipiShtrafiv.edtFind.Width:=frmTipiShtrafiv.Width-24;
 end;
 
 procedure TfrmTipiShtrafiv.aAddExecute(Sender: TObject);
@@ -130,11 +132,11 @@ begin
   if not frmMain.IsFormOpen('frmTipiShtrafivEdit') then frmTipiShtrafivEdit:=TfrmTipiShtrafivEdit.Create(self);
   frmMain.Enabled:=false;
   frmTipiShtrafivEdit.Show;
-  if frmMain.IsFormOpen('frmFilter') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmTipiShtrafiv.Enabled:=false;
   frmTipiShtrafivEdit.Caption:='Додавання типу штрафів';
   frmTipiShtrafivEdit.BorderStyle:=bsDialog;
   frmTipiShtrafivEdit.Position:=poMainFormCenter;
@@ -153,19 +155,19 @@ begin
   if not frmMain.IsFormOpen('frmTipiShtrafivEdit') then frmTipiShtrafivEdit:=TfrmTipiShtrafivEdit.Create(self);
   frmMain.Enabled:=false;
   frmTipiShtrafivEdit.Show;
-  if frmMain.IsFormOpen('frmFilter') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmTipiShtrafiv.Enabled:=false;
   frmTipiShtrafivEdit.Caption:='Редагування типу штрафів';
   frmTipiShtrafivEdit.BorderStyle:=bsDialog;
   frmTipiShtrafivEdit.Position:=poMainFormCenter;
 
-  frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text:=IntToStr(frmTipiShtrafiv.qTipiShtrafiv.FieldByName('KODTIPUSHTRAFIV').Value);
+  frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text:=IntToStr(frmTipiShtrafiv.qTipiShtrafiv.FieldByName('Код').Value);
   frmTipiShtrafivEdit.edtKodTipuShtrafiv.Enabled:=false;
   frmTipiShtrafivEdit.btnKodTipuShtrafiv.Enabled:=false;
-  frmTipiShtrafivEdit.edtTipShtrafu.Text:=frmTipiShtrafiv.qTipiShtrafiv.FieldByName('TIPSHTRAFU').Value;
+  frmTipiShtrafivEdit.edtTipShtrafu.Text:=frmTipiShtrafiv.qTipiShtrafiv.FieldByName('Тип штрафів').Value;
   frmTipiShtrafivEdit.edtTipShtrafu.Enabled:=true;
   frmTipiShtrafivEdit.edtTipShtrafu.SetFocus;
 end;
@@ -176,19 +178,19 @@ begin
   if not frmMain.IsFormOpen('frmTipiShtrafivEdit') then frmTipiShtrafivEdit:=TfrmTipiShtrafivEdit.Create(self);
   frmMain.Enabled:=false;
   frmTipiShtrafivEdit.Show;
-  if frmMain.IsFormOpen('frmFilter') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmTipiShtrafiv.Enabled:=false;
   frmTipiShtrafivEdit.Caption:='Видалення типу штрафів';
   frmTipiShtrafivEdit.BorderStyle:=bsDialog;
   frmTipiShtrafivEdit.Position:=poMainFormCenter;
 
-  frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text:=IntToStr(frmTipiShtrafiv.qTipiShtrafiv.FieldByName('KODTIPUSHTRAFIV').Value);
+  frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text:=IntToStr(frmTipiShtrafiv.qTipiShtrafiv.FieldByName('Код').Value);
   frmTipiShtrafivEdit.edtKodTipuShtrafiv.Enabled:=false;
   frmTipiShtrafivEdit.btnKodTipuShtrafiv.Enabled:=false;
-  frmTipiShtrafivEdit.edtTipShtrafu.Text:=frmTipiShtrafiv.qTipiShtrafiv.FieldByName('TIPSHTRAFU').Value;
+  frmTipiShtrafivEdit.edtTipShtrafu.Text:=frmTipiShtrafiv.qTipiShtrafiv.FieldByName('Тип штрафів').Value;
   frmTipiShtrafivEdit.edtTipShtrafu.Enabled:=false;
   frmTipiShtrafivEdit.btnVidmina.SetFocus;
 end;
@@ -199,19 +201,19 @@ begin
   if not frmMain.IsFormOpen('frmTipiShtrafivEdit') then frmTipiShtrafivEdit:=TfrmTipiShtrafivEdit.Create(self);
   frmTipiShtrafiv.Enabled:=false;
   frmTipiShtrafivEdit.Show;
-  if frmMain.IsFormOpen('frmFilter') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmTipiShtrafiv.Enabled:=false;
-  if frmMain.IsFormOpen('frmShtrafiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFilter') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmViluchennyZRealizaciiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmAdminZapobizhZahodiEdit') then frmTipiShtrafiv.Enabled:=false;
+//  if frmMain.IsFormOpen('frmShtrafiEdit') then frmTipiShtrafiv.Enabled:=false;
   frmTipiShtrafivEdit.Caption:='Вибір типу штрафів';
   frmTipiShtrafivEdit.BorderStyle:=bsDialog;
   frmTipiShtrafivEdit.Position:=poMainFormCenter;
 
-  frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text:=IntToStr(frmTipiShtrafiv.qTipiShtrafiv.FieldByName('KODTIPUSHTRAFIV').Value);
+  frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text:=IntToStr(frmTipiShtrafiv.qTipiShtrafiv.FieldByName('Код').Value);
   frmTipiShtrafivEdit.edtKodTipuShtrafiv.Enabled:=false;
   frmTipiShtrafivEdit.btnKodTipuShtrafiv.Enabled:=false;
-  frmTipiShtrafivEdit.edtTipShtrafu.Text:=frmTipiShtrafiv.qTipiShtrafiv.FieldByName('TIPSHTRAFU').Value;
+  frmTipiShtrafivEdit.edtTipShtrafu.Text:=frmTipiShtrafiv.qTipiShtrafiv.FieldByName('Тип штрафів').Value;
   frmTipiShtrafivEdit.edtTipShtrafu.Enabled:=false;
   frmTipiShtrafivEdit.btnVikonati.SetFocus;
 end;
@@ -226,7 +228,8 @@ begin
   with frmTipiShtrafiv do
   begin
     qTipiShtrafiv.SQL.Clear;
-    qTipiShtrafiv.SQL.Text:='select * from TIPISHTRAFIV order by TIPSHTRAFU';
+//    qTipiShtrafiv.SQL.Text:='select * from TIPISHTRAFIV order by TIPSHTRAFU';
+    qTipiShtrafiv.SQL.Text:='select KODTIPUSHTRAFIV as "Код", TIPSHTRAFU as "Тип штрафів" from TIPISHTRAFIV where not TIPSHTRAFU is null order by TIPSHTRAFU';
     qTipiShtrafiv.Open;
     aSortByKod.Checked:=false;
     aSortByTip.Checked:=true;
@@ -238,7 +241,8 @@ begin
   with frmTipiShtrafiv do
   begin
     qTipiShtrafiv.SQL.Clear;
-    qTipiShtrafiv.SQL.Text:='select * from TIPISHTRAFIV order by KODTIPUSHTRAFIV';
+//    qTipiShtrafiv.SQL.Text:='select * from TIPISHTRAFIV order by TIPSHTRAFU';
+    qTipiShtrafiv.SQL.Text:='select KODTIPUSHTRAFIV as "Код", TIPSHTRAFU as "Тип штрафів" from TIPISHTRAFIV where not TIPSHTRAFU is null order by KODTIPUSHTRAFIV';
     qTipiShtrafiv.Open;
     aSortByKod.Checked:=true;
     aSortByTip.Checked:=false;
@@ -247,6 +251,8 @@ end;
 
 procedure TfrmTipiShtrafiv.aSortByTipExecute(Sender: TObject);
 begin
+  frmTipiShtrafiv.aUpdateExecute(sender);
+{
   with frmTipiShtrafiv do
   begin
     qTipiShtrafiv.SQL.Clear;
@@ -255,6 +261,7 @@ begin
     aSortByKod.Checked:=false;
     aSortByTip.Checked:=true;
   end;
+}
 end;
 
 procedure TfrmTipiShtrafiv.aFindChangeExecute(Sender: TObject);
@@ -266,7 +273,7 @@ end;
 procedure TfrmTipiShtrafiv.qTipiShtrafivFilterRecord(DataSet: TDataSet;
   var Accept: Boolean);
 begin
-  if frmMain.PosN(frmTipiShtrafiv.edtFind.Text,frmTipiShtrafiv.qTipiShtrafiv.FieldByName('TIPSHTRAFU').Value,0)>0 then Accept:=true else Accept:=false;
+  if frmMain.PosN(frmTipiShtrafiv.edtFind.Text,frmTipiShtrafiv.qTipiShtrafiv.FieldByName('Тип штрафів').Value,0)>0 then Accept:=true else Accept:=false;
 end;
 
 procedure TfrmTipiShtrafiv.FormActivate(Sender: TObject);

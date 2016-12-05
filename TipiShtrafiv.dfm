@@ -1,8 +1,8 @@
 object frmTipiShtrafiv: TfrmTipiShtrafiv
-  Left = 876
-  Top = 328
+  Left = 486
+  Top = 109
   Width = 404
-  Height = 249
+  Height = 261
   Caption = 'frmTipiShtrafiv'
   Color = clBtnFace
   Constraints.MinHeight = 232
@@ -25,6 +25,7 @@ object frmTipiShtrafiv: TfrmTipiShtrafiv
     Width = 197
     Height = 85
     DataSource = dsTipiShtrafiv
+    ImeName = 'Russian'
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -32,28 +33,16 @@ object frmTipiShtrafiv: TfrmTipiShtrafiv
     TitleFont.Height = -11
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'KODTIPUSHTRAFIV'
-        Title.Caption = #1050#1086#1076' '#1090#1080#1087#1091' '#1096#1090#1088#1072#1092#1110#1074
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'TIPSHTRAFU'
-        Title.Caption = #1058#1080#1087' '#1096#1090#1088#1072#1092#1110#1074
-        Visible = True
-      end>
   end
   object Panel1: TPanel
-    Left = 321
+    Left = 313
     Top = 0
     Width = 75
-    Height = 201
+    Height = 202
     Align = alRight
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 1
     object btnDodati: TButton
       Left = 0
@@ -106,18 +95,20 @@ object frmTipiShtrafiv: TfrmTipiShtrafiv
   end
   object Panel2: TPanel
     Left = 0
-    Top = 201
-    Width = 396
+    Top = 202
+    Width = 388
     Height = 21
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
+    ParentBackground = True
     TabOrder = 2
     object edtFind: TEdit
       Left = 12
       Top = 0
       Width = 121
       Height = 21
+      ImeName = 'Russian'
       TabOrder = 0
       Text = 'edtFind'
       OnChange = aFindChangeExecute
@@ -217,10 +208,14 @@ object frmTipiShtrafiv: TfrmTipiShtrafiv
   object qTipiShtrafiv: TIBQuery
     Database = frmMain.dbAzz
     Transaction = frmMain.trAzz
-    BufferChunks = 1000
-    CachedUpdates = False
     OnFilterRecord = qTipiShtrafivFilterRecord
     Left = 268
     Top = 64
+  end
+  object qTemp: TIBQuery
+    Database = frmMain.dbAzz
+    Transaction = frmMain.trAzz
+    Left = 52
+    Top = 104
   end
 end

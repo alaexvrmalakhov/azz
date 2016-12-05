@@ -39,21 +39,21 @@ procedure TfrmTipiShtrafivEdit.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
 {
-  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
-  begin
-    frmFinansoviSankciiEdit.Enabled:=true;
-    frmMain.Enabled:=false;
-    if frmViddilennyEdit.Caption<>'Вибір типу штрафів' then
-    begin
-      frmViddilenny.Enabled:=true;
-      frmFinansoviSankciiEdit.Enabled:=false;
-    end
-    else
-      frmViddilenny.Close;
-    Action:=caFree;
-    exit;
-  end;
-}
+//  if frmMain.IsFormOpen('frmFinansoviSankciiEdit') then
+//  begin
+//    frmFinansoviSankciiEdit.Enabled:=true;
+//    frmMain.Enabled:=false;
+//    if frmViddilennyEdit.Caption<>'Вибір типу штрафів' then
+//    begin
+//      frmViddilenny.Enabled:=true;
+//      frmFinansoviSankciiEdit.Enabled:=false;
+//    end
+//    else
+//      frmViddilenny.Close;
+//    Action:=caFree;
+//    exit;
+//  end;
+
   if frmMain.IsFormOpen('frmFilter') then
   begin
     frmFilter.Enabled:=true;
@@ -128,7 +128,7 @@ begin
     Action:=caFree;
     exit;
   end;
-
+}
   frmMain.Enabled:=true;
   Action:=caFree;
 end;
@@ -138,14 +138,14 @@ begin
   with frmTipiShtrafiv do
   begin
     edtFind.Text:='';
-    qTipiShtrafiv.SQL.Clear;
-    qTipiShtrafiv.SQL.Text:='insert into TIPISHTRAFIV (KODTIPUSHTRAFIV) values (gen_id(GET_DICTIONARIES_RECORD_ID,1))';
-    qTipiShtrafiv.Open;
-    qTipiShtrafiv.SQL.Clear;
-    qTipiShtrafiv.SQL.Text:='select * from TIPISHTRAFIV order by KODTIPUSHTRAFIV';
-    qTipiShtrafiv.Open;
-    qTipiShtrafiv.Last;
-    frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text:=IntToStr(frmTipiShtrafiv.qTipiShtrafiv.FieldByName('KODTIPUSHTRAFIV').Value);
+    qTemp.SQL.Clear;
+    qTemp.SQL.Text:='insert into TIPISHTRAFIV (KODTIPUSHTRAFIV) values (gen_id(GET_DICTIONARIES_RECORD_ID,1))';
+    qTemp.Open;
+    qTemp.SQL.Clear;
+    qTemp.SQL.Text:='select * from TIPISHTRAFIV order by KODTIPUSHTRAFIV';
+    qTemp.Open;
+    qTemp.Last;
+    frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text:=IntToStr(frmTipiShtrafiv.qTemp.FieldByName('KODTIPUSHTRAFIV').Value);
   end;
 end;
 
@@ -153,6 +153,7 @@ procedure TfrmTipiShtrafivEdit.aOKExecute(Sender: TObject);
 begin
   if frmTipiShtrafivEdit.Caption='Вибір типу штрафів' then
   begin
+{
     if frmMain.IsFormOpen('frmFilter') then
     begin
       frmFilter.cbFilter.Text:=frmTipiShtrafivEdit.edtTipShtrafu.Text;
@@ -192,19 +193,23 @@ begin
       frmTipiShtrafiv.Close;
       exit;
     end;
+}
   end;
 
   if frmTipiShtrafivEdit.Caption='Видалення типу штрафів' then
   begin
     if MessageDlg('Видалення цього запису може відобразитись на роботі програми в цілому!!!'+#13+'Ви дійсно бажаєти видалити цей запис?'+#13+'',mtWarning,[mbYes,mbNo],0)=mrYes then
     begin
-      frmTipiShtrafiv.qTipiShtrafiv.SQL.Clear;
-      frmTipiShtrafiv.qTipiShtrafiv.SQL.Text:='delete from TIPISHTRAFIV where KODTIPUSHTRAFIV=:Kod';
-      frmTipiShtrafiv.qTipiShtrafiv.Params.Clear;
-      frmTipiShtrafiv.qTipiShtrafiv.Params.Add;
-      frmTipiShtrafiv.qTipiShtrafiv.Params[0].Name:='Kod';
-      frmTipiShtrafiv.qTipiShtrafiv.Params[0].Value:=frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text;
-      frmTipiShtrafiv.qTipiShtrafiv.Open;
+      with frmTipiShtrafiv.qTemp do
+      begin
+        SQL.Clear;
+        SQL.Text:='delete from TIPISHTRAFIV where KODTIPUSHTRAFIV=:Kod';
+        Params.Clear;
+        Params.Add;
+        Params[0].Name:='Kod';
+        Params[0].Value:=frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text;
+        Open;
+      end;
       frmMain.trAzz.CommitRetaining;
       frmTipiShtrafivEdit.Close;
       frmTipiShtrafiv.aUpdateExecute(sender);
@@ -233,16 +238,19 @@ begin
       exit;
     end;
 
-    frmTipiShtrafiv.qTipiShtrafiv.SQL.Clear;
-    frmTipiShtrafiv.qTipiShtrafiv.SQL.Text:='update TIPISHTRAFIV set TIPSHTRAFU=:Tip where KODTIPUSHTRAFIV=:Kod';
-    frmTipiShtrafiv.qTipiShtrafiv.Params.Clear;
-    frmTipiShtrafiv.qTipiShtrafiv.Params.Add;
-    frmTipiShtrafiv.qTipiShtrafiv.Params[0].Name:='Tip';
-    frmTipiShtrafiv.qTipiShtrafiv.Params[0].Value:=frmTipiShtrafivEdit.edtTipShtrafu.Text;
-    frmTipiShtrafiv.qTipiShtrafiv.Params.Add;
-    frmTipiShtrafiv.qTipiShtrafiv.Params[1].Name:='Kod';
-    frmTipiShtrafiv.qTipiShtrafiv.Params[1].Value:=frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text;
-    frmTipiShtrafiv.qTipiShtrafiv.Open;
+    with frmTipiShtrafiv.qTemp do
+    begin
+      SQL.Clear;
+      SQL.Text:='update TIPISHTRAFIV set TIPSHTRAFU=:Tip where KODTIPUSHTRAFIV=:Kod';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='Tip';
+      Params[0].Value:=frmTipiShtrafivEdit.edtTipShtrafu.Text;
+      Params.Add;
+      Params[1].Name:='Kod';
+      Params[1].Value:=frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text;
+      Open;
+    end;
     frmMain.trAzz.CommitRetaining;
     frmTipiShtrafivEdit.Close;
     frmTipiShtrafiv.aUpdateExecute(sender);
@@ -270,16 +278,19 @@ begin
       exit;
     end;
 
-    frmTipiShtrafiv.qTipiShtrafiv.SQL.Clear;
-    frmTipiShtrafiv.qTipiShtrafiv.SQL.Text:='update TIPISHTRAFIV set TIPSHTRAFU=:Tip where KODTIPUSHTRAFIV=:Kod';
-    frmTipiShtrafiv.qTipiShtrafiv.Params.Clear;
-    frmTipiShtrafiv.qTipiShtrafiv.Params.Add;
-    frmTipiShtrafiv.qTipiShtrafiv.Params[0].Name:='Tip';
-    frmTipiShtrafiv.qTipiShtrafiv.Params[0].Value:=frmTipiShtrafivEdit.edtTipShtrafu.Text;
-    frmTipiShtrafiv.qTipiShtrafiv.Params.Add;
-    frmTipiShtrafiv.qTipiShtrafiv.Params[1].Name:='Kod';
-    frmTipiShtrafiv.qTipiShtrafiv.Params[1].Value:=frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text;
-    frmTipiShtrafiv.qTipiShtrafiv.Open;
+    with frmTipiShtrafiv.qTemp do
+    begin
+      SQL.Clear;
+      SQL.Text:='update TIPISHTRAFIV set TIPSHTRAFU=:Tip where KODTIPUSHTRAFIV=:Kod';
+      Params.Clear;
+      Params.Add;
+      Params[0].Name:='Tip';
+      Params[0].Value:=frmTipiShtrafivEdit.edtTipShtrafu.Text;
+      Params.Add;
+      Params[1].Name:='Kod';
+      Params[1].Value:=frmTipiShtrafivEdit.edtKodTipuShtrafiv.Text;
+      Open;
+    end;
     frmMain.trAzz.CommitRetaining;
     frmTipiShtrafivEdit.Close;
     frmTipiShtrafiv.aUpdateExecute(sender);
